@@ -1,0 +1,1 @@
+tree -aR -I .git
