@@ -201,6 +201,9 @@ bindsym Control+Print exec gnome-screenshot -i
 # load extra mappings (e.g., compose key)
 exec --no-startup-id "xmodmap ~/.Xmodmap"
 
+# fix scale of floating "Open File" prompts
+for_window [class="xdg-desktop-portal-gnome"] resize set width 35 ppt height 30 ppt
+
 # ==================================================================================+++
 
 
