@@ -1,22 +1,22 @@
 # Everything to setup an ubuntu install
 
-Flash usb and install ubuntu; transfer files if necessary
+### Flash usb and install ubuntu; transfer files if necessary
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - if duel booting on the same storage device, no need for a separate boot loader partition (already added by previous fs)
 
-apt install: ssh-server
+### apt install: ssh-server
 
-With gpus, install appropriate graphics drivers and reboot
+### With gpus, install appropriate graphics drivers and reboot
 - nvidia:
-    - 'sudo apt install nvidia-driver-<version>'
-    - find best <version> from https://www.nvidia.com/download/index.aspx
+    - 'sudo apt install nvidia-driver-\<version\>'
+    - find best \<version\> from https://www.nvidia.com/download/index.aspx
 
-Install chrome
+### Install chrome
 - chrome://flags ⇒ smooth scrolling
 - extensions
     - Dark Reader
 
-apt install essential software:
+### apt install essential software:
 - brightnessctl (and modify group permissions to use it correctly:)
     - ‘sudo adduser $USER video’
     - ‘newgrp video’
@@ -26,7 +26,7 @@ apt install essential software:
 - pulseaudio
 - pulseaudio-utils
 
-Security setup
+### Security setup
 - fingerprint
     - apt install:
         - fprintd
@@ -50,7 +50,7 @@ Security setup
     - ** see https://github.com/boltgolt/howdy/issues/781 for more details
 - enable new auth methods via pam-auth-update
 
-Setup window management and appearance
+### Setup window management and appearance
 - apt install:
     - i3 
     - polybar
@@ -68,7 +68,7 @@ Setup window management and appearance
     - nitrogen: set image to desired (see wallpapers at root)
 - reboot
 
-Install other software
+### Install other software
 - apt: 
     - xdotool (generally useful; manipulates windows in X11)
     - ffmpeg
@@ -90,17 +90,17 @@ Install other software
     - new environs: ‘conda install ipykernel’
     - start notebook server from base env, then select kernel from other envs in the gui
 
-(Opt) Modify power/thermal settings:
+### (Opt) Modify power/thermal settings:
 - CPU states: powerprofilesctl (recommend balanced default)
 - bios-level (recommend optimized default)
 
-If desired, place ubuntu first in boot order
+### If desired, place ubuntu first in boot order
 
-Appendix
+### Appendix
 - showing keycodes
     - xev
     - showkey
 
 
-TODO: full run-through
+### TODO: full run-through
 
