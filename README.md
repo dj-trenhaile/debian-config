@@ -1,6 +1,106 @@
 # Everything to setup an ubuntu install
 
-latest laptop docs: https://docs.google.com/document/d/1JfKS64VvJU1Vvqf_Ka6O13J_VgZn9AkUa2_RmhKpi0s/edit?usp=sharing
-latest desktop docs: https://docs.google.com/document/d/1sJof6kU5mVHUAYRGZD_9MOQESS6KUnWzhOQe1sTn61g/edit?usp=sharing
+Flash usb and install ubuntu; transfer files if necessary
+- swap: https://opensource.com/article/19/2/swap-space-poll
+- if duel booting on the same storage device, no need for a separate boot loader partition (already added by previous fs)
 
-(in the future, these will be one document)
+apt install: ssh-server
+
+With gpus, install appropriate graphics drivers and reboot
+- nvidia:
+    - 'sudo apt install nvidia-driver-<version>'
+    - find best <version> from https://www.nvidia.com/download/index.aspx
+
+Install chrome
+- chrome://flags ⇒ smooth scrolling
+- extensions
+    - Dark Reader
+
+apt install essential software:
+- brightnessctl (and modify group permissions to use it correctly:)
+    - ‘sudo adduser $USER video’
+    - ‘newgrp video’
+- scrot
+- gnome-screenshot
+- net-tools
+- pulseaudio
+- pulseaudio-utils
+
+Security setup
+- fingerprint
+    - apt install:
+        - fprintd
+        - libpam-fprintd
+    - add fingerprints via gnome-control-center or fprintd-enroll
+    - (opt) check that prints work with fprintd-verify
+- facial rec
+    - install howdy: https://github.com/boltgolt/howdy
+    - apt install: 
+        - opencv-python
+        - ‘sudo pip install dlib --break-system-packages’ (outside of any virtual env) **
+    - become root and navigate to install location at /lib/security/howdy:
+        - run install.sh in dlib-data
+        - chmod -R a+rx:
+            - dlib-data
+            - models
+            - recorders
+        - chmod -R a+rxw:
+            - snapshots
+        - compare.py: import ConfigParser >> import configparser as ConfigParser **
+    - ** see https://github.com/boltgolt/howdy/issues/781 for more details
+- enable new auth methods via pam-auth-update
+
+Setup window management and appearance
+- apt install:
+    - i3 
+    - polybar
+    - rofi
+    - picom
+    - nitrogen
+    - libinput-tools (uses config in xorg.conf.d to fix trackpad issues)
+    - blueman
+- clone this repo, move all files in fs to corresponding places in your filesystem
+- other setup:
+    - polybar: install nerd font symbols
+        - download from https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/3270
+        - move complete.ttf to /usr/share/fonts/truetype/nerdfonts
+        - ‘fc-cache -vf /usr/share/fonts’
+    - nitrogen: set image to desired (see wallpapers at root)
+- reboot
+
+Install other software
+- apt: 
+    - xdotool (generally useful; manipulates windows in X11)
+    - ffmpeg
+- snap:
+    - vscode; extensions:
+        - https://marketplace.visualstudio.com/items?itemName=chrisdias.vscode-opennewinstance
+        - gitlens
+    - pycharm
+    - spotify
+    - orange-app (soundcloud client)
+- anaconda
+    - recommended: https://github.com/conda-forge/miniforge#mambaforge
+    - recommended work flow:
+        - create new environments in the current project directory: ‘conda create --prefix ./.env’
+        - to activate them: ‘conda activate ./.env’
+        - eliminate long absolute path from environment prompt: ‘conda config --set env_prompt ‘({name})’’
+- jupyter notebook
+    - activate base conda environ and ‘conda install nb_conda_kernels’
+    - new environs: ‘conda install ipykernel’
+    - start notebook server from base env, then select kernel from other envs in the gui
+
+(Opt) Modify power/thermal settings:
+- CPU states: powerprofilesctl (recommend balanced default)
+- bios-level (recommend optimized default)
+
+If desired, place ubuntu first in boot order
+
+Appendix
+- showing keycodes
+    - xev
+    - showkey
+
+
+TODO: full run-through
+
