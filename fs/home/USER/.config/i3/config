@@ -170,7 +170,7 @@ bindsym $mod+Shift+mod2+KP_Insert move container to workspace 10
 
 # =========================================== custom options =======================+++
 # bindsym $mod+Shift+x exec "i3lock"
-bindsym $mod+Shift+x exec --no-startup-id "playerctl pause; bash ~/.scripts/lockscreen/lock_screen.sh"
+bindsym $mod+Shift+x exec --no-startup-id "playerctl pause; bash ~/.config/i3/lockscreen/lock_screen.sh"
 
 # ====== fix monitors on startup =====++
 # workspace 1 output DP-0
@@ -180,6 +180,7 @@ exec --no-startup-id "picom --config ~/.config/picom/config --backend xr_glx_hyb
 # ================++
 
 # ====== sound control ======++
+exec --no-startup-id "pulseaudio --start"
 bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"
 bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"
 bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
@@ -203,6 +204,9 @@ exec --no-startup-id "xmodmap ~/.Xmodmap"
 
 # fix scale of floating "Open File" prompts
 for_window [class="xdg-desktop-portal-gnome"] resize set width 35 ppt height 30 ppt
+
+# position bluetooth window
+for_window [instance="blueman-manager"] floating enable, resize set width 25 ppt height 20 ppt, move position 65 ppt 76 ppt
 
 # ==================================================================================+++
 
