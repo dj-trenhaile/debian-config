@@ -4,7 +4,9 @@
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
 
-### apt install: ssh-server
+### enable ssh login
+- apt install: openssh-server
+- 'sudo systemctl enable ssh'
 
 ### With gpus, install appropriate graphics drivers and reboot
 - nvidia:
