@@ -2,7 +2,7 @@
 
 ### Flash usb and install ubuntu; transfer files if necessary
 - swap: https://opensource.com/article/19/2/swap-space-poll
-- if duel booting on the same storage device, no need for a separate boot loader partition (already added by previous fs)
+- uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
 
 ### apt install: ssh-server
 
