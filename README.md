@@ -72,7 +72,8 @@
 
 ### Install other software
 - apt: 
-    - xdotool (generally useful; manipulates windows in X11)
+    - xdotool (manipulates windows in Xorg)
+    - xclip (pipe command line output directly to clipboard: '... | xclip -selection clipboard')
     - ffmpeg
 - snap:
     - vscode; extensions:
