@@ -1,29 +1,51 @@
 # Everything to setup an ubuntu install
+<br>
+<br>
 
-### Flash usb and install ubuntu; transfer files if necessary
+## Flash usb and install ubuntu; transfer files if necessary
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
 
-### enable ssh login
+## enable ssh login
 - apt install: openssh-server
 - 'sudo systemctl enable ssh'
 
-### Graphics drivers and display setup
+## Graphics drivers
 - nvidia:
     - check for existing drivers (e.g., 'nvidia-smi'). Newer releases install automatically. If not installed, proceed.
     - find best \<version\> from https://www.nvidia.com/download/index.aspx
     - 'sudo apt install nvidia-driver-\<version\>'
     - reboot
-    - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
-    - adjust displays as desired in Nvidia Settings and save config file
-    - **NOTE: gnome overrides xorg.conf. If you wish to use ubuntu without i3, you will have to set the monitor configuration again via gnome-control-center
+## Configuring displays
+For most display configurations, the tool packaged with your graphics drivers is sufficient and most convenient. However, running xrandr commands at X server start time offers the most flexiblity and compatibility with i3. For exmaple, configurations that require display-specific scaling are only possible via xrandr. 
 
-### Install chrome
+- nvidia - Nvidia X Server Settings
+    - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
+    - adjust displays via nvidia-settings and save config file 
+  
+**Note: gnome overrides xorg.conf. To use ubuntu without i3, set the display configuration via gnome-control-center instead.
+<br>
+<br>
+- xrandr - add desired commands to ~/.xprofile:
+    - rotate a display: 'xrandr --output \<display\> --rotate \<direction\>'
+    - scale a display: 'xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>' where:
+        - Px and Py: display picture width and height scalars, respectively
+        - Sx and Sy: virtual screen width and height, respectively
+        - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
+        - **Note: chain addition sets of the above parameters in one command when configuring multiple displays. Set --fb only once. 
+
+You can also combine these settings with a global DPI setting.
+- 'echo "Xft.dpi: \<desired global dpi\>" > ~/.Xresources'
+- create/modify .xinitrc:
+    - xrdb -merge ~/.Xresources
+    - exec i3
+
+## Install chrome
 - chrome://flags ⇒ smooth scrolling
 - extensions
     - Dark Reader
 
-### apt install essential software:
+## apt install essential software:
 - brightnessctl (and modify group permissions to use it correctly:)
     - ‘sudo adduser $USER video’
     - ‘newgrp video’
@@ -33,7 +55,7 @@
 - pulseaudio
 - pulseaudio-utils
 
-### Security setup
+## Security setup
 - fingerprint
     - apt install:
         - fprintd
@@ -57,7 +79,7 @@
     - ** see https://github.com/boltgolt/howdy/issues/781 for more details
 - enable new auth methods via pam-auth-update
 
-### Setup window management and appearance
+## Setup window management and appearance
 - apt install:
     - i3 
     - polybar
@@ -75,7 +97,7 @@
     - nitrogen: set image to desired (see wallpapers at root)
 - reboot
 
-### Install other software
+## Install other software
 - apt: 
     - xdotool (manipulates windows in Xorg)
     - xclip (pipe command line output directly to clipboard: '... | xclip -selection clipboard')
@@ -98,17 +120,17 @@
     - new environs: ‘conda install ipykernel’
     - start notebook server from base env, then select kernel from other envs in the gui
 
-### (Opt) Modify power/thermal settings:
+## (Opt) Modify power/thermal settings:
 - CPU states: powerprofilesctl (recommend balanced default)
 - bios-level (recommend optimized default)
 
-### If desired, place ubuntu first in boot order
+## If desired, place ubuntu first in boot order
 
-### Appendix
+## Appendix
 - showing keycodes
     - xev
     - showkey
 
 
-### TODO: full run-through
+## TODO: full run-through
 
