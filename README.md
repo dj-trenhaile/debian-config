@@ -81,8 +81,8 @@
     - ffmpeg
 - snap:
     - vscode; extensions:
-        - https://marketplace.visualstudio.com/items?itemName=chrisdias.vscode-opennewinstance
-        - gitlens
+        - Open Folder Context Menus for VS Code
+        - GitLens
     - pycharm
     - spotify
     - orange-app (soundcloud client)
