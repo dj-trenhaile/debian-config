@@ -16,6 +16,7 @@
     - reboot
     - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
     - adjust displays as desired in Nvidia Settings and save config file
+    - **NOTE: gnome overrides xorg.conf. If you wish to use ubuntu without i3, you will have to set the monitor configuration again via gnome-control-center
 
 ### Install chrome
 - chrome://flags ⇒ smooth scrolling
