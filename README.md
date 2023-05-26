@@ -8,10 +8,14 @@
 - apt install: openssh-server
 - 'sudo systemctl enable ssh'
 
-### With gpus, install appropriate graphics drivers and reboot
+### Graphics drivers and display setup
 - nvidia:
-    - 'sudo apt install nvidia-driver-\<version\>'
+    - check for existing drivers (e.g., 'nvidia-smi'). Newer releases install automatically. If not installed, proceed.
     - find best \<version\> from https://www.nvidia.com/download/index.aspx
+    - 'sudo apt install nvidia-driver-\<version\>'
+    - reboot
+    - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
+    - adjust displays as desired in Nvidia Settings and save config file
 
 ### Install chrome
 - chrome://flags ⇒ smooth scrolling
