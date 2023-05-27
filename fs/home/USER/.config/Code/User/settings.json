@@ -1,8 +1,9 @@
 {
     "files.autoSave": "afterDelay",
-    "window.zoomLevel": -1,
+    "window.zoomLevel": -2,
     "editor.rulers": [
         80,
         100
-    ]
+    ],
+    "editor.fontFamily": "'Symbols Nerd Font', 'Droid Sans Mono', 'monospace', monospace"
 }
