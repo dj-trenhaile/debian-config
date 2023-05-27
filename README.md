@@ -54,6 +54,7 @@ You can also combine these settings with a global DPI setting.
 - net-tools
 - pulseaudio
 - pulseaudio-utils
+- cava
 
 ## Security setup
 - fingerprint
