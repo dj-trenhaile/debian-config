@@ -53,7 +53,7 @@ You can also combine these settings with a global DPI setting.
 - gnome-screenshot
 - net-tools
 - pulseaudio
-- pulseaudio-utils
+- playerctl
 - cava
 
 ## Security setup
