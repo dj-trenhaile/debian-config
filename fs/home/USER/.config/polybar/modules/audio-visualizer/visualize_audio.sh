@@ -1,46 +1,56 @@
 #!/bin/bash
 
+export _DIR="${BASH_SOURCE%/*}"
+
+
+# create "dictionary" to translate cava output =============================== #
 bar="▁▂▃▄▅▆▇█"
 dict="s/;//g;"
 
-# creating "dictionary" to replace char with bar
 i=0
 while [ $i -lt ${#bar} ]
 do
     dict="${dict}s/$i/${bar:$i:1}/g;"
-    i=$((i=i+1))
+    i=$((i+1))
 done
+# ============================================================================ #
 
-# make sure to clean pipe
-pipe="/tmp/cava.fifo"
-if [ -p $pipe ]; then
-    unlink $pipe
-fi
-mkfifo $pipe
 
-# write cava config
-config="/tmp/cava_config"
+# run cava and timeout listener ============================================== #
 echo "
 
 [general]
-bars = 100
+bars = $BARS_CNT
 
 [output]
 method = raw
-raw_target = $pipe
+raw_target = $PIPE
 data_format = ascii
-ascii_max_range = 7
+ascii_max_range = $BARS_RANGE
 
-" > $config
+" > $CAVA_CONFIG
 
-# run cava
-pkill cava  # kill any lingering instances
-cava -p $config &
-# if pulseaudio sinks change, signal cava to reload so that it
-# grabs the new default
-~/.config/polybar/modules/audio-visualizer/watch_pa.sh &
+rm -f $PIPE
+${_DIR}/run_cava.sh &
+${_DIR}/listener.sh &
+# ============================================================================ #
 
-# reading data from fifo
-while read -r cmd; do
-    echo $cmd | sed $dict
-done < $pipe
+
+# main loop
+while true
+do
+    if [ -p $PIPE ]
+    then
+        # read cava output
+        while read -r cmd; do
+            echo $cmd | sed $dict
+        done < $PIPE
+    
+        DICT=$dict ANIM_DELAY=$IDLE_ANIM_DELAY ${_DIR}/idle.sh
+        ${_DIR}/run_cava.sh &
+    fi
+done
+
+
+
+ 
