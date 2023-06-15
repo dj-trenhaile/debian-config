@@ -89,6 +89,7 @@ You can also combine these settings with a global DPI setting.
     - nitrogen
     - libinput-tools (uses config in xorg.conf.d to fix trackpad issues)
     - blueman
+    - lxappearance
 - clone this repo, move all files in fs to corresponding places in your filesystem
 - other setup:
     - polybar: install nerd font symbols
@@ -96,6 +97,7 @@ You can also combine these settings with a global DPI setting.
         - move complete.ttf to /usr/share/fonts/truetype/nerdfonts
         - ‘fc-cache -vf /usr/share/fonts’
     - nitrogen: set image to desired (see wallpapers at root)
+    - lxappearance: set desired applications theme
 - reboot
 
 ## Install other software
