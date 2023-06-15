@@ -23,15 +23,13 @@ do
         fi
     done < <(echo "$INPUTS_RAW")
 
-    # print inputs
-    echo $INPUTS
-
-    # increment empty_its
+    # print results
     if [ "$INPUTS" == "" ]
     then
-        echo "empty"
+        echo "(none)"
         empty_its=$((empty_its+1))
     else
+        echo $INPUTS
         empty_its=0
     fi
 
