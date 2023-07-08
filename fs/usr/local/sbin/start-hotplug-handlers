@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# testing
+exec &> /home/djtrenhaile/testing_start.txt
+echo "start"
+
+for session_id in $(loginctl list-sessions --no-legend | cut -d ' ' -f1)
+do
+    session=$(loginctl show-session $session_id)
+    session_type=$(echo -e "$session" | grep Type | cut -d '=' -f2)
+    if [ $session_type == "x11" ] || [ $session_type == "wayland" ]
+    then
+        su -c "~/.polybar/handle_displays_hotplug.sh" -l $(echo -e "$session" | grep Name | cut -d '=' -f2) &
+    fi
+done
