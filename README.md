@@ -2,11 +2,16 @@
 <br>
 <br>
 
+## Environment details:
+- display manager: gdm3 (better compatibility than sddm)
+- desktop environment: kde
+- window manager: i3
+
 ## Flash usb and install ubuntu; transfer files if necessary
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
 
-## enable ssh login
+## Enable ssh login
 - apt install: openssh-server
 - 'sudo systemctl enable ssh'
 
@@ -16,17 +21,12 @@
     - find best \<version\> from https://www.nvidia.com/download/index.aspx
     - 'sudo apt install nvidia-driver-\<version\>'
     - reboot
-## Configuring displays
-For most display configurations, the tool packaged with your graphics drivers is sufficient and most convenient. However, running xrandr commands at X server start time offers the most flexiblity and compatibility with i3. For exmaple, configurations that require display-specific scaling are only possible via xrandr. 
-
-- nvidia - Nvidia X Server Settings
+## Configure displays
+- via kde - System Settings
+- via nvidia - Nvidia X Server Settings
     - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
     - adjust displays via nvidia-settings and save config file 
-  
-**Note: gnome overrides xorg.conf. To use ubuntu without i3, set the display configuration via gnome-control-center instead.
-<br>
-<br>
-- xrandr - add desired commands to ~/.xprofile:
+- via xrandr - add desired commands to ~/.xprofile:
     - rotate a display: 'xrandr --output \<display\> --rotate \<direction\>'
     - scale a display: 'xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>' where:
         - Px and Py: display picture width and height scalars, respectively
@@ -34,11 +34,11 @@ For most display configurations, the tool packaged with your graphics drivers is
         - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
         - **Note: chain addition sets of the above parameters in one command when configuring multiple displays. Set --fb only once. 
 
-You can also combine these settings with a global DPI setting.
-- 'echo "Xft.dpi: \<desired global dpi\>" > ~/.Xresources'
-- create/modify .xinitrc:
-    - xrdb -merge ~/.Xresources
-    - exec i3
+## Configure systemd
+- window manager:
+    - mask kwin: 'systemctl --user mask plasma-kwin_x11.service'
+    - add i3 to kde x11 service wants: 'systemctl --user add-wants plasma-workspace-x11.target plasma-i3_x11.service'
+- mask graphical desktop: 'systemctl --user mask plasma-plasmashell.service' 
 
 ## Install chrome
 - chrome://flags ⇒ smooth scrolling
@@ -49,8 +49,6 @@ You can also combine these settings with a global DPI setting.
 - brightnessctl (and modify group permissions to use it correctly:)
     - ‘sudo adduser $USER video’
     - ‘newgrp video’
-- scrot
-- gnome-screenshot
 - net-tools
 - pulseaudio
 - playerctl
@@ -61,7 +59,7 @@ You can also combine these settings with a global DPI setting.
     - apt install:
         - fprintd
         - libpam-fprintd
-    - add fingerprints via gnome-control-center or fprintd-enroll
+    - add fingerprints via System Settings or fprintd-enroll
     - (opt) check that prints work with fprintd-verify
 - facial rec
     - install howdy: https://github.com/boltgolt/howdy
@@ -97,7 +95,7 @@ You can also combine these settings with a global DPI setting.
         - move complete.ttf to /usr/share/fonts/truetype/nerdfonts
         - ‘fc-cache -vf /usr/share/fonts’
     - nitrogen: set image to desired (see wallpapers at root)
-    - lxappearance: set desired applications theme
+    - set desired application and system themes in System Settings
 - reboot
 
 ## Install other software
@@ -109,6 +107,7 @@ You can also combine these settings with a global DPI setting.
     - vscode; extensions:
         - Open Folder Context Menus for VS Code
         - GitLens
+        - VS Color Picker
     - pycharm
     - spotify
     - orange-app (soundcloud client)
@@ -123,6 +122,12 @@ You can also combine these settings with a global DPI setting.
     - new environs: ‘conda install ipykernel’
     - start notebook server from base env, then select kernel from other envs in the gui
 
+## Configure application settings with dconf
+Some GTK applications read runtime settings from a read-optimized key-value 
+binary file (located at ~/.config/dconf/user) of type GVariant Database (gvdb). 
+These settings can be modified with dconf (cli) or dconf-editor (gui). 
+- disable blueman notifications: /org/blueman/general/plugin-list -> ['!ConnectionNotifier']
+
 ## (Opt) Modify power/thermal settings:
 - CPU states: powerprofilesctl (recommend balanced default)
 - bios-level (recommend optimized default)
@@ -133,6 +138,19 @@ You can also combine these settings with a global DPI setting.
 - showing keycodes
     - xev
     - showkey
+- setting global dpi:
+    -  'echo "Xft.dpi: \<desired global dpi\>" > ~/.Xresources'
+    -  create/modify .xinitrc:
+        - xrdb -merge ~/.Xresources
+        - exec i3
+- modify GTK application themes w/o de: lxappearance
+- Desktop sessions are stored as .desktop file in /usr/share/xsessions and can 
+be modified similarly to .service files; kde example:
+    [Desktop Entry]
+    Type=XSession
+    Exec=/usr/bin/startplasma-x11
+    DesktopNames=KDE
+    Name=Plasma (X11)
 
 
 ## TODO: full run-through

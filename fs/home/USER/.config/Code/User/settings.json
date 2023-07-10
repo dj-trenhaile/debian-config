@@ -1,6 +1,5 @@
 {
     "files.autoSave": "afterDelay",
-    "window.zoomLevel": -2,
     "editor.rulers": [
         80,
         100
