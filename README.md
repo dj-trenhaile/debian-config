@@ -21,7 +21,7 @@
     - find best \<version\> from https://www.nvidia.com/download/index.aspx
     - 'sudo apt install nvidia-driver-\<version\>'
     - reboot
-## Configuring displays
+## Configure displays
 - via kde - System Settings
 - via nvidia - Nvidia X Server Settings
     - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
@@ -33,6 +33,12 @@
         - Sx and Sy: virtual screen width and height, respectively
         - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
         - **Note: chain addition sets of the above parameters in one command when configuring multiple displays. Set --fb only once. 
+
+## Configure systemd
+- window manager:
+    - mask kwin: 'systemctl --user mask plasma-kwin_x11.service'
+    - add i3 to kde x11 service wants: 'systemctl --user add-wants plasma-workspace-x11.target plasma-i3_x11.service'
+- mask graphical desktop: 'systemctl --user mask plasma-plasmashell.service' 
 
 ## Install chrome
 - chrome://flags ⇒ smooth scrolling
@@ -115,6 +121,12 @@
     - activate base conda environ and ‘conda install nb_conda_kernels’
     - new environs: ‘conda install ipykernel’
     - start notebook server from base env, then select kernel from other envs in the gui
+
+## Configure application settings with dconf
+Some GTK applications read runtime settings from a read-optimized key-value 
+binary file (located at ~/.config/dconf/user) of type GVariant Database (gvdb). 
+These settings can be modified with dconf (cli) or dconf-editor (gui). 
+- disable blueman notifications: /org/blueman/general/plugin-list -> ['!ConnectionNotifier']
 
 ## (Opt) Modify power/thermal settings:
 - CPU states: powerprofilesctl (recommend balanced default)
