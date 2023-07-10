@@ -11,7 +11,7 @@
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
 
-## enable ssh login
+## Enable ssh login
 - apt install: openssh-server
 - 'sudo systemctl enable ssh'
 
@@ -144,6 +144,13 @@ These settings can be modified with dconf (cli) or dconf-editor (gui).
         - xrdb -merge ~/.Xresources
         - exec i3
 - modify GTK application themes w/o de: lxappearance
+- Desktop sessions are stored as .desktop file in /usr/share/xsessions and can 
+be modified similarly to .service files; kde example:
+    [Desktop Entry]
+    Type=XSession
+    Exec=/usr/bin/startplasma-x11
+    DesktopNames=KDE
+    Name=Plasma (X11)
 
 
 ## TODO: full run-through
