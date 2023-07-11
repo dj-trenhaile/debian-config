@@ -1,5 +1,5 @@
 [Appearance]
-ColorScheme=Breeze
+ColorScheme=i3
 
 [General]
 Name=i3wm-compat
