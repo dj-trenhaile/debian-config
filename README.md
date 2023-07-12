@@ -24,8 +24,8 @@
 ## Configure displays
 - via kde - System Settings
 - via nvidia - Nvidia X Server Settings
-    - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
-    - adjust displays via nvidia-settings and save config file 
+    - if failing to write config, either copy raw output to file manually or
+    try 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
 - via xrandr - add desired commands to ~/.xprofile:
     - rotate a display: 'xrandr --output \<display\> --rotate \<direction\>'
     - scale a display: 'xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>' where:
@@ -95,7 +95,6 @@
     - Background Services: enable only:
         - Automatic Location for Night Color
         - Gnome/GTK Settings Synchronization Service
-        - KScreen 2
         - Plasma Vault module
         - Removable Device Automounter
         - Search Folder Updater

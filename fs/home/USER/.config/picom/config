@@ -1,1 +1,1 @@
-opacity-rule = [ "80:class_g *?= 'xfce4-terminal'" ];
+opacity-rule = [ "80:class_g *?= 'konsole'" ];
