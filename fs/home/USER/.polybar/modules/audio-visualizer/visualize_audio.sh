@@ -1,6 +1,8 @@
 #!/bin/bash
 
-export _DIR="${BASH_SOURCE%/*}"
+_DIR="${BASH_SOURCE%/*}"
+export PIPE=/tmp/cava.$$.fifo
+export CAVA_CONFIG=/tmp/cava.$$.config
 
 
 # create "dictionary" to translate cava output =============================== #
@@ -13,10 +15,9 @@ do
     dict="${dict}s/$i/${bar:$i:1}/g;"
     i=$((i+1))
 done
-# ============================================================================ #
 
 
-# run cava and timeout listener ============================================== #
+# run cava =================================================================== #
 echo "
 
 [general]
@@ -32,11 +33,9 @@ ascii_max_range = $BARS_RANGE
 
 rm -f $PIPE
 ${_DIR}/run_cava.sh &
-${_DIR}/listener.sh &
-# ============================================================================ #
 
 
-# main loop
+# main loop ================================================================== #
 while true
 do
     if [ -p $PIPE ]
