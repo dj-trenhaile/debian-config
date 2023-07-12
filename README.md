@@ -24,8 +24,8 @@
 ## Configure displays
 - via kde - System Settings
 - via nvidia - Nvidia X Server Settings
-    - 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
-    - adjust displays via nvidia-settings and save config file 
+    - if failing to write config, either copy raw output to file manually or
+    try 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
 - via xrandr - add desired commands to ~/.xprofile:
     - rotate a display: 'xrandr --output \<display\> --rotate \<direction\>'
     - scale a display: 'xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>' where:
@@ -78,6 +78,48 @@
     - ** see https://github.com/boltgolt/howdy/issues/781 for more details
 - enable new auth methods via pam-auth-update
 
+## System Settings
+- Appearance
+    - Global Theme: Breeze Dark (appearance and desktop/window layout)
+- Workspace Behavior
+    - Desktop Effects
+        - Zoom: no
+    - Screen Locking
+        - never lock screen automatically
+        - no keyboard shortcut
+- Shortcuts
+    - disable all meta shortcuts; can ignore kwin since it will be replaced by i3wm
+    - Common Actions contains extra defaults that are not needed; user discretion
+- Startup and Shutdown
+    - Autostart: none
+    - Background Services: enable only:
+        - Automatic Location for Night Color
+        - Gnome/GTK Settings Synchronization Service
+        - Plasma Vault module
+        - Removable Device Automounter
+        - Search Folder Updater
+        - SMART
+        - Thunderbolt Device Monitor
+        - Time Zone
+        - (opt) Touchpad
+        - Write Daemon
+    - Desktop Session: start an empty session
+- Notifications
+    - Application-specific settings
+        - Power Management: disable all event (battery only)
+- KDE Wallet: disable
+- Power Management
+    - Energy Saving
+        - Screen Energy Saving: disable
+        - Suspend session: disable
+        - power button: user discretion
+
+## Configure .profile
+- 'export TERMINAL=konsole'
+- 'export COMPOSITOR_LAUNCH_LOCK=/var/lock/compositor_launch.lock'
+- 'export POLYBAR_VARS=/tmp/polybar_vars.txt'
+- 'export POLYBAR_LAUNCH_LOCK=/var/lock/polybar_launch.lock'
+
 ## Setup window management and appearance
 - apt install:
     - i3 
@@ -95,7 +137,11 @@
         - move complete.ttf to /usr/share/fonts/truetype/nerdfonts
         - ‘fc-cache -vf /usr/share/fonts’
     - nitrogen: set image to desired (see wallpapers at root)
-    - set desired application and system themes in System Settings
+    - konsole: 
+        - enable provided profile, set as default
+        - disable system and session toolbars
+        - import konsole.shortcuts
+    - lxappearance: set application theme to Breeze-Dark
 - reboot
 
 ## Install other software
@@ -143,7 +189,6 @@ These settings can be modified with dconf (cli) or dconf-editor (gui).
     -  create/modify .xinitrc:
         - xrdb -merge ~/.Xresources
         - exec i3
-- modify GTK application themes w/o de: lxappearance
 - Desktop sessions are stored as .desktop file in /usr/share/xsessions and can 
 be modified similarly to .service files; kde example:
     [Desktop Entry]
