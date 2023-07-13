@@ -43,6 +43,8 @@ floating_modifier $mod
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r exec "pkill picom", restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "qdbus org.kde.ksmserver /KSMServer logout 1 0 0"
 
 # lockscreen
 # bindsym $mod+Shift+x exec "i3lock"
