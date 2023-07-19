@@ -1,13 +1,36 @@
 #!/bin/bash
 
-SETTINGS_LOCK=/var/lock/polybar_settings.lock
+WATCH_EXP="type='signal', \
+           sender='org.freedesktop.DBus', \
+           path='/org/freedesktop/DBus', \
+           interface='org.freedesktop.DBus'"
 
 
-(
-# acquire lock. Only one instance allowed, so exit if unavailable 
-flock -n 9 || exit 1
+# set initial value
+echo  
 
-polybar-msg hook settings 2
-systemsettings
-polybar-msg hook settings 1
-) 9> $SETTINGS_LOCK  # redirect changes on lock file descriptor to lock file
+
+watch_acquisitions() {
+    while read event_line
+    do
+        if [ "$event_line" == "string \"org.kde.systemsettings\"" ]
+        then
+            polybar-msg hook settings 3
+        fi
+    done < <(dbus-monitor "${WATCH_EXP}, \
+                           member='NameAcquired'")
+}
+
+watch_losses() {
+    while read event_line
+    do
+        if [ "$event_line" == "string \"org.kde.systemsettings\"" ]
+        then
+            polybar-msg hook settings 2
+        fi
+    done < <(dbus-monitor "${WATCH_EXP}, \
+                           member='NameLost'")
+}
+
+watch_acquisitions &
+watch_losses &
