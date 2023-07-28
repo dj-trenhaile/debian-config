@@ -13,7 +13,7 @@ set +a
 flock 9
 
 # kill any lingering bars
-polybar-msg cmd quit
+pkill -9 polybar
 
 # start bars
 PRIMARY=$(xrandr -q | grep " primary" | cut -d ' ' -f1)
