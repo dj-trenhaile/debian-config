@@ -11,14 +11,15 @@ DISPLAY_FRACTION=$1
 
 
 char_limit=$(($(get_num_chars_18 $BAR_MONITOR $DISPLAY_FRACTION) - 3))
-echo_truncated() {
-    output=${1:0:char_limit}
-    if [ ${#1} -gt $char_limit ]
+echo_inputs() {
+    output="sink inputs -- ${1}"
+    output_truncated=${output:0:char_limit}
+    if [ ${#output} -gt $char_limit ]
     then
-        output="${output}..."
+        output_truncated="${output_truncated}..."
     fi
     
-    echo $output
+    echo $output_truncated
 }
 
 
@@ -48,7 +49,7 @@ get_inputs() {
     # print results
     if [ "$INPUTS" == "" ]
     then
-        echo_truncated "(none)"
+        echo_inputs "(none)"
 
         {
         # acquire lock. If timer has lock (and is therefore setting idle state), 
@@ -67,7 +68,7 @@ get_inputs() {
         flock -u 9
         } 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
     else
-        echo_truncated "sink inputs -- ${INPUTS}"
+        echo_inputs $INPUTS
 
         {
         # acquire lock

@@ -9,7 +9,7 @@ DISPLAY_FRACTION=$1
 
 
 # get number of bars ======================================================
-BARS_CNT=$(get_num_chars_22 $BAR_MONITOR $DISPLAY_FRACTION)  
+export BARS_CNT=$(get_num_chars_22 $BAR_MONITOR $DISPLAY_FRACTION)  
 
 
 # create "dictionary" to translate cava output =============================== #
