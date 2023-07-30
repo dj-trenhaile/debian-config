@@ -68,7 +68,7 @@ get_inputs() {
         flock -u 9
         } 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
     else
-        echo_inputs $INPUTS
+        echo_inputs "$INPUTS"
 
         {
         # acquire lock
