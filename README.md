@@ -11,10 +11,6 @@
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
 
-## Enable ssh login
-- apt install: openssh-server
-- 'sudo systemctl enable ssh'
-
 ## Graphics drivers
 - nvidia:
     - check for existing drivers (e.g., 'nvidia-smi'). Newer releases install automatically. If not installed, proceed.
@@ -33,26 +29,6 @@
         - Sx and Sy: virtual screen width and height, respectively
         - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
         - **Note: chain addition sets of the above parameters in one command when configuring multiple displays. Set --fb only once. 
-
-## Configure systemd
-- window manager:
-    - mask kwin: 'systemctl --user mask plasma-kwin_x11.service'
-    - add i3 to kde x11 service wants: 'systemctl --user add-wants plasma-workspace-x11.target plasma-i3_x11.service'
-- mask graphical desktop: 'systemctl --user mask plasma-plasmashell.service' 
-
-## Install chrome
-- chrome://flags ⇒ smooth scrolling
-- extensions
-    - Dark Reader
-
-## apt install essential software:
-- brightnessctl (and modify group permissions to use it correctly:)
-    - ‘sudo adduser $USER video’
-    - ‘newgrp video’
-- net-tools
-- pulseaudio
-- playerctl
-- cava
 
 ## Security setup
 - fingerprint
