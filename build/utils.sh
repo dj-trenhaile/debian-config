@@ -1,12 +1,10 @@
 #!/bin/bash
 
-
-# root file install pipeline ====================================================== #
 # **NOTE: ineffective on file_paths in which the file is the only path 
 # component (no trailing slash to remove, so file name will be interpretted as
 # dir name to create)
 make_dirs() {
-    mkdir -p ${file_path%/*}
+    mkdir -p ${local_file_path%/*}
 }
 
 
@@ -39,8 +37,6 @@ install_file() {
 }
 
 
-
-# TODO: integrate? ====
 disable_service() {
     echo -n "        disable ${local_service}: "
     {

@@ -169,7 +169,7 @@ do
     else
         print_file_path
         [ $DRY -eq 1 ] && continue
-        log=$(sudo file_path=$file_path \
+        log=$(sudo local_file_path=$local_file_path \
                    ./build/util_wrapper.sh "make_dirs")
         parse_log
         log=$(sudo file_path=$file_path \
