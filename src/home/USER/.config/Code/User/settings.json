@@ -4,6 +4,6 @@
         80,
         100
     ],
-    "editor.fontFamily": "'Symbols Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', 'monospace'",
     "editor.mouseWheelZoom": true
 }

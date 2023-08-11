@@ -1,15 +1,18 @@
-# Everything to setup an ubuntu install
+# Setup instructions
 <br>
 <br>
 
-## Environment details:
+## Environment details
 - display manager: gdm3 (better compatibility than sddm)
 - desktop environment: kde
 - window manager: i3
 
-## Flash usb and install ubuntu; transfer files if necessary
+## OS setup resources
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
+
+# Files
+Clone repo and run install.sh. A reboot is required for all settings to take effect.
 
 ## Graphics drivers
 - nvidia:
@@ -17,7 +20,7 @@
     - find best \<version\> from https://www.nvidia.com/download/index.aspx
     - 'sudo apt install nvidia-driver-\<version\>'
     - reboot
-## Configure displays
+## Display(s) configuration
 - via kde - System Settings
 - via nvidia - Nvidia X Server Settings
     - if failing to write config, either copy raw output to file manually or
@@ -29,6 +32,7 @@
         - Sx and Sy: virtual screen width and height, respectively
         - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
         - **Note: chain addition sets of the above parameters in one command when configuring multiple displays. Set --fb only once. 
+**One can also assign i3 workspaces to specific displays. The provided config imports from ~/.local/i3/display_assignments.conf
 
 ## Security setup
 - fingerprint
@@ -90,71 +94,19 @@
         - Suspend session: disable
         - power button: user discretion
 
-## Configure .profile
-- 'export TERMINAL=konsole'
-- 'export COMPOSITOR_LAUNCH_LOCK=/var/lock/compositor_launch.lock'
-- 'export POLYBAR_VARS=/tmp/polybar_vars.txt'
-- 'export POLYBAR_LAUNCH_LOCK=/var/lock/polybar_launch.lock'
+## Other appearance settings
+- nitrogen: set image to desired; see ~/.resources
+- konsole: 
+    - enable provided profile, set as default
+    - disable system and session toolbars
+    - import konsole.shortcuts (provided at root)
+- lxappearance: set application theme to Breeze-Dark
 
-## Setup window management and appearance
-- apt install:
-    - i3 
-    - polybar
-    - rofi
-    - picom
-    - nitrogen
-    - libinput-tools (uses config in xorg.conf.d to fix trackpad issues)
-    - blueman
-    - lxappearance
-- clone this repo, move all files in fs to corresponding places in your filesystem
-- other setup:
-    - polybar: install nerd font symbols
-        - download from https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/3270
-        - move complete.ttf to /usr/share/fonts/truetype/nerdfonts
-        - ‘fc-cache -vf /usr/share/fonts’
-    - nitrogen: set image to desired (see wallpapers at root)
-    - konsole: 
-        - enable provided profile, set as default
-        - disable system and session toolbars
-        - import konsole.shortcuts
-    - lxappearance: set application theme to Breeze-Dark
-- reboot
-
-## Install other software
-- apt: 
-    - xdotool (manipulates windows in Xorg)
-    - xclip (pipe command line output directly to clipboard: '... | xclip -selection clipboard')
-    - ffmpeg
-- snap:
-    - vscode; extensions:
-        - Open Folder Context Menus for VS Code
-        - GitLens
-        - VS Color Picker
-    - pycharm
-    - spotify
-    - orange-app (soundcloud client)
-- anaconda
-    - recommended: https://github.com/conda-forge/miniforge#mambaforge
-    - recommended work flow:
-        - create new environments in the current project directory: ‘conda create --prefix ./.env’
-        - to activate them: ‘conda activate ./.env’
-        - eliminate long absolute path from environment prompt: ‘conda config --set env_prompt ‘({name})’’
+## Other software
 - jupyter notebook
     - activate base conda environ and ‘conda install nb_conda_kernels’
     - new environs: ‘conda install ipykernel’
     - start notebook server from base env, then select kernel from other envs in the gui
-
-## Configure application settings with dconf
-Some GTK applications read runtime settings from a read-optimized key-value 
-binary file (located at ~/.config/dconf/user) of type GVariant Database (gvdb). 
-These settings can be modified with dconf (cli) or dconf-editor (gui). 
-- disable blueman notifications: /org/blueman/general/plugin-list -> ['!ConnectionNotifier']
-
-## (Opt) Modify power/thermal settings:
-- CPU states: powerprofilesctl (recommend balanced default)
-- bios-level (recommend optimized default)
-
-## If desired, place ubuntu first in boot order
 
 ## Appendix
 - showing keycodes
@@ -172,7 +124,3 @@ be modified similarly to .service files; kde example:
     Exec=/usr/bin/startplasma-x11
     DesktopNames=KDE
     Name=Plasma (X11)
-
-
-## TODO: full run-through
-

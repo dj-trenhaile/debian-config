@@ -8,11 +8,19 @@ TIMER_PID_FILE=/tmp/polybar_audio-descriptor_timer.pid
 TIMER_LOCK=/var/lock/polybar_audio-descriptor_timer.lock
 
 DISPLAY_FRACTION=$1
+USE_PREFIX=$2
 
 
-char_limit=$(($(get_num_chars_18 $BAR_MONITOR $DISPLAY_FRACTION) - 3))
+prefix="sink inputs -- "
+if [ $USE_PREFIX -eq 0 ]
+then
+    prefix=""
+fi
+
+
+char_limit=$(($(get_num_chars_18_mono $BAR_MONITOR $DISPLAY_FRACTION) - 3))
 echo_inputs() {
-    output="sink inputs -- ${1}"
+    output="${prefix}${1}"
     output_truncated=${output:0:char_limit}
     if [ ${#output} -gt $char_limit ]
     then
@@ -45,7 +53,7 @@ get_inputs() {
     do  
         INPUTS="${INPUTS} | ${input}"
     done < <(tail +2 < <(echo -e "$INPUTS_RAW"))
-    
+
     # print results
     if [ "$INPUTS" == "" ]
     then
@@ -102,10 +110,3 @@ do
         get_inputs
     fi
 done < <(pactl subscribe)
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _DIR="${BASH_SOURCE%/*}"
-OVERLAY=${_DIR}/lock.png
+OVERLAY=~/.resources/lock.png
 BG=/tmp/screen.png
 RES=$(xrandr | grep 'current' | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')
 

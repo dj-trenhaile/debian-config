@@ -13,7 +13,7 @@ set +a
 flock 9
 
 # kill any lingering bars
-pkill -9 polybar
+polybar-msg cmd quit
 
 # start bars
 PRIMARY=$(xrandr -q | grep " primary" | cut -d ' ' -f1)
@@ -33,5 +33,3 @@ done
 # descriptor open
 flock -u 9
 ) 9> $POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
-
-

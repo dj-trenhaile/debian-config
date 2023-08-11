@@ -6,10 +6,6 @@ WATCH_EXP="type='signal', \
            interface='org.freedesktop.DBus'"
 
 
-# set initial value
-echo  
-
-
 watch_acquisitions() {
     while read event_line
     do
@@ -21,6 +17,7 @@ watch_acquisitions() {
                            member='NameAcquired'")
 }
 
+
 watch_losses() {
     while read event_line
     do
@@ -31,6 +28,7 @@ watch_losses() {
     done < <(dbus-monitor "${WATCH_EXP}, \
                            member='NameLost'")
 }
+
 
 watch_acquisitions &
 watch_losses &

@@ -33,15 +33,20 @@ get_num_chars() {
     echo $(bc <<< "scale=0; ${num_chars} / 1")
 }
 
-# get_num_chars wrapper for 22-pt font
-get_num_chars_22() {
-    FONT_WIDTH=7.50
+# get_num_chars wrapper for 26-pt monospaced font
+get_num_chars_26_mono() {
+    FONT_WIDTH=8.39
     get_num_chars $1 $2 $FONT_WIDTH
 }
 
-# get_num_chars wrapper for 18-pt font
-get_num_chars_18() {
-    FONT_WIDTH=6.18
+# get_num_chars wrapper for 20-pt monospaced font
+get_num_chars_20_mono() {
+    FONT_WIDTH=6.62
     get_num_chars $1 $2 $FONT_WIDTH
 }
 
+# get_num_chars wrapper for 18-pt monospaced font
+get_num_chars_18_mono() {
+    FONT_WIDTH=5.75
+    get_num_chars $1 $2 $FONT_WIDTH
+}

@@ -1,0 +1,7 @@
+[Unit]
+Description=polybar module "settings" background support
+
+[Service]
+Type=forking
+ExecStart=%h/.polybar/modules/settings/watch_state.sh
+Restart=on-failure
