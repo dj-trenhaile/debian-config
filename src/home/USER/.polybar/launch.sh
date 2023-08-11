@@ -26,7 +26,6 @@ do
     else
         BAR_MONITOR=$m polybar "utils-secondary" &
     fi
-    connected_displays="${connected_displays}${m},"
 done
 
 # explicitly release lock so that backgrounded processes do not keep file 
