@@ -17,6 +17,14 @@ vars="${vars}BAR_TEMPERATURE_ZONE=${ZONE}\n"
 CARD=$(ls -1 /sys/class/backlight | head -n 1)
 vars="${vars}BAR_BACKLIGHT_CARD=${CARD}\n"
 
+# BAR_BATTERY
+BAT=$(ls /sys/class/power_supply | grep "BAT" | head -n 1)
+vars="${vars}BAR_BATTERY=${BAT}"
+
+# BAR_BATTERY_ADAPTER
+ADP=$(ls /sys/class/power_supply | grep "^A" | head -n 1)
+vars="${vars}BAR_BATTERY_ADAPTER=${ADP}\n"
+
 
 # write labels and variables ================================================= #
 cat $HOME/.config/polybar/labels.txt > $POLYBAR_VARS
