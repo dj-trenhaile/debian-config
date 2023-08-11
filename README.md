@@ -75,6 +75,7 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
     - Background Services: enable only:
         - Automatic Location for Night Color
         - Gnome/GTK Settings Synchronization Service
+        - Keyboard Daemon
         - Plasma Vault module
         - Removable Device Automounter
         - Search Folder Updater
@@ -88,6 +89,12 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
     - Application-specific settings
         - Power Management: disable all event (battery only)
 - KDE Wallet: disable
+- Input Devices
+    - Keyboard
+        - Hardware
+            - NumLock on Plasma Startup: Turn on
+        - Advanced
+            - Position of Compose key: Left Win
 - Power Management
     - Energy Saving
         - Screen Energy Saving: disable

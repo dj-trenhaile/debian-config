@@ -117,47 +117,57 @@ bindsym $mod+space focus mode_toggle
 
 # switch to workspace
 bindsym $mod+1 workspace 1
-bindsym $mod+mod2+KP_1 workspace 1
+bindcode $mod+87 workspace 1
+bindcode $mod+mod2+87 workspace 1
 bindsym $mod+2 workspace 2
-bindsym $mod+mod2+KP_2 workspace 2
+bindcode $mod+88 workspace 2
+bindcode $mod+mod2+88 workspace 2
 bindsym $mod+3 workspace 3
-bindsym $mod+mod2+KP_3 workspace 3
+bindcode $mod+89 workspace 3
+bindcode $mod+mod2+89 workspace 3
 bindsym $mod+4 workspace 4
-bindsym $mod+mod2+KP_4 workspace 4
+bindcode $mod+83 workspace 4
+bindcode $mod+mod2+83 workspace 4
 bindsym $mod+5 workspace 5
-bindsym $mod+mod2+KP_5 workspace 5
+bindcode $mod+84 workspace 5
+bindcode $mod+mod2+84 workspace 5
 bindsym $mod+6 workspace 6
-bindsym $mod+mod2+KP_6 workspace 6
+bindcode $mod+85 workspace 6
+bindcode $mod+mod2+85 workspace 6
 bindsym $mod+7 workspace 7
-bindsym $mod+mod2+KP_7 workspace 7
+bindcode $mod+79 workspace 7
+bindcode $mod+mod2+79 workspace 7
 bindsym $mod+8 workspace 8
-bindsym $mod+mod2+KP_8 workspace 8
+bindcode $mod+80 workspace 8
+bindcode $mod+mod2+80 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+mod2+KP_9 workspace 9
+bindcode $mod+81 workspace 9
+bindcode $mod+mod2+81 workspace 9
 bindsym $mod+0 workspace 10
-bindsym $mod+mod2+KP_0 workspace 10
+bindcode $mod+90 workspace 10
+bindcode $mod+mod2+90 workspace 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1; workspace 1
-bindsym $mod+Shift+mod2+KP_1 move container to workspace 1; workspace 1
+bindcode $mod+Shift+87 move container to workspace 1; workspace 1
 bindsym $mod+Shift+2 move container to workspace 2; workspace 2
-bindsym $mod+Shift+mod2+KP_2 move container to workspace 2; workspace 2
+bindcode $mod+Shift+88 move container to workspace 2; workspace 2
 bindsym $mod+Shift+3 move container to workspace 3; workspace 3
-bindsym $mod+Shift+mod2+KP_3 move container to workspace 3; workspace 3
+bindcode $mod+Shift+89 move container to workspace 3; workspace 3
 bindsym $mod+Shift+4 move container to workspace 4; workspace 4
-bindsym $mod+Shift+mod2+KP_4 move container to workspace 4; workspace 4
+bindcode $mod+Shift+83 move container to workspace 4; workspace 4
 bindsym $mod+Shift+5 move container to workspace 5; workspace 5
-bindsym $mod+Shift+mod2+KP_5 move container to workspace 5; workspace 5
+bindcode $mod+Shift+84 move container to workspace 5; workspace 5
 bindsym $mod+Shift+6 move container to workspace 6; workspace 6
-bindsym $mod+Shift+mod2+KP_6 move container to workspace 6; workspace 6
+bindcode $mod+Shift+85 move container to workspace 6; workspace 6
 bindsym $mod+Shift+7 move container to workspace 7; workspace 7
-bindsym $mod+Shift+mod2+KP_7 move container to workspace 7; workspace 7
+bindcode $mod+Shift+79 move container to workspace 7; workspace 7
 bindsym $mod+Shift+8 move container to workspace 8; workspace 8
-bindsym $mod+Shift+mod2+KP_8 move container to workspace 8; workspace 8
+bindcode $mod+Shift+80 move container to workspace 8; workspace 8
 bindsym $mod+Shift+9 move container to workspace 9; workspace 9
-bindsym $mod+Shift+mod2+KP_9 move container to workspace 9; workspace 9
+bindcode $mod+Shift+81 move container to workspace 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace 10; workspace 10
-bindsym $mod+Shift+mod2+KP_0 move container to workspace 10; workspace 10
+bindcode $mod+Shift+90 move container to workspace 10; workspace 10
 
 # import workspace display assignments
 include ~/.local/i3/display_assignments.conf
