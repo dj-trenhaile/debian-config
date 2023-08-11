@@ -1,9 +1,0 @@
-{
-    "files.autoSave": "afterDelay",
-    "editor.rulers": [
-        80,
-        100
-    ],
-    "editor.fontFamily": "'Symbols Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
-    "editor.mouseWheelZoom": true
-}
