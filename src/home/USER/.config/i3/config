@@ -5,8 +5,7 @@
 set $mod Mod1
 
 # font pango:DejaVu Sans Mono 8
-font pango:"IBM 3270" 10
-font pango:Symbols Nerd Font 10
+font pango:3270 Nerd Font Mono 10
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
