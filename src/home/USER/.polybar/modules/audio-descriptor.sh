@@ -18,7 +18,7 @@ then
 fi
 
 
-char_limit=$(($(get_num_chars_18_mono $BAR_MONITOR $DISPLAY_FRACTION) - 3))
+char_limit=$(($(get_num_chars_20_mono $BAR_MONITOR $DISPLAY_FRACTION) - 3))
 echo_inputs() {
     output="${prefix}${1}"
     output_truncated=${output:0:char_limit}

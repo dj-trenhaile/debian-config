@@ -19,7 +19,7 @@ vars="${vars}BAR_BACKLIGHT_CARD=${CARD}\n"
 
 # BAR_BATTERY
 BAT=$(ls /sys/class/power_supply | grep "BAT" | head -n 1)
-vars="${vars}BAR_BATTERY=${BAT}"
+vars="${vars}BAR_BATTERY=${BAT}\n"
 
 # BAR_BATTERY_ADAPTER
 ADP=$(ls /sys/class/power_supply | grep "^A" | head -n 1)
