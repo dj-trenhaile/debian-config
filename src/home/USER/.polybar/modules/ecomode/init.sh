@@ -1,8 +1,15 @@
 #!/bin/bash
 
-_DIR="${BASH_SOURCE%/*}"
+_DIR=${BASH_SOURCE%/*}
 
 
+# check that battery exists
+if [ "$BAR_BATTERY" == "" ]
+then
+    exit 1
+fi
+
+# import power profiles
 source ${_DIR}/profiles.sh
 
 # set initial module state 
@@ -20,14 +27,3 @@ else
     balanced
 fi
 ) 9> $COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
-
-
-
-
-
-
-
-
-
-    
-
