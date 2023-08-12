@@ -108,14 +108,26 @@ then
                      net-tools
     # TODO: integrate brightnessctl elsewhere
 
-    # install font
+    # install font(s)
+    sudo apt install fonts-3270
     if [ "$(fc-list | grep 3270NerdFontMono-Regular.ttf)" == "" ]
     then
         wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/3270/Regular/3270NerdFontMono-Regular.ttf"
-        sudo mkdir /usr/share/fonts/truetype/3270 2> /dev/null
         sudo mv 3270NerdFontMono-Regular.ttf /usr/share/fonts/truetype/3270/
-        fc-cache -vf /usr/share/fonts
     fi
+    if [ "$(fc-list | grep SymbolsNerdFont-Regular.ttf)" == "" ]
+    then
+        wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf"
+        sudo mkdir /usr/share/fonts/truetype/symbols-nerdfont 2> /dev/null
+        sudo mv SymbolsNerdFont-Regular.ttf /usr/share/fonts/truetype/symbols-nerdfont/
+    fi
+    if [ "$(fc-list | grep JetBrainsMono-Regular.ttf)" == "" ]
+    then
+        wget "https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf"
+        sudo mkdir /usr/share/fonts/truetype/jetbrainsmono 2> /dev/null
+        sudo mv JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/jetbrainsmono/
+    fi
+    fc-cache -vf /usr/share/fonts
 
     # install other software
     sudo apt install google-chrome-stable \
