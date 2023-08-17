@@ -108,6 +108,7 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
     - disable system and session toolbars
     - import konsole.shortcuts (provided at root)
 - lxappearance: set application theme to Breeze-Dark
+    - **also run as root to configure root applications (e.g., GParted)
 
 ## Other software
 - jupyter notebook

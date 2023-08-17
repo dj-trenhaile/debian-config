@@ -134,7 +134,8 @@ then
                      xdotool \
                      xclip \
                      ffmpeg \
-                     font-manager
+                     font-manager \
+                     gparted
     snaps=("code" "spotify" "slack")
     for candidate in ${snaps[@]}
     do
