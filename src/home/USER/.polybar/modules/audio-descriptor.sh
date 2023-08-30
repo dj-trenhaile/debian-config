@@ -1,11 +1,11 @@
 #!/bin/bash
 
-_DIR="${BASH_SOURCE%/*}"
+_DIR=${BASH_SOURCE%/*}
 source ${_DIR}/../utils.sh
 source ${_DIR}/audio-visualizer/toggle_state.sh
 TIMEOUT_SECS=5
-TIMER_PID_FILE=/tmp/polybar_audio-descriptor_timer.pid
-TIMER_LOCK=/var/lock/polybar_audio-descriptor_timer.lock
+TIMER_LOCK="/tmp/polybar_audio-descriptor_timer.$$.lock"
+VISUALIZER_STATE_LOCK="/tmp/polybar_audio-descriptor_visualizer-state.$$.lock"
 
 DISPLAY_FRACTION=$1
 USE_PREFIX=$2
@@ -31,76 +31,119 @@ echo_inputs() {
 }
 
 
-timer_pid=0
-set_idle_timer() {
-    sleep $TIMEOUT_SECS
-    
-    (
-    # acquire lock
-    flock 9
+log() {
+    echo "$(date): ${1}" >> /home/djtrenhaile/test.txt
+}
 
-    # change audio-visualizer state: idle
-    idle
-    ) 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
+
+
+timer_pid=0
+idle_timer() {
+    log "timer called"
+    {
+        # acquire timer lock
+        flock 9
+
+        log "timer set"
+        sleep $TIMEOUT_SECS
+
+        log "attempting to trigger"
+        {
+            # acquire visualizer state lock
+            flock 8
+
+            log "triggered"
+
+            # set audio-visualizer state: idle
+            idle            
+        } 8> $VISUALIZER_STATE_LOCK  # redirect changes on lock file descriptor to lock file
+    } 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
 }
 
 
 get_inputs() {
     # get inputs
-    INPUTS_RAW=$(pactl list sink-inputs | grep "application.name = " | cut -d '=' -f 2 | tr -d '"')
-    INPUTS=$(echo "$INPUTS_RAW" | head -1)
+    inputs_raw=$(pactl list sink-inputs | grep "application.name = " | cut -d '=' -f 2 | tr -d '"')
+    inputs=$(echo "$inputs_raw" | head -1)
     while read input
     do  
-        INPUTS="${INPUTS} | ${input}"
-    done < <(tail +2 < <(echo -e "$INPUTS_RAW"))
+        inputs="${inputs} | ${input}"
+    done < <(tail +2 < <(echo -e "$inputs_raw"))
 
-    # print results
-    if [ "$INPUTS" == "" ]
+    # print results and handle visualizer state changes
+    if [ "$inputs" == "" ]
     then
         echo_inputs "(none)"
-
+        
         {
-        # acquire lock. If timer has lock (and is therefore setting idle state), 
-        # no need to set another timer; exit
-        flock -n 9 || exit 1
+            {
+                # attempt to acquire visualizer state lock
+                flock -n 9
 
-        # if no idle timer set, set one
-        if [ $timer_pid -eq 0 ]
-        then
-            set_idle_timer &
-            timer_pid=$!
-        fi
+                # if no timer active, set one 
+                if [ $timer_pid -eq 0 ]
+                then
+                    idle_timer &
+                    timer_pid=$!
+                    # manually release lock (file descriptor passed to timer process)
+                    flock -u 9
+                fi
+            } || {
+                # lock acquisition failed ==> timer triggered, state is being set to idle.
+                # acquire visualizer state lock
+                flock 9
 
-        # explicitly release lock so that backgrounded processes do not keep file 
-        # descriptor open
-        flock -u 9
-        } 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
+                # reset timer_pid
+                timer_pid=0
+            }
+        } 9> $VISUALIZER_STATE_LOCK  # redirect changes on lock file descriptor to lock file
     else
-        echo_inputs "$INPUTS"
+        echo_inputs "$inputs"   
 
         {
-        # acquire lock
-        flock 9
+            {
+                # attempt to acquire visualizer state lock
+                flock -n 9
 
-        if [ $timer_pid -gt 0 ]
-        then
-            # if timer running, stop it. Otherwise, timer went off and 
-            # audio-visualizer state is idle, so set state: active
-            if [ "$(ps -p $timer_pid -o comm=)" == "audio-descriptor.sh" ]
-            then
-                kill $timer_pid
-            else
+                if [ $timer_pid -gt 0 ]
+                then
+                    {
+                        {
+                            # attempt to acquire timer lock
+                            flock -n 8
+                            
+                            # timer triggered before visualizer state lock acquisition. Current
+                            # state is idle.
+                            # set audio-visualizer state: active
+                            active
+                        } || {
+                            # lock acquisition failed ==> timer running
+                            # (will block at state change since visualizer state lock is acquired).
+                            # kill timer
+                            kill $timer_pid
+                        }
+                        
+                        # reset timer_pid
+                        timer_pid=0
+                    } 8> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
+                fi
+            } || {
+                # lock acquisition failed ==> timer triggered, state is being set to idle.
+                # acquire visualizer state lock
+                flock 9
+
+                # set audio-visualizer state: active
                 active
-            fi
-            timer_pid=0
-        fi
-        } 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
+                # reset timer_pid
+                timer_pid=0
+            }
+        } 9> $VISUALIZER_STATE_LOCK  # redirect changes on lock file descriptor to lock file
     fi
 }
 
 
 # get initial inputs
-get_inputs
+get_inputs  
 
 # update inputs on sink-input change event
 while read event
@@ -110,3 +153,4 @@ do
         get_inputs
     fi
 done < <(pactl subscribe)
+
