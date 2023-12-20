@@ -5,5 +5,28 @@
         100
     ],
     "editor.fontFamily": "'Symbols Nerd Font', 'JetBrains Mono', 'monospace'",
-    "editor.mouseWheelZoom": true
+    "editor.mouseWheelZoom": true,
+    "update.mode": "none",
+    "python.terminal.executeInFileDir": true,
+    "launch": {
+        // Use IntelliSense to learn about possible attributes.
+        // Hover to view descriptions of existing attributes.
+        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Python: debug current file",
+                "type": "python",
+                "request": "launch",
+                "program": "${file}",
+                "console": "integratedTerminal",
+                "justMyCode": true,
+                "cwd": "${fileDirname}"
+            }
+        ]
+    }, 
+    "git.openRepositoryInParentFolders": "never",
+    "terminal.integrated.inheritEnv": false,
+    "search.quickOpen.includeHistory": false,
+    "workbench.startupEditor": "none",
 }

@@ -7,10 +7,15 @@
             "label": "Make: clean and rebuild",
             "type": "shell",
             "command": "make clean && make",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
+            "group": "build"
+        },
+        {
+            "label": "Python: run current file",
+            "type": "shell",
+            "command": "${config:python.pythonPath} ${file}",
+            "group": "build",
+            "options": {
+                "cwd": "${fileDirname}"
             }
         }
     ]

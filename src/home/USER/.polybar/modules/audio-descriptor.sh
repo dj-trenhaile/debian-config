@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: trap "<rm locks>; exit" SIGTERM
+
 _DIR=${BASH_SOURCE%/*}
 source ${_DIR}/../utils.sh
 source ${_DIR}/audio-visualizer/toggle_state.sh
@@ -12,47 +14,20 @@ USE_PREFIX=$2
 
 
 prefix="sink inputs -- "
-if [ $USE_PREFIX -eq 0 ]
-then
+if [ $USE_PREFIX -eq 0 ]; then
     prefix=""
 fi
 
-
-char_limit=$(($(get_num_chars_20_mono $BAR_MONITOR $DISPLAY_FRACTION) - 3))
-echo_inputs() {
-    output="${prefix}${1}"
-    output_truncated=${output:0:char_limit}
-    if [ ${#output} -gt $char_limit ]
-    then
-        output_truncated="${output_truncated}..."
-    fi
-    
-    echo $output_truncated
-}
-
-
-log() {
-    echo "$(date): ${1}" >> /home/djtrenhaile/test.txt
-}
-
-
-
 timer_pid=0
 idle_timer() {
-    log "timer called"
     {
         # acquire timer lock
         flock 9
 
-        log "timer set"
         sleep $TIMEOUT_SECS
-
-        log "attempting to trigger"
         {
             # acquire visualizer state lock
             flock 8
-
-            log "triggered"
 
             # set audio-visualizer state: idle
             idle            
@@ -60,19 +35,27 @@ idle_timer() {
     } 9> $TIMER_LOCK  # redirect changes on lock file descriptor to lock file
 }
 
+char_limit=$(($(get_num_chars_20_mono $BAR_MONITOR $DISPLAY_FRACTION) - 3))
+echo_inputs() {
+    output="${prefix}${1}"
+    output_truncated=${output:0:char_limit}
+    if [ ${#output} -gt $char_limit ]; then
+        output_truncated="${output_truncated}..."
+    fi
+    
+    echo $output_truncated
+}
 
 get_inputs() {
     # get inputs
     inputs_raw=$(pactl list sink-inputs | grep "application.name = " | cut -d '=' -f 2 | tr -d '"')
     inputs=$(echo "$inputs_raw" | head -1)
-    while read input
-    do  
+    while read input; do
         inputs="${inputs} | ${input}"
     done < <(tail +2 < <(echo -e "$inputs_raw"))
 
     # print results and handle visualizer state changes
-    if [ "$inputs" == "" ]
-    then
+    if [ "$inputs" == "" ]; then
         echo_inputs "(none)"
         
         {
@@ -81,8 +64,7 @@ get_inputs() {
                 flock -n 9
 
                 # if no timer active, set one 
-                if [ $timer_pid -eq 0 ]
-                then
+                if [ $timer_pid -eq 0 ]; then
                     idle_timer &
                     timer_pid=$!
                     # manually release lock (file descriptor passed to timer process)
@@ -105,8 +87,7 @@ get_inputs() {
                 # attempt to acquire visualizer state lock
                 flock -n 9
 
-                if [ $timer_pid -gt 0 ]
-                then
+                if [ $timer_pid -gt 0 ]; then
                     {
                         {
                             # attempt to acquire timer lock
@@ -146,11 +127,8 @@ get_inputs() {
 get_inputs  
 
 # update inputs on sink-input change event
-while read event
-do 
-    if [ "$(echo $event | grep "Event '.*' on sink-input")" != "" ]
-    then
+while read event; do
+    if [ "$(echo $event | grep "Event '.*' on sink-input")" != "" ]; then
         get_inputs
     fi
 done < <(pactl subscribe)
-

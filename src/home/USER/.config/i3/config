@@ -28,7 +28,7 @@ for_window [instance="systemsettings"] floating enable, border none, sticky enab
 no_focus [instance="systemsettings"]
 
 # other window rules
-for_window [window_type="dialog"] resize set width 75 ppt height 75 ppt, move position center
+for_window [window_type="dialog"] resize set width 50 ppt height 50 ppt, move position center
 for_window [instance="blueman-manager"] floating enable, border none, resize set width 25 ppt height 25 ppt, move position center, move right 20 ppt, move down 33 ppt
 no_focus [instance="blueman-manager"]
 
@@ -41,7 +41,8 @@ bindsym $mod+Shift+e exec "qdbus org.kde.ksmserver /KSMServer logout 1 0 0"
 
 # lockscreen
 # bindsym $mod+Shift+x exec "i3lock"
-bindsym $mod+Shift+x exec --no-startup-id "playerctl pause; ~/.i3/lock_screen.sh"
+# TODO: optimise
+bindsym $mod+Shift+x exec --no-startup-id "playerctl pause; sleep 0.25; ~/.i3/lock_screen.sh"
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -221,7 +222,11 @@ bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl set 10%+"
 bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 10%-"
 
 # screenshots
-bindsym Control+Print exec --no-startup-id spectacle
+bindsym Print exec --no-startup-id spectacle
+bindsym Control+Print exec --no-startup-id "spectacle -r"
 
 # load extra mappings (e.g., compose key)
 exec --no-startup-id "xmodmap ~/.Xmodmap"
+
+# xdg-desktop-portal-kde ui size work-around, as per https://www.reddit.com/r/kde/comments/xkwq4i/saving_file_dialog_in_gtk_app_too_small/
+exec --no-startup-id "systemctl --user restart plasma-xdg-desktop-portal-kde"

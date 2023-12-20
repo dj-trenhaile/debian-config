@@ -4,21 +4,25 @@
 
 ## Environment details
 - display manager: gdm3 (better compatibility than sddm)
-- desktop environment: kde
+- desktop environment: kde plasma
 - window manager: i3
 
 ## OS setup resources
 - swap: https://opensource.com/article/19/2/swap-space-poll
 - uefi vs legacy/BIOS booting: http://www.rodsbooks.com/linux-uefi/
+- kde plasma version heirarchy:
+    - kde-full
+    - kde-standard
+    - kde-plasma-desktop
 
 # Files
-Clone repo and run install.sh. A reboot is required for all settings to take effect.
+Clone repo and run install script. Reboot to apply all settings.
 
 ## Graphics drivers
 - nvidia:
-    - check for existing drivers (e.g., 'nvidia-smi'). Newer releases install automatically. If not installed, proceed.
+    - check for existing drivers (e.g., 'nvidia-smi').
     - find best \<version\> from https://www.nvidia.com/download/index.aspx
-    - 'sudo apt install nvidia-driver-\<version\>'
+    - install cooresponding package "nvidia-driver-\<version\>"
     - reboot
 ## Display(s) configuration
 - via kde - System Settings
@@ -36,14 +40,14 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
 
 ## Security setup
 - fingerprint
-    - apt install:
+    - packages:
         - fprintd
         - libpam-fprintd
     - add fingerprints via System Settings or fprintd-enroll
     - (opt) check that prints work with fprintd-verify
 - facial rec
     - install howdy: https://github.com/boltgolt/howdy
-    - apt install: 
+    - packages:
         - opencv-python
         - ‘sudo pip install dlib --break-system-packages’ (outside of any virtual env) **
     - become root and navigate to install location at /lib/security/howdy:
@@ -69,10 +73,12 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
         - no keyboard shortcut
 - Shortcuts
     - disable all meta shortcuts; can ignore kwin since it will be replaced by i3wm
-    - Common Actions contains extra defaults that are not needed; user discretion
+    - Common Actions contains extra defaults; user discretion
+        - (rec) Zoom In: Ctrl+=
 - Startup and Shutdown
     - Autostart: none
     - Background Services: enable only:
+        - Accounts
         - Automatic Location for Night Color
         - Gnome/GTK Settings Synchronization Service
         - Keyboard Daemon
@@ -88,7 +94,10 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
 - Notifications
     - Application-specific settings
         - Power Management: disable all event (battery only)
-- KDE Wallet: disable
+- KDE Wallet
+    - Access Control
+        - Prompt when an application access a wallet: no
+    - KWalletManager: set empty password
 - Input Devices
     - Keyboard
         - Hardware
@@ -117,18 +126,19 @@ Clone repo and run install.sh. A reboot is required for all settings to take eff
     - start notebook server from base env, then select kernel from other envs in the gui
 
 ## Appendix
+- purging gnome-shell (standard Ubuntu desktop env)
+    - 'sudo apt remove
+        - ubuntu-desktop'
+        - \*gnome\*'
+    - from /usr/share, remove:
+        - gnome-session
+        - ubuntu*.desktop session files from xsessions
 - showing keycodes
     - xev
     - showkey
-- setting global dpi:
+- setting global dpi
     -  'echo "Xft.dpi: \<desired global dpi\>" > ~/.Xresources'
     -  create/modify .xinitrc:
         - xrdb -merge ~/.Xresources
         - exec i3
-- Desktop sessions are stored as .desktop file in /usr/share/xsessions and can 
-be modified similarly to .service files; kde example:
-    [Desktop Entry]
-    Type=XSession
-    Exec=/usr/bin/startplasma-x11
-    DesktopNames=KDE
-    Name=Plasma (X11)
+- maintain multiple package versions with 'update-alternatives'

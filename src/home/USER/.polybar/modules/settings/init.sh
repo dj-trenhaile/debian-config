@@ -1,7 +1,6 @@
 #!/bin/bash
 
-if [ "$(pgrep systemsettings)" == "" ]
-then 
+if [ "$(pgrep systemsettings)" == "" ]; then
     echo  
 else 
     echo  

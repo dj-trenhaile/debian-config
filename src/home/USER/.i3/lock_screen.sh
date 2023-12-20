@@ -18,8 +18,7 @@ write_overlay_offsets() {
   overlay_y=$(echo $overlay_res | cut -d 'x' -f2)
 
   # for each display, calculate total screen offset of overlay image
-  while read display
-  do
+  while read display; do
     geometry=$(echo $display | cut -d ' ' -f3)
 
     resolution=$(echo $geometry | cut -d '+' -f1)
@@ -38,11 +37,9 @@ write_overlay_offsets() {
 
 
 randr_state=$(xrandr --listactivemonitors)
-if [ "$randr_state" == "$(cat $RANDR_STATE 2> /dev/null)" ]
-then
+if [ "$randr_state" == "$(cat $RANDR_STATE 2> /dev/null)" ]; then
   # randr state not changed; unless offsets file not found, do not regenerate
-  if [ ! -e $OVERLAY_OFFSETS ]
-  then
+  if [ ! -e $OVERLAY_OFFSETS ]; then
     write_overlay_offsets
   fi
 else
@@ -56,8 +53,7 @@ cmd="ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY"
 filter="[0]boxblur=10:1"
 
 overlay_num=1
-while read overlay_offsets
-do
+while read overlay_offsets; do
   # read overlay offsets
   x_offset=$(echo $overlay_offsets | cut -d 'x' -f1)
   y_offset=$(echo $overlay_offsets | cut -d 'x' -f2)
@@ -84,8 +80,7 @@ eval $cmd
 # lock screen
 i3lock -i $BG
 # watch for verification via biometrics
-while pidof i3lock 
-do
+while pidof i3lock; do
   if (fprintd-verify | grep verify-match); then 
     killall i3lock
   fi
