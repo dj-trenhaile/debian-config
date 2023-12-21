@@ -77,6 +77,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     # install DE, configure associated systemd services
     sudo apt install kde-standard
+    sudo apt remove qt5ct && sudo apt autoremove  # evil; see https://forum.manjaro.org/t/plasma-application-appearance-and-styles-not-changing/83955/2
     systemctl --user mask plasma-kwin_x11.service
     systemctl --user add-wants plasma-workspace-x11.target plasma-i3_x11.service
     systemctl --user mask plasma-plasmashell.service
