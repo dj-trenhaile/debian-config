@@ -14,120 +14,116 @@
     - kde-plasma-desktop
 
 ## Files
-Clone repo and run install script. Reboot to apply all settings.
+Clone repo and run install script. Reboot to apply all settings. (TODO: prompt on install)
 
 ## Display(s) configuration
+### Position and scale
 - via kde - System Settings
 - via nvidia - Nvidia X Server Settings
     - if failing to write config, either copy raw output to file manually or
-    try 'sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit'
-- via xrandr - add desired commands to ~/.xprofile:
-    - rotate a display: 'xrandr --output \<display\> --rotate \<direction\>'
-    - scale a display: 'xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>' where:
+    try `sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit`
+- via xrandr (recommended; most flexible) - add startup configuration commands to ~/.xprofile
+    - rotate a display: `xrandr --output \<display\> --rotate \<direction\>`
+    - scale a display: `xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>`
         - Px and Py: display picture width and height scalars, respectively
         - Sx and Sy: virtual screen width and height, respectively
         - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
-        - **Note: chain addition sets of the above parameters in one command when configuring multiple displays. Set --fb only once. 
-**One can also assign i3 workspaces to specific displays. The provided config imports from ~/.local/i3/display_assignments.conf
+        - When configuring multiple displays, do so with one `xrandr` call in which --fb is specified once and the --scale/--pos arguments are specified in sequential pairs for each display to configure
+### i3 integration
+One can assign i3 workspaces to specific displays. The provided config includes i3 commands for this purpose from ~/.local/i3/display_assignments.conf
 
 ## Security setup
-- fingerprint
-    - packages:
-        - fprintd
-        - libpam-fprintd
-    - add fingerprints via System Settings or fprintd-enroll
-    - (opt) check that prints work with fprintd-verify
-- facial rec
-    - install howdy: https://github.com/boltgolt/howdy
-    - packages:
-        - opencv-python
-        - ‘sudo pip install dlib --break-system-packages’ (outside of any virtual env) **
-    - become root and navigate to install location at /lib/security/howdy:
-        - run install.sh in dlib-data
-        - chmod -R a+rx:
-            - dlib-data
-            - models
-            - recorders
-        - chmod -R a+rxw:
-            - snapshots
-        - compare.py: import ConfigParser >> import configparser as ConfigParser **
-    - ** see https://github.com/boltgolt/howdy/issues/781 for more details
-- enable new auth methods via pam-auth-update
+### Fingerprint
+1. `sudo apt install fprintd libpam-fprintd`
+2. Add fingerprints via System Settings or `fprintd-enroll`
+3. (opt) Check that prints work with `fprintd-verify`
+### Facial rec
+Install Howdy: https://github.com/boltgolt/howdy
+- Outside of any virtual env, `sudo pip install dlib --break-system-packages`<sup>1</sup>
+- Become root and navigate to /lib/security/howdy
+    - `dlib-data/install.sh`
+    - `chmod -R a+rx dlib-data models records`
+    - `chmod -R a+rxw snapshots`
+    - In compare.py, modify `import ConfigParser` to `import configparser as ConfigParser`<sup>1</sup><br>
+
+<sup>1</sup>See https://github.com/boltgolt/howdy/issues/781 for more details
+### Enable new auth methods
+`pam-auth-update`
 
 ## System Settings
-- Appearance
-    - Global Theme: Breeze Dark (appearance and desktop/window layout)
-- Workspace Behavior
-    - Desktop Effects
-        - Zoom: no
-    - Screen Locking
-        - never lock screen automatically
-        - no keyboard shortcut
-- Shortcuts
-    - disable all meta shortcuts; can ignore kwin since it will be replaced by i3wm
-    - Common Actions contains extra defaults; user discretion
-        - (rec) Zoom In: Ctrl+=
-- Startup and Shutdown
-    - Autostart: none
-    - Background Services: enable only:
-        - Accounts
-        - Automatic Location for Night Color
-        - Gnome/GTK Settings Synchronization Service
-        - Keyboard Daemon
-        - Plasma Vault module
-        - Removable Device Automounter
-        - Search Folder Updater
-        - SMART
-        - Thunderbolt Device Monitor
-        - Time Zone
-        - (opt) Touchpad
-        - Write Daemon
-    - Desktop Session: start an empty session
-- Notifications
-    - Application-specific settings
-        - Power Management: disable all event (battery only)
-- KDE Wallet
-    - Access Control
-        - Prompt when an application access a wallet: no
-    - KWalletManager: set empty password
-- Input Devices
-    - Keyboard
-        - Hardware
-            - NumLock on Plasma Startup: Turn on
-        - Advanced
-            - Position of Compose key: Left Win
-- Power Management
-    - Energy Saving
-        - Screen Energy Saving: disable
-        - Suspend session: disable
-        - power button: user discretion
+### Appearance
+Global Theme: Breeze Dark (appearance and desktop/window layout)
+### Workspace Behavior
+- Desktop Effects
+    - Zoom: no
+- Screen Locking
+    - never lock screen automatically
+    - no keyboard shortcut
+### Shortcuts
+- disable all meta shortcuts; can ignore kwin since it will be replaced by i3wm
+- Common Actions contains extra defaults; user discretion
+    - (rec) Zoom In: Ctrl+=
+### Startup and Shutdown
+- Autostart: none
+- Background Services: enable only:
+    - Accounts
+    - Automatic Location for Night Color
+    - Gnome/GTK Settings Synchronization Service
+    - Keyboard Daemon
+    - Plasma Vault module
+    - Removable Device Automounter
+    - Search Folder Updater
+    - SMART
+    - Thunderbolt Device Monitor
+    - Time Zone
+    - (opt) Touchpad
+    - Write Daemon
+- Desktop Session: start an empty session
+### Notifications
+- Application-specific settings
+    - Power Management: disable all event (battery only)
+### KDE Wallet
+- Access Control
+    - Prompt when an application access a wallet: no
+- KWalletManager: set empty password
+### Input Devices
+- Keyboard
+    - Hardware
+        - NumLock on Plasma Startup: Turn on
+    - Advanced
+        - Position of Compose key: Left Win
+### Power Management
+- Energy Saving
+    - Screen Energy Saving: disable
+    - Suspend Session: disable
+    - Power Button: user discretion
 
 ## Other appearance settings
-- nitrogen: set image to desired; see ~/.resources
-- konsole: 
-    - enable provided profile, set as default
-    - disable system and session toolbars
-    - import konsole.shortcuts (provided at root)
-- lxappearance: set application theme to Breeze-Dark
-    - **also run as root to configure root applications (e.g., GParted)
+- `nitrogen` and set image to desired; see ~/.resources
+- `konsole` 
+    - Enable provided profile, set as default
+    - Disable system and session toolbars
+    - Import konsole.shortcuts (provided at root)
+- `lxappearance` and set application theme to Breeze-Dark
+    - **Also run as root to configure root applications (e.g., GParted)
 
 ## Other software
-- jupyter notebook
-    - activate base conda environ and ‘conda install nb_conda_kernels’
-    - new environs: ‘conda install ipykernel’
-    - start notebook server from base env, then select kernel from other envs in the gui
+- Jupyter notebook
+    - Activate base conda env and `conda install nb_conda_kernels`
+    - In new envs, `conda install ipykernel`
+    - Start notebook servers from base env, then select desired kernel in target env
 
 ## Appendix
 ### Purging gnome-shell (standard Ubuntu desktop env)
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove \*gnome\*`
-3. If using gdm3, reinstall with `sudo apt install gdm3`
-4. (optional) Remove all associated xsession configs from /usr/share/xsessions
+    - If using gdm3, reinstall with `sudo apt install gdm3`
+3. (opt) Remove all associated xsession configs from /usr/share/xsessions
 ### Showing keycodes
 - `xev`
 - `showkey`
 ### Setting global dpi
-- In ~/.Xresources, create/modify the line `"Xft.dpi: \<global dpi\>`
+- In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
 ### Maintaining multiple versions of a package
 `update-alternatives`
