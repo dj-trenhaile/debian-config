@@ -1,6 +1,4 @@
 # Setup instructions
-<br>
-<br>
 
 ## Environment details
 - display manager: gdm3 (better compatibility than sddm)
@@ -15,15 +13,9 @@
     - kde-standard
     - kde-plasma-desktop
 
-# Files
+## Files
 Clone repo and run install script. Reboot to apply all settings.
 
-## Graphics drivers
-- nvidia:
-    - check for existing drivers (e.g., 'nvidia-smi').
-    - find best \<version\> from https://www.nvidia.com/download/index.aspx
-    - install cooresponding package "nvidia-driver-\<version\>"
-    - reboot
 ## Display(s) configuration
 - via kde - System Settings
 - via nvidia - Nvidia X Server Settings
@@ -126,19 +118,16 @@ Clone repo and run install script. Reboot to apply all settings.
     - start notebook server from base env, then select kernel from other envs in the gui
 
 ## Appendix
-- purging gnome-shell (standard Ubuntu desktop env)
-    - 'sudo apt remove
-        - ubuntu-desktop'
-        - \*gnome\*'
-    - from /usr/share, remove:
-        - gnome-session
-        - ubuntu*.desktop session files from xsessions
-- showing keycodes
-    - xev
-    - showkey
-- setting global dpi
-    -  'echo "Xft.dpi: \<desired global dpi\>" > ~/.Xresources'
-    -  create/modify .xinitrc:
-        - xrdb -merge ~/.Xresources
-        - exec i3
-- maintain multiple package versions with 'update-alternatives'
+### Purging gnome-shell (standard Ubuntu desktop env)
+1. `sudo apt remove ubuntu-desktop`
+2. `sudo apt remove \*gnome\*`
+3. If using gdm3, reinstall with `sudo apt install gdm3`
+4. (optional) Remove all associated xsession configs from /usr/share/xsessions
+### Showing keycodes
+- `xev`
+- `showkey`
+### Setting global dpi
+- In ~/.Xresources, create/modify the line `"Xft.dpi: \<global dpi\>`
+- Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
+### Maintaining multiple versions of a package
+`update-alternatives`
