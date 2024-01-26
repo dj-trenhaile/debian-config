@@ -18,7 +18,7 @@ fi
 # parse args ================================================================= #
 
 help() {
-    echo -e "Usage: install_debian.sh [OPTION]...
+    echo -e "Usage: install.sh [OPTION]...
     -d, --dry              do not modify any src files, install any packages, or perform systemd integration; show src files that would be installed
     -r, --refresh          do not install any packages or perform systemd integration; install src files
     -o, --overwrite        do not back up existing files, immediately overwrite them
