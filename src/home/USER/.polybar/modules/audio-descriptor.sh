@@ -8,6 +8,7 @@ source ${_DIR}/audio-visualizer/toggle_state.sh
 TIMEOUT_SECS=5
 TIMER_LOCK="/tmp/polybar_audio-descriptor_timer.$$.lock"
 VISUALIZER_STATE_LOCK="/tmp/polybar_audio-descriptor_visualizer-state.$$.lock"
+trap "rm $TIMER_LOCK; rm $VISUALIZER_STATE_LOCK; exit" SIGTERM
 
 DISPLAY_FRACTION=$1
 USE_PREFIX=$2

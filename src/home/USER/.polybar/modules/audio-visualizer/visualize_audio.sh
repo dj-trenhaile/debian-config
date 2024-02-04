@@ -1,7 +1,4 @@
 #!/bin/bash
-
-# TODO: trap "<rm pipe + config; pass kill signal to children>; exit" SIGTERM
-
 _DIR=${BASH_SOURCE%/*}
 source ${_DIR}/../../utils.sh
 export PIPE=/tmp/cava.$$.fifo
