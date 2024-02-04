@@ -1,7 +1,4 @@
 #!/bin/bash
-
-# TODO: trap "<rm locks>; exit" SIGTERM
-
 _DIR=${BASH_SOURCE%/*}
 source ${_DIR}/../utils.sh
 source ${_DIR}/audio-visualizer/toggle_state.sh
