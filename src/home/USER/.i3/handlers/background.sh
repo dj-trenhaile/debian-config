@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SPLASH_TIME=1  # in seconds
+SPLASH_TIME=1.5  # in seconds
 
 
 (
