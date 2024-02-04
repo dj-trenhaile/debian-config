@@ -14,7 +14,7 @@
     - kde-plasma-desktop
 
 ## Files
-Clone repo and run install script. Reboot to apply all settings. (TODO: prompt on install)
+Clone repo and run install script. A relog/reboot is recommended to apply all configurations (not required on "file refresh"; see `install.sh --help` for more details).
 
 ## Display(s) configuration
 ### Position and scale

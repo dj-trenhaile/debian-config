@@ -1,5 +1,4 @@
 #!/bin/bash
-
 _DIR=${BASH_SOURCE%/*}
 CMD=$1
 

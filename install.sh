@@ -1,5 +1,4 @@
 #!/bin/bash
-
 _REL_PATH="${BASH_SOURCE%/*}"
 _ORIGIN_DIR=$(pwd)
 source ${_REL_PATH}/build/utils.sh
@@ -140,6 +139,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                        "chrisdias.vscode-opennewinstance"
                        "ms-python.python"
                        "ms-python.vscode-pylance"
+                       "ms-python.debugpy"
                        "dlasagno.rasi"
                        "lihui.vs-color-picker"
                        "13xforever.language-x86-64-assembly")

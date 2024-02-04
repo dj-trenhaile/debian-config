@@ -7,10 +7,8 @@ make_dirs() {
     mkdir -p ${local_file_path%/*}
 }
 
-
 replace_file() {    
-    if [ $OVERWRITE -eq 0 ]
-    then
+    if [ $OVERWRITE -eq 0 ]; then
         echo -n "        backup: "   
         {
             file_name=$(echo $file_path | tr '/' '\n' | tail -n 1)
@@ -26,7 +24,6 @@ replace_file() {
     fi
 }
 
-
 install_file() {
     echo -n "        install: "
     {
@@ -35,7 +32,6 @@ install_file() {
         echo $local_file_path
     } || handle_failure
 }
-
 
 disable_service() {
     echo -n "        disable ${local_service}: "
@@ -46,12 +42,10 @@ disable_service() {
 }
 
 
-
 # helpers ==================================================================== #
 print_file_path() {
     echo "    ${file_path}"
 }
-
 
 handle_failure() {
     echo "FAILED"
@@ -65,28 +59,23 @@ STATS=("installs" "backups" "failures")
 
 
 init_stats() {
-    for stat in ${STATS[@]}
-    do
+    for stat in ${STATS[@]}; do
         declare -g -i $stat=0
     done
 }
 
-
 print_stats() {
-    for stat in ${STATS[@]}
-    do
+    for stat in ${STATS[@]}; do
         echo -n "${!stat} "
     done
     echo
 }
 
-
 parse_log() {
     echo -e "$log" | head -n -1
     log_stats=$(echo -e "$log" | tail -n 1)
     i=1
-    for stat in ${STATS[@]}
-    do
+    for stat in ${STATS[@]}; do
         declare -g -i $stat=$(("${!stat}" + $(echo -e "$log_stats" | cut -d ' ' -f$i)))
         i=$((i+1))
     done
