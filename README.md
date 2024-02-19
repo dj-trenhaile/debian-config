@@ -126,3 +126,6 @@ In /shortcuts:
 ### Packages, maintain multiple versions
 'update-alternatives'
 
+## TODO
+- get list of standard ubuntu apps to remove
+

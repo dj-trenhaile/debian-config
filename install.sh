@@ -126,8 +126,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      font-manager \
                      gparted \
                      audacity \
-                     kid3 \
-                     calligra-gemini
+                     kid3
     snaps=("spotify" "slack")
     for candidate in ${snaps[@]}; do
         sudo snap install $candidate
