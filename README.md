@@ -103,9 +103,11 @@ Global Theme: Breeze Dark (appearance and desktop/window layout)
 - `konsole` 
     - Enable provided profile, set as default
     - Disable system and session toolbars
-    - Import konsole.shortcuts (provided at root)
 - `lxappearance` and set application theme to Breeze-Dark
     - **Also run as root to configure root applications (e.g., GParted)
+
+## Other shortcuts
+.shortcut files provided at repo root. Import them in their respective applications.
 
 ## Other software
 - Jupyter notebook
@@ -113,17 +115,21 @@ Global Theme: Breeze Dark (appearance and desktop/window layout)
     - In new envs, `conda install ipykernel`
     - Start notebook servers from base env, then select desired kernel in target env
 
-## Appendix
-### Purging gnome-shell (standard Ubuntu desktop env)
+## Command Line Appendix
+### Convert, file formats
+- Documents: best to use online converter; yet to find good linux solution
+- Images: 'magick <file>.<source format> <target name>.<target format>'
+### DPI, global
+- In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
+- Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
+### gnome-shell, purge
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove \*gnome\*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
 3. (opt) Remove all associated xsession configs from /usr/share/xsessions
-### Showing keycodes
+### Keycodes
 - `xev`
 - `showkey`
-### Setting global dpi
-- In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
-- Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
-### Maintaining multiple versions of a package
-`update-alternatives`
+### Packages, maintain multiple versions
+'update-alternatives'
+
