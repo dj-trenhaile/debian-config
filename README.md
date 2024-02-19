@@ -59,10 +59,6 @@ Global Theme: Breeze Dark (appearance and desktop/window layout)
 - Screen Locking
     - never lock screen automatically
     - no keyboard shortcut
-### Shortcuts
-- disable all meta shortcuts; can ignore kwin since it will be replaced by i3wm
-- Common Actions contains extra defaults; user discretion
-    - (rec) Zoom In: Ctrl+=
 ### Startup and Shutdown
 - Autostart: none
 - Background Services: enable only:
@@ -79,13 +75,8 @@ Global Theme: Breeze Dark (appearance and desktop/window layout)
     - (opt) Touchpad
     - Write Daemon
 - Desktop Session: start an empty session
-### Notifications
-- Application-specific settings
-    - Power Management: disable all event (battery only)
 ### KDE Wallet
-- Access Control
-    - Prompt when an application access a wallet: no
-- KWalletManager: set empty password
+Enable the KDE wallet subsystem: no
 ### Input Devices
 - Keyboard
     - Hardware
@@ -107,7 +98,9 @@ Global Theme: Breeze Dark (appearance and desktop/window layout)
     - **Also run as root to configure root applications (e.g., GParted)
 
 ## Other shortcuts
-.shortcut files provided at repo root. Import them in their respective applications.
+In /shortcuts:
+- system shortcuts provided as system.kksrc; imported from System Settings->Shortcuts->Import Schema...
+- application shortcuts provided as \<app name\>.shortcuts; imported from their cooresponding applications, from Settings->Configure Keyboard Shortcuts...->Manage Schemas->More Actions->Import Schema...
 
 ## Other software
 - Jupyter notebook
@@ -124,7 +117,7 @@ Global Theme: Breeze Dark (appearance and desktop/window layout)
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
 ### gnome-shell, purge
 1. `sudo apt remove ubuntu-desktop`
-2. `sudo apt remove \*gnome\*`
+2. `sudo apt remove *gnome*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
 3. (opt) Remove all associated xsession configs from /usr/share/xsessions
 ### Keycodes
