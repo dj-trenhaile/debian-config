@@ -14,6 +14,7 @@ font pango:3270 Nerd Font Mono 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+# TODO: troubleshoot inconsistent nitrogen error
 # startup handler for compositor, splash screen, and wallpaper 
 exec --no-startup-id "~/.i3/handlers/background.sh"
 
