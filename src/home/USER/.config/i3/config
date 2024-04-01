@@ -197,16 +197,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# i3bar template:
-# bar {
-#          status_command i3status
-#  }
-# start polybar
-exec_always --no-startup-id "~/.polybar/launch.sh"
-# bind alternative on-demand bars
-bindsym $mod+p exec --no-startup-id "~/.polybar/extra_bars/launch.sh"
-bindsym $mod+Shift+p exec --no-startup-id "~/.polybar/extra_bars/terminate.sh"
-
 # sound control
 exec --no-startup-id "pulseaudio --start"
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
@@ -229,3 +219,13 @@ exec --no-startup-id "xmodmap ~/.Xmodmap"
 
 # xdg-desktop-portal-kde ui size work-around, as per https://www.reddit.com/r/kde/comments/xkwq4i/saving_file_dialog_in_gtk_app_too_small/
 exec --no-startup-id "systemctl --user restart plasma-xdg-desktop-portal-kde"
+
+# other initial setup
+exec --no-startup-id "bluetoothctl power off"
+
+# start polybar
+exec_always --no-startup-id "~/.polybar/launch.sh"
+# bind alternative on-demand bars
+bindsym $mod+p exec --no-startup-id "~/.polybar/extra_bars/launch.sh"
+bindsym $mod+Shift+p exec --no-startup-id "~/.polybar/extra_bars/terminate.sh"
+
