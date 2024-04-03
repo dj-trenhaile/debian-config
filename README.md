@@ -90,12 +90,13 @@ Enable the KDE wallet subsystem: no
     - Power Button: user discretion
 
 ## Other appearance settings
-- `nitrogen` and set image to desired; see ~/.resources
+- `nitrogen`: set image to desired; see ~/.resources
 - `konsole` 
     - Enable provided profile, set as default
     - Disable system and session toolbars
-- `lxappearance` and set application theme to Breeze-Dark
+- `lxappearance`: set application theme to Breeze-Dark
     - **Also run as root to configure root applications (e.g., GParted)
+- `code`: hide Gitlens's commit graph from Source Control and Commit views
 
 ## Other shortcuts
 In /shortcuts:
@@ -128,4 +129,4 @@ In /shortcuts:
 
 ## TODO
 - get list of standard ubuntu apps to remove
-
+- finish global bash string reformatting

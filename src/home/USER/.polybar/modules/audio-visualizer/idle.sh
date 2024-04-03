@@ -2,6 +2,8 @@
 
 trap "QUIT=1" SIGTERM
 
+# TODO: cache wave calculations
+
 # init visualizer values to zeroes
 bar_values=()
 i=0
