@@ -45,7 +45,7 @@ data_format = ascii
 ascii_max_range = $BARS_RANGE
 " > $CAVA_CONFIG
 start_cava 
-# TODO: output bug, laptop sleep bug
+# TODO: laptop sleep bug
 
 
 # main loop ================================================================== #
