@@ -1,5 +1,5 @@
 #!/bin/bash
-_REL_PATH="${BASH_SOURCE%/*}"
+_REL_PATH=${BASH_SOURCE%/*}
 _ORIGIN_DIR=$(pwd)
 source ${_REL_PATH}/build/utils.sh
 DRY=0
@@ -9,7 +9,7 @@ REFRESH_ONLY=0
 
 # check that user is not root
 if [ "$USER" == "root" ]; then
-    echo "Install should be performed on a non-root user. Abort."
+    echo Install should be performed on a non-root user. Abort.
     exit 1
 fi
 
@@ -24,7 +24,7 @@ help() {
     -h, --help             display this help and exit"
 }
 
-if ! args=$(getopt -o "d,r,o,h" -l "dry,refresh,overwrite,help" -- "$@"); then
+if ! args=$(getopt -o d,r,o,h -l dry,refresh,overwrite,help -- $@); then
     help
     exit 1
 fi
@@ -53,21 +53,21 @@ done
 
 
 if [ $DRY -eq 1 ]; then
-    echo "***Performing dry run."
+    echo ***Performing dry run.
 fi
 
 # confirm installation user
-echo "Please confirm your user before proceeding: ${USER} [Y/n]"
+echo Please confirm your user before proceeding: $USER [Y/n]
 read -p "" user_confirmation
 if [ "$user_confirmation" != "Y" ]; then
-    echo "Abort."
+    echo Abort.
     exit 1
 fi
 
 
 # packages and systemd integration =========================================== #
 if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
-    echo "Installing packages and performing systemd integration..."
+    echo Installing packages and performing systemd integration...
     cd ~/Downloads
 
     # enable remote login
@@ -102,17 +102,18 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     # install font(s)
     sudo apt install fonts-3270
-    if [ "$(fc-list | grep 3270NerdFontMono-Regular.ttf)" == "" ]; then
-        wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/3270/Regular/3270NerdFontMono-Regular.ttf"
+    fonts=$(fc-list)
+    if [ "$(echo $fonts | grep 3270NerdFontMono-Regular.ttf)" == "" ]; then
+        wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/3270/Regular/3270NerdFontMono-Regular.ttf
         sudo mv 3270NerdFontMono-Regular.ttf /usr/share/fonts/truetype/3270/
     fi
-    if [ "$(fc-list | grep SymbolsNerdFont-Regular.ttf)" == "" ]; then
-        wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf"
+    if [ "$(echo $fonts | grep SymbolsNerdFont-Regular.ttf)" == "" ]; then
+        wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf
         sudo mkdir /usr/share/fonts/truetype/symbols-nerdfont 2> /dev/null
         sudo mv SymbolsNerdFont-Regular.ttf /usr/share/fonts/truetype/symbols-nerdfont/
     fi
-    if [ "$(fc-list | grep JetBrainsMono-Regular.ttf)" == "" ]; then
-        wget "https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf"
+    if [ "$(echo $fonts | grep JetBrainsMono-Regular.ttf)" == "" ]; then
+        wget https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf
         sudo mkdir /usr/share/fonts/truetype/jetbrainsmono 2> /dev/null
         sudo mv JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/jetbrainsmono/
     fi
@@ -127,34 +128,35 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      gparted \
                      audacity \
                      kid3
-    snaps=("spotify" "slack")
+    snaps=(spotify slack)
     for candidate in ${snaps[@]}; do
         sudo snap install $candidate
     done
-    vscode_extensions=("ms-vscode.cpptools"
-                       "ms-vscode.cpptools-themes"
-                       "eamodio.gitlens"
-                       "ms-vscode.live-server" 
-                       "webfreak.debug"
-                       "chrisdias.vscode-opennewinstance"
-                       "ms-python.python"
-                       "ms-python.vscode-pylance"
-                       "ms-python.debugpy"
-                       "dlasagno.rasi"
-                       "lihui.vs-color-picker"
-                       "13xforever.language-x86-64-assembly")
+    vscode_extensions=(ms-vscode.cpptools
+                       ms-vscode.cpptools-themes
+                       eamodio.gitlens
+                       mhutchie.git-graph
+                       ms-vscode.live-server 
+                       webfreak.debug
+                       chrisdias.vscode-opennewinstance
+                       ms-python.python
+                       ms-python.vscode-pylance
+                       ms-python.debugpy
+                       dlasagno.rasi
+                       lihui.vs-color-picker
+                       13xforever.language-x86-64-assembly)
     for extension in ${vscode_extensions[@]}; do
         code --install-extension $extension
     done
 
     # install and configure anaconda
     if [ "$(which conda)" == "" ]; then
-        wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+        wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
         bash Mambaforge-$(uname)-$(uname -m).sh
         conda config --set env_name "({name})"
     fi
 
-    cd "${_ORIGIN_DIR}/${_REL_PATH}"
+    cd ${_ORIGIN_DIR}/${_REL_PATH}
     echo "    ---- done."
 fi
 
@@ -166,12 +168,12 @@ cd $_REL_PATH
 
 # root files ================================================================= #
 
-echo "Installing root files..."
-FILE_PREFIX="src"
-USER_PATH="/home/USER/"
-DBUS_SERVICES_PATH="/usr/share/dbus-1/services/"
-for file_path in $(find $FILE_PREFIX -type f ! -path "${FILE_PREFIX}${USER_PATH}*" \
-                                             ! -path "${FILE_PREFIX}${DBUS_SERVICES_PATH}*"); do
+echo Installing root files...
+FILE_PREFIX=src
+USER_PATH=${FILE_PREFIX}/home/USER/
+DBUS_SERVICES_PATH=${FILE_PREFIX}/usr/share/dbus-1/services/
+for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
+                                             ! -path ${DBUS_SERVICES_PATH}*); do
     local_file_path=${file_path#$FILE_PREFIX}
     if [ -f $local_file_path ]; then
         if [ "$(cat $local_file_path)" != "$(cat $file_path)" ]; then
@@ -180,24 +182,24 @@ for file_path in $(find $FILE_PREFIX -type f ! -path "${FILE_PREFIX}${USER_PATH}
             log=$(sudo OVERWRITE=$OVERWRITE \
                        file_path=$file_path \
                        local_file_path=$local_file_path \
-                       ./build/util_wrapper.sh "replace_file")
+                       ./build/util_wrapper.sh replace_file)
             parse_log
         fi
     else
         print_file_path
         [ $DRY -eq 1 ] && continue
         log=$(sudo local_file_path=$local_file_path \
-                   ./build/util_wrapper.sh "make_dirs")
+                   ./build/util_wrapper.sh make_dirs)
         parse_log
         log=$(sudo file_path=$file_path \
                    local_file_path=$local_file_path \
-                   ./build/util_wrapper.sh "install_file")
+                   ./build/util_wrapper.sh install_file)
         parse_log
     fi 
 done
 
 echo "    -------- dbus services..."
-for file_path in $(find "${FILE_PREFIX}${DBUS_SERVICES_PATH}" | grep disabled); do
+for file_path in $(find $DBUS_SERVICES_PATH | grep disabled); do
     local_service_disabled=${file_path#$FILE_PREFIX}
     local_service=${local_service_disabled%.disabled}
     if [ -f $local_service ]; then
@@ -217,11 +219,10 @@ echo "    ---- done."
 # user files ================================================================= #
 
 echo "Installing user files..."
-PREFIXED_USER_PATH="${FILE_PREFIX}${USER_PATH}"
-LOCAL_USER_PATH="/home/${USER}/"
-for dir in $(find $PREFIXED_USER_PATH -maxdepth 1 -type d ! -path "$PREFIXED_USER_PATH"); do
+LOCAL_USER_PATH=/home/${USER}/
+for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
     for file_path in $(find $dir -type f ); do
-        local_file_path="${LOCAL_USER_PATH}${file_path#$PREFIXED_USER_PATH}"
+        local_file_path=${LOCAL_USER_PATH}${file_path#$USER_PATH}
         if [ -f $local_file_path ]; then
             if [ "$(cat $local_file_path)" != "$(cat $file_path)" ]; then
                 print_file_path
@@ -244,16 +245,16 @@ write_dotfile_content() {
     installs=$((installs+1))
 }
 
-echo -e "    -------- top-level dotfile insertions..."
+echo "    -------- top-level dotfile insertions..."
 HEADER="# >>> DE install >>>"
 FOOTER="# <<< DE install <<<"
-for file_path in $(find $PREFIXED_USER_PATH -maxdepth 1 -type f); do
-    local_file_path="${LOCAL_USER_PATH}${file_path#$PREFIXED_USER_PATH}"
+for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
+    local_file_path=${LOCAL_USER_PATH}${file_path#$USER_PATH}
     local_file_lines_cnt=0
     
     backup_suffix=""
     if [ $OVERWRITE -eq 1 ]; then
-        backup_suffix="$$.bak"
+        backup_suffix=$$.bak
     fi
 
     if [ -f $local_file_path ]; then
@@ -273,10 +274,10 @@ for file_path in $(find $PREFIXED_USER_PATH -maxdepth 1 -type f); do
                 if [ $content_end_line -ge $content_start_line ]; then
                     # content region is at least 1 line long; if out of date,
                     # replace it 
-                    if [ "$(sed -n "${content_start_line},${content_end_line}p" $local_file_path)" != "$(cat $file_path)" ]; then
+                    if [ "$(sed -n ${content_start_line},${content_end_line}p $local_file_path)" != "$(cat $file_path)" ]; then
                         print_file_path
                         [ $DRY -eq 1 ] && continue
-                        sed -i$backup_suffix "${content_start_line},${content_end_line}d" $local_file_path
+                        sed -i$backup_suffix ${content_start_line},${content_end_line}d $local_file_path
                         backup_suffix=""
                         write_dotfile_content
                     fi
@@ -305,12 +306,12 @@ for file_path in $(find $PREFIXED_USER_PATH -maxdepth 1 -type f); do
 done
 
 
-echo -e "    -------- resources..."
-RESOURCE_PREFIX="res"
+echo "    -------- resources..."
+RESOURCE_PREFIX=res
 LOCAL_RESOURCES_DIR="${LOCAL_USER_PATH}.resources"
 mkdir -p $LOCAL_RESOURCES_DIR
 for file_path in $(find $RESOURCE_PREFIX -type f); do
-    local_file_path="${LOCAL_RESOURCES_DIR}${file_path#$RESOURCE_PREFIX}"
+    local_file_path=$LOCAL_RESOURCES_DIR${file_path#$RESOURCE_PREFIX}
     if [ ! -f $local_file_path ]; then
         print_file_path
         [ $DRY -eq 1 ] && continue
@@ -326,6 +327,6 @@ echo "    ---- done."
 # display final stats
 echo
 echo -e "Done.
-src files installed: ${installs}
-Local files backed up: ${backups}
-Failures: ${failures}"
+src files installed: $installs
+Local files backed up: $backups
+Failures: $failures"

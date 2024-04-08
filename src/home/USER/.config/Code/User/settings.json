@@ -29,4 +29,5 @@
     "terminal.integrated.inheritEnv": false,
     "search.quickOpen.includeHistory": false,
     "workbench.startupEditor": "none",
+    "window.restoreWindows": "none",
 }

@@ -12,7 +12,7 @@ replace_file() {
         echo -n "        backup: "   
         {
             file_name=$(echo $file_path | tr '/' '\n' | tail -n 1)
-            backup_path="${local_file_path%/*}/.${file_name#.}.$$.bak"
+            backup_path=${local_file_path%/*}/.${file_name#.}.$$.bak
             mv $local_file_path $backup_path
             backups=$((backups+1))
             echo $backup_path
@@ -37,18 +37,18 @@ disable_service() {
     echo -n "        disable ${local_service}: "
     {
         mv $local_service $local_service_disabled
-        echo "done"
+        echo done
     } || handle_failure 
 }
 
 
 # helpers ==================================================================== #
 print_file_path() {
-    echo "    ${file_path}"
+    echo "    $file_path"
 }
 
 handle_failure() {
-    echo "FAILED"
+    echo FAILED
     failures=$((failures+1))
 }
 
@@ -72,11 +72,11 @@ print_stats() {
 }
 
 parse_log() {
-    echo -e "$log" | head -n -1
-    log_stats=$(echo -e "$log" | tail -n 1)
+    echo $log | head -n -1
+    log_stats=$(echo $log | tail -n 1)
     i=1
     for stat in ${STATS[@]}; do
-        declare -g -i $stat=$(("${!stat}" + $(echo -e "$log_stats" | cut -d ' ' -f$i)))
+        declare -g -i $stat=$((${!stat} + $(echo $log_stats | cut -d ' ' -f$i)))
         i=$((i+1))
     done
 }

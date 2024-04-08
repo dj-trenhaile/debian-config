@@ -44,7 +44,8 @@ raw_target = $PIPE
 data_format = ascii
 ascii_max_range = $BARS_RANGE
 " > $CAVA_CONFIG
-start_cava
+start_cava 
+# TODO: laptop sleep bug
 
 
 # main loop ================================================================== #
