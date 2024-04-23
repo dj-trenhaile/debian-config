@@ -91,7 +91,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      blueman \
                      lxappearance
     # settings
-    dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier']"
+    dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
 
     # install script dependencies
     sudo apt install pulseaudio \
