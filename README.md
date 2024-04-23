@@ -110,13 +110,13 @@ In /shortcuts:
     - Start notebook servers from base env, then select desired kernel in target env
 
 ## Command Line Appendix
-### Convert, file formats
+### Convert b/w file formats
 - Documents: best to use online converter; yet to find good linux solution
 - Images: 'magick <file>.<source format> <target name>.<target format>'
-### DPI, global
+### Set global DPI
 - In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
-### gnome-shell, purge
+### Purge gnome-shell
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove *gnome*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
@@ -130,3 +130,4 @@ In /shortcuts:
 ## TODO
 - get list of standard ubuntu apps to remove
 - finish global bash string reformatting
+- migrate manual system settings to install.sh; looking at ~/.config, including kde.org/systemsettings.conf
