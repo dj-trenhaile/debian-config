@@ -9,11 +9,11 @@ get_num_chars() {
     DISPLAY_FRACTION=$2
     FONT_WIDTH=$3  # measured in characters per pixel
 
-    display_pixel_width=$(xrandr | grep $DISPLAY_ID | cut -d 'x' -f1 | tr ' ' '\n' | tail -n 1)
-    num_chars=$(bc -l <<< "${FONT_WIDTH} * ${display_pixel_width} * ${DISPLAY_FRACTION}")  
+    display_pixel_width=$(xrandr | grep $DISPLAY_ID | cut -d x -f1 | tr ' ' "\n" | tail -n 1)
+    num_chars=$(bc <<< "$FONT_WIDTH * $display_pixel_width * $DISPLAY_FRACTION")  
 
     # return num_chars floored to integer
-    echo $(bc <<< "scale=0; ${num_chars} / 1")
+    echo $(bc <<< "scale=0; $num_chars / 1")
 }
 
 # get_num_chars wrapper for 26-pt monospaced font

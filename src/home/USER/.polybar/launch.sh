@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_DIR="${BASH_SOURCE%/*}"
+_DIR=${BASH_SOURCE%/*}
 
 # generate and set variables
 ${_DIR}/generate_vars.sh
@@ -16,13 +16,13 @@ set +a
     polybar-msg cmd quit
 
     # start bars
-    PRIMARY=$(xrandr -q | grep " primary" | cut -d ' ' -f1)
-    for m in $(xrandr -q | grep " connected" | cut -d ' ' -f1); do
-        if [ $m == $PRIMARY ]; then
-            BAR_MONITOR=$m polybar "utils-primary" &
-            BAR_MONITOR=$m polybar "extras" &
+    PRIMARY=$(xrandr -q | grep ' primary' | cut -d ' ' -f1)
+    for m in $(xrandr -q | grep ' connected' | cut -d ' ' -f1); do
+        if [ "$m" == "$PRIMARY" ]; then
+            BAR_MONITOR=$m polybar utils-primary &
+            BAR_MONITOR=$m polybar extras &
         else
-            BAR_MONITOR=$m polybar "utils-secondary" &
+            BAR_MONITOR=$m polybar utils-secondary &
         fi
     done
 
