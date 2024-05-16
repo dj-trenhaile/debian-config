@@ -300,14 +300,14 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
         # prepare local file for insertion === #
 
         # search for line num of existing header; if present, proceed
-        header_line_num=$(grep -n $HEADER $local_file_path | head -n 1 | cut -d : -f1)
+        header_line_num=$(grep -n "$HEADER" $local_file_path | head -n 1 | cut -d : -f1)
         if [ "$header_line_num" != '' ]; then
             
             append_line_num=$header_line_num
             content_start_line_num=$((header_line_num + 1))
 
             # search for offset from header to existing footer
-            footer_offset=$(grep -n $FOOTER <<< $(
+            footer_offset=$(grep -n "$FOOTER" <<< $(
                                   cat $local_file_path | 
                                   tail -n $((local_file_lines_cnt - header_line_num))
                               ) | tail -n 1 | cut -d : -f1)
@@ -375,7 +375,8 @@ echo "    ---- done."
 
 
 
-echo "\nDone.
+echo "
+Done.
 src files installed: $installs
 Local files backed up: $backups
 Failures: $failures"
