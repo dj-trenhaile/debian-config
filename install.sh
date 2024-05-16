@@ -292,7 +292,7 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
         append_line_num=$((local_file_lines_cnt + 2))
 
         backup_suffix=''
-        if [ $OVERWRITE -eq 1 ]; then
+        if [ $OVERWRITE -eq 0 ]; then
             backup_suffix=.$$.bak
         fi
 

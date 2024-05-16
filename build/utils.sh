@@ -9,7 +9,7 @@ make_dirs() {
 }
 
 replace_file() {    
-    # if OVERWRITE, backup local file
+    # if not OVERWRITE, backup local file
     if [ $OVERWRITE -eq 0 ]; then
         echo -n '        backup: '
         {
