@@ -213,7 +213,7 @@ for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
     fi 
 done
 
-echo "    -------- dbus services..."
+echo '    -------- dbus services...'
 # iterate src dbus service files
 for file_path in $(find $DBUS_SERVICES_PATH | grep disabled); do
     
@@ -236,7 +236,7 @@ for file_path in $(find $DBUS_SERVICES_PATH | grep disabled); do
     fi
 done
 
-echo "    ---- done."
+echo '    ---- done.'
 
 
 
@@ -274,7 +274,7 @@ for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
 done
 
 
-echo "    -------- top-level dotfile insertions..."
+echo '    -------- top-level dotfile insertions...'
 HEADER='# >>> DE install >>>'
 FOOTER='# <<< DE install <<<'
 # iterate src user home files
@@ -367,7 +367,7 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
 done
 
 
-echo "    -------- resources..."
+echo '    -------- resources...'
 RES_PREFIX=res
 LOCAL_RES_DIR=${LOCAL_USER_PATH}.resources
 mkdir -p $LOCAL_RES_DIR
@@ -386,7 +386,7 @@ for file_path in $(find $RES_PREFIX -type f); do
 done
     
 
-echo "    ---- done."
+echo '    ---- done.'
 
 
 
