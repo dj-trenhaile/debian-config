@@ -61,17 +61,17 @@ handle_failure() {
 
 # statistics ================================================================= #
 
-STATS=(installs backups failures)
+_STATS=(installs backups failures)
 
 
 init_stats() {
-    for stat in ${STATS[@]}; do
+    for stat in ${_STATS[@]}; do
         declare -g -i $stat=0
     done
 }
 
 print_stats() {
-    for stat in ${STATS[@]}; do
+    for stat in ${_STATS[@]}; do
         echo -n "${!stat} "
     done
     echo
@@ -81,7 +81,7 @@ parse_log() {
     echo "$log" | head -n -1
     log_stats=$(echo "$log" | tail -n 1)
     i=1
-    for stat in ${STATS[@]}; do
+    for stat in ${_STATS[@]}; do
         declare -g -i $stat=$((${!stat} + $(echo $log_stats | cut -d ' ' -f$i)))
         i=$((i+1))
     done
