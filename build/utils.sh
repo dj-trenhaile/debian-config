@@ -21,6 +21,7 @@ replace_file() {
             mv $local_file_path $backup_path
             backups=$((backups+1))
             echo $backup_path
+        
         } || handle_failure
     fi
     
@@ -33,6 +34,7 @@ install_file() {
         cp $file_path $local_file_path
         installs=$((installs+1))
         echo $local_file_path
+    
     } || handle_failure
 }
 
@@ -41,6 +43,7 @@ disable_service() {
     {
         mv $local_service $local_service_disabled
         echo done
+    
     } || handle_failure 
 }
 

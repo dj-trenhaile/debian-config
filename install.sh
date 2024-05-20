@@ -159,7 +159,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     fi
 
     cd ${_CWD}
-    echo "    ---- done."
+    echo '    ---- done.'
 fi
 # ========================= # 
 
