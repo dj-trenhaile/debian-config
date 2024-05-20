@@ -46,6 +46,7 @@ disable_service() {
 
 
 # helpers ==================================================================== #
+
 print_file_path() {
     echo "    $file_path"
 }
@@ -55,9 +56,11 @@ handle_failure() {
     failures=$((failures+1))
 }
 
+# ========================= # 
 
 
 # statistics ================================================================= #
+
 STATS=(installs backups failures)
 
 
@@ -83,3 +86,6 @@ parse_log() {
         i=$((i+1))
     done
 }
+
+# ========================= # 
+

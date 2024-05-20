@@ -51,6 +51,8 @@ for arg in $@; do
     shift  
 done
 
+# ========================= # 
+
 
 if [ $DRY -eq 1 ]; then
     echo ***Performing dry run.
@@ -159,11 +161,11 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     cd ${_CWD}
     echo "    ---- done."
 fi
+# ========================= # 
 
 
 init_stats
 cd $_REL_PATH
-
 
 
 # root files ================================================================= #
@@ -238,6 +240,7 @@ done
 
 echo '    ---- done.'
 
+# ========================= # 
 
 
 # user files ================================================================= #
@@ -272,7 +275,6 @@ for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
         fi 
     done
 done
-
 
 echo '    -------- top-level dotfile insertions...'
 HEADER='# >>> DE install >>>'
@@ -366,7 +368,6 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
     fi
 done
 
-
 echo '    -------- resources...'
 RES_PREFIX=res
 LOCAL_RES_DIR=${LOCAL_USER_PATH}.resources
@@ -385,16 +386,16 @@ for file_path in $(find $RES_PREFIX -type f); do
     fi
 done
     
-
 echo '    ---- done.'
 
+# ========================= # 
 
 
 # final stats ================================================================ #
-
 echo "
 Done.
 src files installed: $installs
 Local files backed up: $backups
 Failures: $failures"
+# ========================= # 
 
