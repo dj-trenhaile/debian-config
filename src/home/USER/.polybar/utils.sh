@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Given a randr display identifier, a fraction, and a monospace font 
 # width (pts), return the number of characters (floored to the first integer) 
 # that can fit within the fraction of one row of the display 
@@ -27,3 +26,4 @@ get_num_chars_20_mono() {
     FONT_WIDTH=0.067
     get_num_chars $1 $2 $FONT_WIDTH
 }
+

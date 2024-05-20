@@ -1,7 +1,10 @@
 #!/bin/bash
 
 vars=''
+
+
 # get variables ============================================================== #
+
 # BAR_TEMPERATURE_ZONE
 ZONE=0
 for zone in /sys/class/thermal/thermal_zone*; do
@@ -23,8 +26,11 @@ vars="${vars}BAR_BATTERY=${BAT}\n"
 ADP=$(ls /sys/class/power_supply | grep ^A | head -n 1)
 vars="${vars}BAR_BATTERY_ADAPTER=${ADP}\n"
 
+# ======================== #
+
 
 # write labels and variables ================================================= #
 cat $HOME/.config/polybar/labels.txt > $POLYBAR_VARS
 echo -e "\n\n${vars}" >> $POLYBAR_VARS
+# ======================== #
 

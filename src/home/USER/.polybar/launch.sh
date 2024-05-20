@@ -1,6 +1,6 @@
 #!/bin/bash
-
 _DIR=${BASH_SOURCE%/*}
+
 
 # generate and set variables
 ${_DIR}/generate_vars.sh
@@ -30,3 +30,4 @@ set +a
     # descriptor open
     flock -u 9
 ) 9> $POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
+
