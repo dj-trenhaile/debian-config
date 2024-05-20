@@ -29,8 +29,8 @@ write_overlay_offsets() {
 
     overlay_x_offset=$((x_offset + (width / 2) - (overlay_x / 2)))
     overlay_y_offset=$((y_offset + (height / 2) - (overlay_y / 2)))
-    
-    echo ${overlay_x_offset}x${overlay_y_offset} >> $_OVERLAY_OFFSETS  
+    echo ${overlay_x_offset}x${overlay_y_offset} >> $_OVERLAY_OFFSETS
+
   done < <(tail -n +2 < <(echo "$randr_state"))  # skip first line
 }
 
