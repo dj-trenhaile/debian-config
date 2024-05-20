@@ -131,7 +131,8 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     for candidate in ${snaps[@]}; do
         sudo snap install $candidate
     done
-    vscode_extensions=(ms-vscode.cpptools
+    vscode_extensions=(rogalmic.bash-debug
+                       ms-vscode.cpptools
                        ms-vscode.cpptools-themes
                        eamodio.gitlens
                        mhutchie.git-graph
@@ -288,61 +289,75 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
         local_file_lines_cnt=$(cat $local_file_path | wc -l)
 
         # init: append new write section 2 lines below last line
-        setup_cmd="$local_file_lines_cnt a\ \n$HEADER\n\n$FOOTER"
+        setup_cmd="$local_file_lines_cnt a \\\n$HEADER\n$FOOTER"
         append_line_num=$((local_file_lines_cnt + 2))
 
-        backup_suffix=''
-        if [ $OVERWRITE -eq 0 ]; then
-            backup_suffix=.$$.bak
-        fi
 
+        # ========================= #
+        # check current file state; get new setup cmd and append line num if
+        # necessary, or continue to next file if local file up-to-date
+        # ========================= #
 
-        # prepare local file for insertion === #
-
-        # search for line num of existing header; if present, proceed
-        header_line_num=$(grep -n "$HEADER" $local_file_path | head -n 1 | cut -d : -f1)
+        # search for line num of existing header
+        header_line_num=$(grep -n "$HEADER" $local_file_path | head -n 1 | cut -d ':' -f1)
         if [ "$header_line_num" != '' ]; then
-            
+            # header exists; set append line num
             append_line_num=$header_line_num
-            content_start_line_num=$((header_line_num + 1))
 
-            # search for offset from header to existing footer
-            footer_offset=$(grep -n "$FOOTER" <<< $(
-                                  cat $local_file_path | 
-                                  tail -n $((local_file_lines_cnt - header_line_num))
-                              ) | tail -n 1 | cut -d : -f1)
-            if [ "$footer_offset" != '' ]; then
+            # if lines after header, proceed
+            if [ $header_line_num -lt $local_file_lines_cnt ]; then
 
-                content_end_line_num=$((header_line_num + footer_offset - 1))
+                content_start_line_num=$((header_line_num + 1))
 
-                # if content region gt 0 lines, proceed
-                if [ $content_start_line_num -ge $content_end_line_num ]; then
-                    
-                    if [ "$(sed -n $content_start_line_num,${content_end_line_num}p $local_file_path)" == "$(cat $file_path)" ]; then
-                        # local file matches src file; continue to next src file
-                        continue
+                # search for offset from header to existing footer
+                footer_offset=$(grep -n "$FOOTER" <<< $(
+                                    cat $local_file_path | 
+                                    tail -n $((local_file_lines_cnt - header_line_num))
+                                ) | tail -n 1 | cut -d ':' -f1)
+                if [ "$footer_offset" != '' ]; then
 
-                    else
-                        # local file doesn't match src file; set setup_cmd to delete all lines 
-                        # between header and footer
-                        setup_cmd="$content_start_line_num,$content_end_line_num d"
+                    # if content region gt 0 lines, proceed
+                    content_end_line_num=$((header_line_num + footer_offset - 1))
+                    if [ $content_end_line_num -ge $content_start_line_num ]; then
+
+                        if [ "$(sed -n "$content_start_line_num,$content_end_line_num p" $local_file_path)" == \
+                             "$(cat $file_path)" ]; then
+                            # local file matches src file; continue to next src file
+                            continue
+
+                        else
+                            # local file doesn't match src file; set setup_cmd to delete all lines 
+                            # between header and footer
+                            setup_cmd="$content_start_line_num,$content_end_line_num d"
+                        fi
                     fi
+                else
+                    # no footer after header; set setup_cmd to replace all  
+                    # lines after header w/ just footer
+                    setup_cmd="$content_start_line_num,$local_file_lines_cnt c $FOOTER"
                 fi
             else
-                # no footer; set setup_cmd to replace all lines after header w/ just footer
-                setup_cmd="$content_start_line_num,${local_file_lines_cnt} c\ $FOOTER"
+                # no lines after header; set setup_cmd to append a footer
+                setup_cmd="$header_line_num a $FOOTER" 
             fi
         fi
 
         print_file_path
         [ $DRY -eq 1 ] && continue
-        sed -i$backup_suffix $setup_cmd $local_file_path
-        backup_suffix=''
 
+        backup_suffix=''
+        if [ $OVERWRITE -eq 0 ]; then
+            backup_suffix=.$$.bak
+        fi
+        sed -i$backup_suffix "$setup_cmd" $local_file_path
         
-        # insert src file into local file === #
-        
-        sed -i$backup_suffix "$append_line_num r $file_path" $local_file_path
+
+        # ========================= #
+        # insert src file into local file
+        # ========================= #
+
+        sed -i "$append_line_num a \\\\" $local_file_path
+        sed -i "$append_line_num r $file_path" $local_file_path
         installs=$((installs+1))
     
     else
@@ -374,6 +389,8 @@ done
 echo "    ---- done."
 
 
+
+# final stats ================================================================ #
 
 echo "
 Done.
