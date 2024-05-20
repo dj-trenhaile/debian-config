@@ -29,5 +29,6 @@ set +a
     # explicitly release lock so that backgrounded processes do not keep file 
     # descriptor open
     flock -u 9
+    
 ) 9> $POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
 
