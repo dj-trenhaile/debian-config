@@ -370,7 +370,7 @@ done
 
 echo '    -------- resources...'
 RES_PREFIX=res
-LOCAL_RES_DIR=${LOCAL_USER_PATH}.resources
+LOCAL_RES_DIR=$LOCAL_USER_PATH.resources
 mkdir -p $LOCAL_RES_DIR
 # iterate incoming resources
 for file_path in $(find $RES_PREFIX -type f); do
