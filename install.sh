@@ -1,7 +1,6 @@
 #!/bin/bash
 _REL_PATH=${BASH_SOURCE%/*}
-_CWD=$(pwd)
-source ${_REL_PATH}/build/utils.sh
+source $_REL_PATH/build/utils.sh
 DRY=0
 OVERWRITE=0
 REFRESH_ONLY=0
@@ -69,6 +68,7 @@ fi
 # packages and systemd integration =========================================== #
 if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     echo Installing packages and performing systemd integration...
+    cwd=$(pwd)
     cd ~/Downloads
 
     # enable remote login
@@ -158,7 +158,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
         conda config --set env_prompt '({name})'
     fi
 
-    cd ${_CWD}
+    cd $cwd
     echo '    ---- done.'
 fi
 # ========================= # 
@@ -173,8 +173,8 @@ cd $_REL_PATH
 echo Installing root files...
 # iterate src files, ignore user home and dbus services paths
 FILE_PREFIX=src
-USER_PATH=${FILE_PREFIX}/home/USER/
-DBUS_SERVICES_PATH=${FILE_PREFIX}/usr/share/dbus-1/services/
+USER_PATH=$FILE_PREFIX/home/USER/
+DBUS_SERVICES_PATH=$FILE_PREFIX/usr/share/dbus-1/services/
 for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
                                              ! -path ${DBUS_SERVICES_PATH}*); do
     
@@ -247,7 +247,7 @@ echo '    ---- done.'
 
 echo Installing user files...
 # iterate src user home dirs
-LOCAL_USER_PATH=/home/${USER}/
+LOCAL_USER_PATH=/home/$USER/
 for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
     
     # iterate dir files
