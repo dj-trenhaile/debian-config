@@ -16,7 +16,7 @@ font pango:3270 Nerd Font Mono 10
 
 # TODO: troubleshoot inconsistent nitrogen error
 # startup handler for compositor, splash screen, and wallpaper 
-exec --no-startup-id "~/.i3/handlers/background.sh"
+exec --no-startup-id "~/.i3/background.sh"
 
 # desktop environment window rules
 for_window [title="win7"] floating enable, border none

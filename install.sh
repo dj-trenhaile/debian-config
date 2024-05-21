@@ -1,14 +1,13 @@
 #!/bin/bash
 _REL_PATH=${BASH_SOURCE%/*}
-_ORIGIN_DIR=$(pwd)
-source ${_REL_PATH}/build/utils.sh
+source $_REL_PATH/build/utils.sh
 DRY=0
 OVERWRITE=0
 REFRESH_ONLY=0
 
 
-# check that user is not root
-if [ "$USER" == "root" ]; then
+# check that user isn't root
+if [ "$USER" == 'root' ]; then
     echo Install should be performed on a non-root user. Abort.
     exit 1
 fi
@@ -17,10 +16,10 @@ fi
 # parse args ================================================================= #
 
 help() {
-    echo -e "Usage: install.sh [OPTION]...
-    -d, --dry              do not modify any src files, install any packages, or perform systemd integration; show src files that would be installed
-    -r, --refresh          do not install any packages or perform systemd integration; install src files
-    -o, --overwrite        do not back up existing files, immediately overwrite them
+    echo "Usage: install.sh [OPTION]...
+    -d, --dry              don't modify any src files, install any packages, or perform systemd integration; show src files that would be installed
+    -r, --refresh          don't install any packages or perform systemd integration; install src files
+    -o, --overwrite        don't back up existing files, immediately overwrite them
     -h, --help             display this help and exit"
 }
 
@@ -51,15 +50,16 @@ for arg in $@; do
     shift  
 done
 
+# ========================= # 
+
 
 if [ $DRY -eq 1 ]; then
     echo ***Performing dry run.
 fi
 
 # confirm installation user
-echo Please confirm your user before proceeding: $USER [Y/n]
-read -p "" user_confirmation
-if [ "$user_confirmation" != "Y" ]; then
+read -p "Please confirm your user before proceeding: $USER [Y/n] " user_confirmation
+if [ "$user_confirmation" != 'Y' ]; then
     echo Abort.
     exit 1
 fi
@@ -68,6 +68,7 @@ fi
 # packages and systemd integration =========================================== #
 if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     echo Installing packages and performing systemd integration...
+    cwd=$(pwd)
     cd ~/Downloads
 
     # enable remote login
@@ -103,16 +104,16 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # install font(s)
     sudo apt install fonts-3270
     fonts=$(fc-list)
-    if [ "$(echo $fonts | grep 3270NerdFontMono-Regular.ttf)" == "" ]; then
+    if [ "$(echo $fonts | grep 3270NerdFontMono-Regular.ttf)" == '' ]; then
         wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/3270/Regular/3270NerdFontMono-Regular.ttf
         sudo mv 3270NerdFontMono-Regular.ttf /usr/share/fonts/truetype/3270/
     fi
-    if [ "$(echo $fonts | grep SymbolsNerdFont-Regular.ttf)" == "" ]; then
+    if [ "$(echo $fonts | grep SymbolsNerdFont-Regular.ttf)" == '' ]; then
         wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf
         sudo mkdir /usr/share/fonts/truetype/symbols-nerdfont 2> /dev/null
         sudo mv SymbolsNerdFont-Regular.ttf /usr/share/fonts/truetype/symbols-nerdfont/
     fi
-    if [ "$(echo $fonts | grep JetBrainsMono-Regular.ttf)" == "" ]; then
+    if [ "$(echo $fonts | grep JetBrainsMono-Regular.ttf)" == '' ]; then
         wget https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf
         sudo mkdir /usr/share/fonts/truetype/jetbrainsmono 2> /dev/null
         sudo mv JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/jetbrainsmono/
@@ -132,7 +133,8 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     for candidate in ${snaps[@]}; do
         sudo snap install $candidate
     done
-    vscode_extensions=(ms-vscode.cpptools
+    vscode_extensions=(rogalmic.bash-debug
+                       ms-vscode.cpptools
                        ms-vscode.cpptools-themes
                        eamodio.gitlens
                        mhutchie.git-graph
@@ -150,47 +152,62 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     done
 
     # install and configure anaconda
-    if [ "$(which conda)" == "" ]; then
+    if [ "$(which conda)" == '' ]; then
         wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
         bash Mambaforge-$(uname)-$(uname -m).sh
-        conda config --set env_name "({name})"
+        conda config --set env_prompt '({name})'
     fi
 
-    cd ${_ORIGIN_DIR}/${_REL_PATH}
-    echo "    ---- done."
+    cd $cwd
+    echo '    ---- done.'
 fi
+# ========================= # 
 
 
 init_stats
 cd $_REL_PATH
 
 
-
 # root files ================================================================= #
 
 echo Installing root files...
+# iterate src files, ignore user home and dbus services paths
 FILE_PREFIX=src
-USER_PATH=${FILE_PREFIX}/home/USER/
-DBUS_SERVICES_PATH=${FILE_PREFIX}/usr/share/dbus-1/services/
+USER_PATH=$FILE_PREFIX/home/USER/
+DBUS_SERVICES_PATH=$FILE_PREFIX/usr/share/dbus-1/services/
 for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
                                              ! -path ${DBUS_SERVICES_PATH}*); do
+    
+    # define cooresponding local file path
     local_file_path=${file_path#$FILE_PREFIX}
+    
     if [ -f $local_file_path ]; then
+        # local file exists; if local contents dissimilar, proceed
         if [ "$(cat $local_file_path)" != "$(cat $file_path)" ]; then
+
             print_file_path
             [ $DRY -eq 1 ] && continue
+
+            # replace local file
             log=$(sudo OVERWRITE=$OVERWRITE \
                        file_path=$file_path \
                        local_file_path=$local_file_path \
                        ./build/util_wrapper.sh replace_file)
             parse_log
         fi
+        
     else
+        # local file doesn't exist
+
         print_file_path
         [ $DRY -eq 1 ] && continue
+
+        # create intermediate dir(s)
         log=$(sudo local_file_path=$local_file_path \
                    ./build/util_wrapper.sh make_dirs)
         parse_log
+        
+        # install local file
         log=$(sudo file_path=$file_path \
                    local_file_path=$local_file_path \
                    ./build/util_wrapper.sh install_file)
@@ -198,120 +215,170 @@ for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
     fi 
 done
 
-echo "    -------- dbus services..."
+echo '    -------- dbus services...'
+# iterate src dbus service files
 for file_path in $(find $DBUS_SERVICES_PATH | grep disabled); do
+    
+    # define cooresponding local disabled file path
     local_service_disabled=${file_path#$FILE_PREFIX}
+    # define cooresponding local active file path
     local_service=${local_service_disabled%.disabled}
+
+    # if local active file exists, proceed
     if [ -f $local_service ]; then
+        
         print_file_path
         [ $DRY -eq 1 ] && continue
+        
+        # disable local file
         log=$(sudo local_service=$local_service \
                    local_service_disabled=$local_service_disabled \
-                   ./build/util_wrapper.sh "disable_service")
+                   ./build/util_wrapper.sh disable_service)
         parse_log
     fi
 done
 
-echo "    ---- done."
+echo '    ---- done.'
 
+# ========================= # 
 
 
 # user files ================================================================= #
 
-echo "Installing user files..."
-LOCAL_USER_PATH=/home/${USER}/
+echo Installing user files...
+# iterate src user home dirs
+LOCAL_USER_PATH=/home/$USER/
 for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
+    
+    # iterate dir files
     for file_path in $(find $dir -type f ); do
-        local_file_path=${LOCAL_USER_PATH}${file_path#$USER_PATH}
+        
+        # define cooresponding local file path
+        local_file_path=$LOCAL_USER_PATH${file_path#$USER_PATH}
+        
         if [ -f $local_file_path ]; then
+            # local file exists; if contents dissimilar, replace it 
             if [ "$(cat $local_file_path)" != "$(cat $file_path)" ]; then
                 print_file_path
                 [ $DRY -eq 1 ] && continue
                 replace_file
             fi
+
         else
+            # local file doesn't exist
+
             print_file_path
             [ $DRY -eq 1 ] && continue
+            
             make_dirs
             install_file
         fi 
     done
 done
 
-
-write_dotfile_content() {
-    sed -i$backup_suffix "${header_line} a \\\\" $local_file_path
-    sed -i "${header_line} r $file_path" $local_file_path
-    installs=$((installs+1))
-}
-
-echo "    -------- top-level dotfile insertions..."
-HEADER="# >>> DE install >>>"
-FOOTER="# <<< DE install <<<"
+echo '    -------- top-level dotfile insertions...'
+HEADER='# >>> DE install >>>'
+FOOTER='# <<< DE install <<<'
+# iterate src user home files
 for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
-    local_file_path=${LOCAL_USER_PATH}${file_path#$USER_PATH}
-    local_file_lines_cnt=0
     
-    backup_suffix=""
-    if [ $OVERWRITE -eq 1 ]; then
-        backup_suffix=$$.bak
-    fi
+    # define cooresponding local file path
+    local_file_path=$LOCAL_USER_PATH${file_path#$USER_PATH}
 
     if [ -f $local_file_path ]; then
+        # local file exists
+
         local_file_lines_cnt=$(cat $local_file_path | wc -l)
-        header_line=$(grep -n "$HEADER" $local_file_path | head -n 1 | cut -d ':' -f1)
-        if [ "$header_line" != "" ]; then
-            footer_line=$(grep -n "$FOOTER" <<< $(cat $local_file_path | tail -n $((local_file_lines_cnt - header_line))) | tail -n 1 | cut -d ':' -f1)
-            if [ "$footer_line" != "" ]; then
-                # footer_line cooresponds to line of FOOTER in previously
-                # defined "here" doc; offset it by header_line so that it
-                # cooresponds to the same in the local file
-                footer_line=$((footer_line + header_line))
 
-                content_start_line=$((header_line + 1))
-                content_end_line=$((footer_line - 1))
+        # init: append new write section 2 lines below last line
+        setup_cmd="$local_file_lines_cnt a \\\n$HEADER\n$FOOTER"
+        append_line_num=$((local_file_lines_cnt + 2))
 
-                if [ $content_end_line -ge $content_start_line ]; then
-                    # content region is at least 1 line long; if out of date,
-                    # replace it 
-                    if [ "$(sed -n ${content_start_line},${content_end_line}p $local_file_path)" != "$(cat $file_path)" ]; then
-                        print_file_path
-                        [ $DRY -eq 1 ] && continue
-                        sed -i$backup_suffix ${content_start_line},${content_end_line}d $local_file_path
-                        backup_suffix=""
-                        write_dotfile_content
+
+        # ========================= #
+        # check current file state; get new setup cmd and append line num if
+        # necessary, or continue to next file if local file up-to-date
+        # ========================= #
+
+        # search for line num of existing header
+        header_line_num=$(grep -n "$HEADER" $local_file_path | head -n 1 | cut -d ':' -f1)
+        if [ "$header_line_num" != '' ]; then
+            # header exists; set append line num
+            append_line_num=$header_line_num
+
+            # if lines after header, proceed
+            if [ $header_line_num -lt $local_file_lines_cnt ]; then
+
+                content_start_line_num=$((header_line_num + 1))
+
+                # search for offset from header to existing footer
+                footer_offset=$(grep -n "$FOOTER" <<< $(
+                                    cat $local_file_path | 
+                                    tail -n $((local_file_lines_cnt - header_line_num))
+                                ) | tail -n 1 | cut -d ':' -f1)
+                if [ "$footer_offset" != '' ]; then
+
+                    # if content region gt 0 lines, proceed
+                    content_end_line_num=$((header_line_num + footer_offset - 1))
+                    if [ $content_end_line_num -ge $content_start_line_num ]; then
+
+                        if [ "$(sed -n "$content_start_line_num,$content_end_line_num p" $local_file_path)" == \
+                             "$(cat $file_path)" ]; then
+                            # local file matches src file; continue to next src file
+                            continue
+
+                        else
+                            # local file doesn't match src file; set setup_cmd to delete all lines 
+                            # between header and footer
+                            setup_cmd="$content_start_line_num,$content_end_line_num d"
+                        fi
                     fi
                 else
-                    # content region is 0 lines long; perform insert
-                    print_file_path
-                    [ $DRY -eq 1 ] && continue
-                    write_dotfile_content
+                    # no footer after header; set setup_cmd to replace all  
+                    # lines after header w/ just footer
+                    setup_cmd="$content_start_line_num,$local_file_lines_cnt c $FOOTER"
                 fi
-
-                # proceed to next dotfile
-                continue     
+            else
+                # no lines after header; set setup_cmd to append a footer
+                setup_cmd="$header_line_num a $FOOTER" 
             fi
         fi
-    else
-        touch $local_file_path
-    fi
 
-    # dotfile has no valid install section; append changes to EOF
-    print_file_path
-    [ $DRY -eq 1 ] && continue
-    header_line=$((local_file_lines_cnt + 1))
-    footer_line=$((local_file_lines_cnt + 2))
-    echo -e "${HEADER}\n${FOOTER}" >> $local_file_path
-    write_dotfile_content 
+        print_file_path
+        [ $DRY -eq 1 ] && continue
+
+        backup_suffix=''
+        if [ $OVERWRITE -eq 0 ]; then
+            backup_suffix=.$$.bak
+        fi
+        sed -i$backup_suffix "$setup_cmd" $local_file_path
+        
+
+        # ========================= #
+        # insert src file into local file
+        # ========================= #
+
+        sed -i "$append_line_num a \\\\" $local_file_path
+        sed -i "$append_line_num r $file_path" $local_file_path
+        installs=$((installs+1))
+    
+    else
+        # local file doesn't exist; copy from src
+        cp $file_path $local_file_path
+    fi
 done
 
-
-echo "    -------- resources..."
-RESOURCE_PREFIX=res
-LOCAL_RESOURCES_DIR="${LOCAL_USER_PATH}.resources"
-mkdir -p $LOCAL_RESOURCES_DIR
-for file_path in $(find $RESOURCE_PREFIX -type f); do
-    local_file_path=$LOCAL_RESOURCES_DIR${file_path#$RESOURCE_PREFIX}
+echo '    -------- resources...'
+RES_PREFIX=res
+LOCAL_RES_DIR=$LOCAL_USER_PATH.resources
+mkdir -p $LOCAL_RES_DIR
+# iterate incoming resources
+for file_path in $(find $RES_PREFIX -type f); do
+    
+    # define cooresponding local res path
+    local_file_path=$LOCAL_RES_DIR${file_path#$RES_PREFIX}
+    
+    # if local res doesn't exist, install it
     if [ ! -f $local_file_path ]; then
         print_file_path
         [ $DRY -eq 1 ] && continue
@@ -319,14 +386,16 @@ for file_path in $(find $RESOURCE_PREFIX -type f); do
     fi
 done
     
+echo '    ---- done.'
 
-echo "    ---- done."
+# ========================= # 
 
 
-
-# display final stats
-echo
-echo -e "Done.
+# final stats ================================================================ #
+echo "
+Done.
 src files installed: $installs
 Local files backed up: $backups
 Failures: $failures"
+# ========================= # 
+

@@ -1,25 +1,30 @@
 #!/bin/bash
 
-mouse_props=$(xdotool getmouselocation | tr ' ' '\n')
-mouse_x=$(echo -e "$mouse_props" | grep "x:" | cut -d ':' -f2)
-mouse_y=$(echo -e "$mouse_props" | grep "y:" | cut -d ':' -f2)
+mouse_props=$(xdotool getmouselocation | tr ' ' "\n")
+mouse_x=$(echo "$mouse_props" | grep x: | cut -d : -f2)
+mouse_y=$(echo "$mouse_props" | grep y: | cut -d : -f2)
+
+ret='NULL'
+stat=1
 
 while read display; do
     display_props=$(echo $display | cut -d ' ' -f3)
 
-    resolution=$(echo $display_props | cut -d '+' -f1)
-    width=$(echo $resolution | cut -d 'x' -f1 | cut -d '/' -f1)
-    height=$(echo $resolution | cut -d 'x' -f2 | cut -d '/' -f1)
+    resolution=$(echo $display_props | cut -d + -f1)
+    width=$(echo $resolution | cut -d x -f1 | cut -d / -f1)
+    height=$(echo $resolution | cut -d x -f2 | cut -d / -f1)
     
-    x_offset=$(echo $display_props | cut -d '+' -f2)
-    y_offset=$(echo $display_props | cut -d '+' -f3)
+    x_offset=$(echo $display_props | cut -d + -f2)
+    y_offset=$(echo $display_props | cut -d + -f3)
 
-    if [ $mouse_x -ge $x_offset ] && [ $mouse_x -lt "$((x_offset + width))" ] &&
-       [ $mouse_y -ge $y_offset ] && [ $mouse_y -lt "$((y_offset + height))" ]; then
-        echo $display | cut -d ' ' -f4
-        exit 0
+    if [ $mouse_x -ge $x_offset ] && [ $mouse_x -lt $((x_offset + width)) ] &&
+       [ $mouse_y -ge $y_offset ] && [ $mouse_y -lt $((y_offset + height)) ]; then
+        ret=$(echo $display | cut -d ' ' -f4)
+        stat=0
+        break
     fi
 done < <(tail +2 < <(xrandr --listactivemonitors))
 
-echo "NULL"
-exit 1
+echo $ret
+exit $stat
+
