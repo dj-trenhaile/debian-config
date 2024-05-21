@@ -1,11 +1,9 @@
 #!/bin/bash
-_DIR=${BASH_SOURCE%/*}
-
 
 # generate and set variables
-${_DIR}/generate_vars.sh
+${BASH_SOURCE%/*}/generate_vars.sh
 set -a
-source $POLYBAR_VARS
+source $_POLYBAR_VARS
 set +a
 
 (
@@ -30,5 +28,5 @@ set +a
     # descriptor open
     flock -u 9
     
-) 9> $POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
+) 9> $_POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
 
