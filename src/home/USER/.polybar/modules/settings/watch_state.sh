@@ -1,29 +1,29 @@
 #!/bin/bash
-
-WATCH_EXP="type='signal', \
-           sender='org.freedesktop.DBus', \
-           path='/org/freedesktop/DBus', \
-           interface='org.freedesktop.DBus'"
+_WATCH_EXP="type='signal', \
+            sender='org.freedesktop.DBus', \
+            path='/org/freedesktop/DBus', \
+            interface='org.freedesktop.DBus'"
+_SERVICE_LINE='string "org.kde.systemsettings"'
 
 
 watch_acquisitions() {
     while read event_line; do
-        if [ "$event_line" == "string \"org.kde.systemsettings\"" ]; then
+        if [ "$event_line" == "$_SERVICE_LINE" ]; then
             polybar-msg hook settings 3
         fi
-    done < <(dbus-monitor "${WATCH_EXP}, \
+    done < <(dbus-monitor "${_WATCH_EXP}, \
                            member='NameAcquired'")
 }
 
 watch_losses() {
     while read event_line; do
-        if [ "$event_line" == "string \"org.kde.systemsettings\"" ]; then
+        if [ "$event_line" == "$_SERVICE_LINE" ]; then
             polybar-msg hook settings 2
         fi
-    done < <(dbus-monitor "${WATCH_EXP}, \
+    done < <(dbus-monitor "${_WATCH_EXP}, \
                            member='NameLost'")
 }
 
-
 watch_acquisitions &
 watch_losses &
+
