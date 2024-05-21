@@ -1,8 +1,8 @@
 #!/bin/bash
-
-trap "QUIT=1" SIGTERM
+trap "quit=1" SIGTERM
 
 # TODO: cache wave calculations
+
 
 # init visualizer values to zeroes
 bar_values=()
@@ -29,9 +29,11 @@ print_visualizer() {
     echo $bar_values_translated | sed $DICT
 }
 
+
 # main animation loop ======================================================== # 
-QUIT=0
-while [ $QUIT -eq 0 ]; do
+quit=0
+while [ $quit -eq 0 ]; do
+
     # decrement lower idxs
     if [ $crest_idx -ge 0 ]; then
         low_idx=$((crest_idx - (BARS_RANGE - 1)))
@@ -68,22 +70,21 @@ while [ $QUIT -eq 0 ]; do
         done
     fi
 
-    # print result
     print_visualizer
-
-    # implement speed modifier
     sleep $ANIM_DELAY
-    
-    # increment crest_idx; reset if animation cycle finished
+
     crest_idx=$((crest_idx+1))
+    # reset if animation cycle finished
     if [ $crest_idx -ge $((top_idx + BARS_RANGE)) ]; then
         crest_idx=$wave_start_idx
     fi
 
 done
+# ======================== #
 
-# $1: crest_idx
-# $2: range
+
+# $1 - crest_idx
+# $2 - range
 get_bounds() {
     offset=$(($2 - 1))
 
@@ -96,8 +97,11 @@ range=$BARS_RANGE
 get_bounds $crest_idx $range
 
 if [ $high_idx -ge 0 ]; then
+
+
     # shutdown animation loop ================================================ #
     while [ $low_idx -le $top_idx ] && [ $crest_value -gt 0 ]; do
+        
         new_crest_idx=$((crest_idx + 2))
         new_crest_value=$((crest_value - 1))
         new_range=$((range - 1))
@@ -105,6 +109,7 @@ if [ $high_idx -ge 0 ]; then
 
         if [ $low_idx -le 0 ]; then
             low_idx=0
+
         else
             # zero 3 old columns (crest_idx += 2, range -= 1)
             
@@ -155,44 +160,17 @@ if [ $high_idx -ge 0 ]; then
             done
         fi
 
-        # print results
         print_visualizer
-
-        # implement speed modifier
         sleep $ANIM_DELAY
 
         # set values for next iteration
         crest_idx=$new_crest_idx
         crest_value=$new_crest_value
         range=$new_range
+
     done
+    # ==================== #
+
+
 fi
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
