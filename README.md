@@ -129,4 +129,5 @@ In /shortcuts:
 
 ## TODO
 - migrate manual system settings to install.sh; looking at ~/.config, including kde.org/systemsettings.conf
+- spotify pulseaudio sink input cleanup service
 
