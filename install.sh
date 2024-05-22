@@ -97,9 +97,12 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # install script dependencies
     sudo apt install pulseaudio \
                      playerctl \
+                     brightnessctl \
                      cava \
                      net-tools
-    # TODO: integrate brightnessctl elsewhere
+    # login to the video group (brightnessctl req) and back into $USER group
+    newgrp video
+    newgrp $USER
 
     # install font(s)
     sudo apt install fonts-3270
