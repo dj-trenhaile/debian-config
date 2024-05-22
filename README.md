@@ -116,7 +116,7 @@ In /shortcuts:
 ### Set global DPI
 - In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
-### Purge gnome-shell
+### Purge GNOME desktop environemnt
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove *gnome*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
@@ -128,6 +128,5 @@ In /shortcuts:
 'update-alternatives'
 
 ## TODO
-- get list of standard ubuntu apps to remove
-- finish global bash string reformatting
 - migrate manual system settings to install.sh; looking at ~/.config, including kde.org/systemsettings.conf
+
