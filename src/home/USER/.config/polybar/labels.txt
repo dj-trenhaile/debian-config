@@ -12,3 +12,4 @@ BAR_WLAN_LABEL_CONNECTED="%essid%%{O8pt}%local_ip% %{F$COLOR_PRIMARY}%{F-}%{O
 BAR_ETH_LABEL_CONNECTED="%local_ip% %{F$COLOR_PRIMARY}%{F-}%{O4pt}%downspeed%"
 
 BAR_DATE_TIMEALT=" %{F$COLOR_FOREGROUND}%H:%M:%S%{F-}"
+
