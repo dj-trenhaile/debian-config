@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ "$(bluetoothctl show | grep 'Powered: yes')" == '' ]; then
-  bluetoothctl power on
+    bluetoothctl power on
 else
-  bluetoothctl power off
+    bluetoothctl power off
 fi
 
