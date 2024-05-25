@@ -70,7 +70,7 @@ while read overlay_offsets; do
 done < <(cat $_OVERLAY_OFFSETS)
 
 # pause on-screen animations
-pid_idle=$(pgrep idle.sh)
+pid_idle=$(pgrep -f idle.sh)
 kill -STOP $pid_idle
 
 # take scrot and apply transformations

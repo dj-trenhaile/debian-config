@@ -9,7 +9,7 @@ _SPLASH_TIME=1  # in seconds
     picom --config ~/.config/picom/config --fading &
     sleep $_SPLASH_TIME
     nitrogen --restore
-    pkill ksplashqml
+    pkill -f ksplashqml
     
     # explicitly release lock so that backgrounded processes do not keep file 
     # descriptor open
