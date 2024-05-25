@@ -14,7 +14,7 @@
     - kde-plasma-desktop
 
 ## Files
-Clone repo and run install script. A relog/reboot is recommended to apply all configurations (not required on "file refresh"; see `install.sh --help` for more details).
+Clone repo and run install.sh.
 
 ## Display(s) configuration
 ### Position and scale
@@ -116,7 +116,7 @@ In /shortcuts:
 ### Set global DPI
 - In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
-### Purge gnome-shell
+### Purge GNOME desktop environemnt
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove *gnome*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
@@ -128,6 +128,6 @@ In /shortcuts:
 'update-alternatives'
 
 ## TODO
-- get list of standard ubuntu apps to remove
-- finish global bash string reformatting
 - migrate manual system settings to install.sh; looking at ~/.config, including kde.org/systemsettings.conf
+- spotify pulseaudio sink input cleanup service
+

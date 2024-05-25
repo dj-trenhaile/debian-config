@@ -30,4 +30,5 @@
     "search.quickOpen.includeHistory": false,
     "workbench.startupEditor": "none",
     "window.restoreWindows": "none",
+    "editor.detectIndentation": false,
 }

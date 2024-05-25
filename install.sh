@@ -17,8 +17,8 @@ fi
 
 help() {
     echo "Usage: install.sh [OPTION]...
-    -d, --dry              don't modify any src files, install any packages, or perform systemd integration; show src files that would be installed
-    -r, --refresh          don't install any packages or perform systemd integration; install src files
+    -d, --dry              don't install any files nor perform system integration; show src files that would be installed
+    -r, --refresh          don't perform system integration; install src files
     -o, --overwrite        don't back up existing files, immediately overwrite them
     -h, --help             display this help and exit"
 }
@@ -65,9 +65,10 @@ if [ "$user_confirmation" != 'Y' ]; then
 fi
 
 
-# packages and systemd integration =========================================== #
+# system integration ========================================================= #
 if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
-    echo Installing packages and performing systemd integration...
+    echo Performing system integration...
+
     cwd=$(pwd)
     cd ~/Downloads
 
@@ -97,9 +98,10 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # install script dependencies
     sudo apt install pulseaudio \
                      playerctl \
+                     brightnessctl \
                      cava \
                      net-tools
-    # TODO: integrate brightnessctl elsewhere
+    sudo usermod –a –G video $USER
 
     # install font(s)
     sudo apt install fonts-3270
@@ -160,6 +162,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     cd $cwd
     echo '    ---- done.'
+
 fi
 # ========================= # 
 
@@ -398,4 +401,10 @@ src files installed: $installs
 Local files backed up: $backups
 Failures: $failures"
 # ========================= # 
+
+
+if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ] && [ $failures -eq 0 ]; then
+    echo '
+    ** System integration successful; relog to apply group changes **'
+fi
 
