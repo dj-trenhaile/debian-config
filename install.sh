@@ -1,6 +1,8 @@
 #!/bin/bash
 _REL_PATH=${BASH_SOURCE%/*}
+
 source $_REL_PATH/build/utils.sh
+
 DRY=0
 OVERWRITE=0
 REFRESH_ONLY=0

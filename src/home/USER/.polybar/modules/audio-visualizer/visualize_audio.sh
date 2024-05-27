@@ -1,9 +1,15 @@
 #!/bin/bash
 _DIR=${BASH_SOURCE%/*}
 _PIPE=/tmp/cava.$$.fifo
-trap "rm $_PIPE; exit" SIGTERM
+cleanup() {
+    rm -f $_PIPE
+}
+trap "cleanup; exit" SIGTERM
+
 export _CAVA_CONFIG=/tmp/cava.config
+
 source $_DIR/../../utils.sh
+
 DISPLAY_FRACTION=$1
 
 
@@ -29,7 +35,7 @@ done
 # run cava =================================================================== #
 
 start_cava() {
-    rm -f $_PIPE
+    cleanup
     mkfifo $_PIPE
     $_DIR/run_cava.sh &
 }
