@@ -11,7 +11,7 @@ source ${BASH_SOURCE%/*}/profiles.sh
 # set initial module state 
 echo "%{F$COLOR_DISABLED}unavailable%{F-}"
 
-(
+{
     # acquire compositor launch lock
     flock 9
 
@@ -22,5 +22,5 @@ echo "%{F$COLOR_DISABLED}unavailable%{F-}"
         balanced
     fi
     
-) 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
+} 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
 

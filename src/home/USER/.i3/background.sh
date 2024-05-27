@@ -2,7 +2,7 @@
 _SPLASH_TIME=1  # in seconds
 
 
-(
+{
     # acquire lock
     flock 9
     
@@ -15,5 +15,5 @@ _SPLASH_TIME=1  # in seconds
     # descriptor open
     flock -u 9
     
-) 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
+ } 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
 

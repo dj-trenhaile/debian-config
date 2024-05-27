@@ -6,7 +6,7 @@ set -a
 source $_POLYBAR_VARS
 set +a
 
-(
+{
     # acquire lock
     flock 9
 
@@ -28,5 +28,5 @@ set +a
     # descriptor open
     flock -u 9
     
-) 9> $_POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
+ } 9> $_POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
 

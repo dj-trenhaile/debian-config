@@ -1,11 +1,17 @@
 #!/bin/bash
 _TIMEOUT_SECS=5
-_TIMER_LOCK=/tmp/polybar_audio-descriptor_timer.$$.lock
-_VISUALIZER_STATE_LOCK=/tmp/polybar_audio-descriptor_visualizer-state.$$.lock
+_TIMER_LOCK=/var/lock/polybar_audio-descriptor_timer.lock
+_VISUALIZER_STATE_LOCK=/var/lock/polybar_audio-descriptor_visualizer-state.lock
+cleanup() {
+    rm -f $_TIMER_LOCK $_VISUALIZER_STATE_LOCK
+}
+cleanup
+trap "rm -f $_TIMER_LOCK $_VISUALIZER_STATE_LOCK; exit" SIGTERM
+
 dir=${BASH_SOURCE%/*}
 source $dir/../utils.sh
 source $dir/audio-visualizer/toggle_state.sh
-trap "rm $_TIMER_LOCK; rm $_VISUALIZER_STATE_LOCK; exit" SIGTERM
+
 DISPLAY_FRACTION=$1
 USE_PREFIX=$2
 
@@ -60,10 +66,10 @@ get_inputs() {
         echo_inputs '(none)'
 
         {
-            {
-                # attempt to acquire state lock
-                flock -n 9
-
+            # attempt to acquire state lock
+            flock -n 9
+            if [ $? -eq 0 ]; then
+                
                 # if no timer active, set one 
                 if [ $timer_pid -eq 0 ]; then
                     idle_timer &
@@ -71,15 +77,15 @@ get_inputs() {
                     # manually release lock (file descriptor passed to timer process)
                     flock -u 9
                 fi
-
-            } || {
+            
+            else
                 # lock acquisition failed ==> timer triggered and will set state: idle; acquire 
                 # state lock
                 flock 9
 
                 # reset timer_pid
                 timer_pid=0
-            }
+            fi
 
         } 9> $_VISUALIZER_STATE_LOCK  # redirect changes on lock file descriptor to lock file
     
@@ -87,33 +93,33 @@ get_inputs() {
         echo_inputs "$inputs"   
 
         {
-            {
-                # attempt to acquire visualizer state lock
-                flock -n 9
-
+            # attempt to acquire visualizer state lock
+            flock -n 9
+            if [ $? -eq 0 ]; then
+                
                 if [ $timer_pid -gt 0 ]; then
                     {
-                        {
+                        (
                             # attempt to acquire timer lock
-                            flock -n 8
+                            flock -n 8 || exit 1
                             
                             # timer triggered before visualizer state lock acquisition ==> current
                             # state is idle; set state: active
                             active
+                            
+                        ) 8> $_TIMER_LOCK  # redirect changes on lock file descriptor to lock file
 
-                        } || {
-                            # lock acquisition failed ==> timer running (will block at state change 
-                            # since state lock is acquired); kill timer
-                            kill $timer_pid
-                        }
-                        
-                        # reset timer_pid
-                        timer_pid=0
+                    } || {
+                        # lock acquisition failed ==> timer running (will block at state change 
+                        # since state lock is acquired); kill timer
+                        kill $timer_pid
+                    }
 
-                    } 8> $_TIMER_LOCK  # redirect changes on lock file descriptor to lock file
+                    # reset timer_pid
+                    timer_pid=0
                 fi
-
-            } || {
+            
+            else
                 # lock acquisition failed ==> timer triggered, state is being set: idle; acquire 
                 # state lock
                 flock 9
@@ -122,7 +128,7 @@ get_inputs() {
                 active
                 # reset timer_pid
                 timer_pid=0
-            }
+            fi
             
         } 9> $_VISUALIZER_STATE_LOCK  # redirect changes on lock file descriptor to lock file
     fi
