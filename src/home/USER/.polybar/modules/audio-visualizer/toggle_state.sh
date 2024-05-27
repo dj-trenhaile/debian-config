@@ -5,6 +5,6 @@ active() {
 }
 
 idle() {
-    pkill cava
+    pkill -f cava
 }
 
