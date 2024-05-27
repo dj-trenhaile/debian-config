@@ -1,8 +1,5 @@
 #!/bin/bash
-trap "quit=1" SIGTERM
-
 # TODO: cache wave calculations
-
 
 # init visualizer values to zeroes
 bar_values=()
@@ -32,6 +29,7 @@ print_visualizer() {
 
 # main animation loop ======================================================== # 
 quit=0
+trap "quit=1" SIGTERM
 while [ $quit -eq 0 ]; do
 
     # decrement lower idxs
