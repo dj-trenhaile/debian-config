@@ -40,10 +40,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec --no-startup-id "qdbus org.kde.ksmserver /KSMServer logout 1 0 0"
 
-# lockscreen
+# lock screen
 # bindsym $mod+Shift+x exec "i3lock"
-# TODO: optimise
-bindsym $mod+Shift+x exec --no-startup-id "playerctl pause; sleep 0.25; ~/.i3/lock_screen.sh"
+bindsym $mod+Shift+x exec --no-startup-id "~/.i3/lock_screen.sh"
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal

@@ -5,6 +5,18 @@ _OVERLAY=~/.resources/lock.png
 _BG=/tmp/screen.png
 
 
+pid_idle=$(pgrep -f idle.sh)
+restart_visualizer() {
+    kill -CONT $pid_idle
+}
+if [ "$pid_idle" == '' ]; then
+    playerctl pause
+    restart_visualizer() { : ; }
+else
+    kill -STOP $pid_idle
+fi
+
+
 # generate and cache overlay offsets ========================================= #
 
 write_overlay_offsets() {  
@@ -70,11 +82,6 @@ while read overlay_offsets; do
     overlay_num=$((overlay_num+1))
 done < <(cat $_OVERLAY_OFFSETS)
 
-# pause on-screen animations
-pid_idle=$(pgrep -f idle.sh)
-kill -STOP $pid_idle
-
-# take scrot and apply transformations
 cmd="$cmd -filter_complex $filter -vframes 1 $_BG -loglevel quiet"
 echo $cmd
 eval $cmd
@@ -82,12 +89,8 @@ eval $cmd
 # ======================== #
 
 
-# lock screen
-i3lock -i $_BG
-wait $!
+i3lock -n -i $_BG
 
-# resume on-screen animations
-kill -CONT $pid_idle
+restart_visualizer
 
-# remove processed scrot
 rm $_BG
