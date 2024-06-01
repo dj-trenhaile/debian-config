@@ -1,12 +1,11 @@
 #!/bin/bash
-_DIR=${BASH_SOURCE%/*}
-_OVERLAY=~/.resources/lock.png
-_OVERLAY_OFFSETS=/var/tmp/lockscreen_overlay_offsets.txt
-_BG=/tmp/screen.png
 _RANDR_STATE=/tmp/randr.txt
+_OVERLAY_OFFSETS=/tmp/lockscreen_overlay_offsets.txt
+_OVERLAY=~/.resources/lock.png
+_BG=/tmp/screen.png
 
 
-# ============================================================================ #
+# generate and cache overlay offsets ========================================= #
 
 write_overlay_offsets() {  
     rm -f $_OVERLAY_OFFSETS
@@ -49,6 +48,8 @@ fi
 # ======================== #
 
 
+# take transformed scrot ===================================================== #
+
 res=$(xrandr | grep current | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')  # TODO: break out
 cmd="ffmpeg -f x11grab -video_size $res -y -i $DISPLAY"
 filter='[0]boxblur=10:1'
@@ -78,18 +79,15 @@ cmd="$cmd -filter_complex $filter -vframes 1 $_BG -loglevel quiet"
 echo $cmd
 eval $cmd
 
+# ======================== #
+
+
 # lock screen
 i3lock -i $_BG
-# watch for verification via biometrics
-while pidof i3lock; do
-    if (fprintd-verify | grep verify-match); then 
-        killall i3lock
-    fi
-done
+wait $!
 
 # resume on-screen animations
 kill -CONT $pid_idle
 
 # remove processed scrot
 rm $_BG
-
