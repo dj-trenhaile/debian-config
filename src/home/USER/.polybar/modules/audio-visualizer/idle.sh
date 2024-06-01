@@ -1,5 +1,4 @@
 #!/bin/bash
-# TODO: cache wave calculations
 
 # init visualizer values to zeroes
 bar_values=()
@@ -17,10 +16,10 @@ top_idx=$((BARS_CNT - 1))
 
 # print current bar values
 print_visualizer() {
-    bar_values_translated=""
+    bar_values_translated=''
     i=0
     while [ $i -lt $BARS_CNT ]; do
-        bar_values_translated="${bar_values_translated}${bar_values[i]};"
+        bar_values_translated="$bar_values_translated${bar_values[i]};"
         i=$((i+1))
     done
     echo $bar_values_translated | sed $DICT

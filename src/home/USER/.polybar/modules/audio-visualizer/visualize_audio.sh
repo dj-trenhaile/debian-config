@@ -18,7 +18,6 @@ export BARS_CNT=$((bars_cnt_raw + (bars_cnt_raw % 2)))
 
 
 # create "dictionary" to translate cava output =============================== #
-# TODO: break out
 
 bar=▁▂▃▄▅▆▇█
 dict="s/;//g;"
