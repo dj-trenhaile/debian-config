@@ -4,4 +4,3 @@ dir=$(git rev-parse --show-toplevel)
 if [ $? -eq 0 ]; then
     tree $dir -aR -I .git*
 fi
-

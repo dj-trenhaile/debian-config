@@ -171,4 +171,3 @@ if [ $high_idx -ge 0 ]; then
 
 
 fi
-

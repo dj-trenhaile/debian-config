@@ -9,4 +9,3 @@ echo "monitor: $BAR_MONITOR"
 
 # launch bar
 polybar extras-secondary &
-

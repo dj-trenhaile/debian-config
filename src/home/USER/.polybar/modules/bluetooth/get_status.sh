@@ -43,4 +43,3 @@ while read event_line; do
             ;;
     esac
 done < <(dbus-monitor "$_WATCH_EXP")
-

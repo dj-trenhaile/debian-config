@@ -16,4 +16,3 @@ _SPLASH_TIME=1  # in seconds
     flock -u 9
     
  } 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
-

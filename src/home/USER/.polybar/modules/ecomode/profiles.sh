@@ -10,4 +10,3 @@ balanced() {
     flock -u 9  # open file descriptor passed on to picom instance; unlock explicitly
     polybar-msg hook ecomode 2 &> /dev/null
 }
-

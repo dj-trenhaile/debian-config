@@ -7,4 +7,3 @@ CMD=$1
 init_stats
 eval $CMD
 print_stats
-

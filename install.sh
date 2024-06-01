@@ -409,4 +409,3 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ] && [ $failures -eq 0 ]; then
     echo '
     ** System integration successful; relog to apply group changes **'
 fi
-

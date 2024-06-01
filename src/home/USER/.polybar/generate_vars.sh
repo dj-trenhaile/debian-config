@@ -33,4 +33,3 @@ vars="${vars}BAR_BATTERY_ADAPTER=${ADP}\n"
 cat $HOME/.config/polybar/labels.txt > $_POLYBAR_VARS
 echo -e "\n\n${vars}" >> $_POLYBAR_VARS
 # ======================== #
-

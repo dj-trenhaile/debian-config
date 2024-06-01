@@ -7,4 +7,3 @@ active() {
 idle() {
     pkill -f cava
 }
-

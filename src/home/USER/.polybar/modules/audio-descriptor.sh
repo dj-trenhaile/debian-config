@@ -143,4 +143,3 @@ while read event; do
         get_inputs
     fi
 done < <(pactl subscribe)
-

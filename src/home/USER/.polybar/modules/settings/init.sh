@@ -6,4 +6,3 @@ else
     echo  
 fi
 systemctl --user start polybar-module_settings.service &> /dev/null
-

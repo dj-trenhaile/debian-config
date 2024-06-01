@@ -6,4 +6,3 @@ while read process; do
         kill $pid
     fi
 done < <(ps -C polybar -o args,pid= | grep extras-secondary | tr -s ' ')
-

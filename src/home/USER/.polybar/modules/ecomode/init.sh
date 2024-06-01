@@ -23,4 +23,3 @@ echo "%{F$COLOR_DISABLED}unavailable%{F-}"
     fi
     
 } 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
-

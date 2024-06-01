@@ -29,4 +29,3 @@ set +a
     flock -u 9
     
  } 9> $_POLYBAR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
-

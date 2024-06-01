@@ -11,4 +11,3 @@ while read event; do
         pkill -USR1 -f "$cmd"
     fi
 done < <(pactl subscribe)
-

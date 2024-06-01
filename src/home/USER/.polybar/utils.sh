@@ -28,4 +28,3 @@ get_num_chars_20_mono() {
     FONT_WIDTH=0.067
     get_num_chars $1 $2 $FONT_WIDTH
 }
-

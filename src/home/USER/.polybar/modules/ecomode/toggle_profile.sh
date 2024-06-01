@@ -15,4 +15,3 @@ source ${BASH_SOURCE%/*}/profiles.sh
     }
 
  } 9> $_COMPOSITOR_LAUNCH_LOCK  # redirect changes on lock file descriptor to lock file
-

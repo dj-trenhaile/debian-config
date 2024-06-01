@@ -26,4 +26,3 @@ watch_losses() {
 
 watch_acquisitions &
 watch_losses &
-

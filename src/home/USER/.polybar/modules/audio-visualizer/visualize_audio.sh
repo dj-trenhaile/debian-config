@@ -69,4 +69,3 @@ while true; do
         start_cava
     fi
 done
-

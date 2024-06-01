@@ -27,4 +27,3 @@ done < <(tail +2 < <(xrandr --listactivemonitors))
 
 echo $ret
 exit $stat
-

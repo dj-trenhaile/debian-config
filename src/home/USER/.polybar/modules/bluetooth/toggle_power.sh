@@ -5,4 +5,3 @@ if [ "$(bluetoothctl show | grep 'Powered: yes')" == '' ]; then
 else
     bluetoothctl power off
 fi
-
