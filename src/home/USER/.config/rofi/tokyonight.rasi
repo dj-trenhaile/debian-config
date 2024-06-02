@@ -88,4 +88,3 @@ element-text {
 element-text selected {
   text-color: @fg-alt;
 }
-
