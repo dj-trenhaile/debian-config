@@ -222,4 +222,3 @@ exec_always --no-startup-id "~/.polybar/launch.sh"
 # bind alternative on-demand bars
 bindsym $mod+p exec --no-startup-id "~/.polybar/extra_bars/launch.sh"
 bindsym $mod+Shift+p exec --no-startup-id "~/.polybar/extra_bars/terminate.sh"
-
