@@ -1,8 +1,0 @@
-#
-# PAM configuration file for the i3lock screen locker. By default, it includes
-# the 'login' configuration file (see /etc/pam.d/login)
-#
-
-auth sufficient pam_unix.so
-auth sufficient pam_fprintd.so max-tries=1 timeout=10
-auth requisite pam_deny.so

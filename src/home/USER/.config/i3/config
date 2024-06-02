@@ -41,7 +41,6 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec --no-startup-id "qdbus org.kde.ksmserver /KSMServer logout 1 0 0"
 
 # lock screen
-# bindsym $mod+Shift+x exec "i3lock"
 bindsym $mod+Shift+x exec --no-startup-id "~/.i3/lock_screen.sh"
 
 # start a terminal
@@ -214,9 +213,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 10%-"
 # screenshots
 bindsym Print exec --no-startup-id spectacle
 bindsym Control+Print exec --no-startup-id "spectacle -r"
-
-# load extra mappings (e.g., compose key)
-exec --no-startup-id "xmodmap ~/.Xmodmap"
 
 # xdg-desktop-portal-kde ui size work-around, as per https://www.reddit.com/r/kde/comments/xkwq4i/saving_file_dialog_in_gtk_app_too_small/
 exec --no-startup-id "systemctl --user restart plasma-xdg-desktop-portal-kde"

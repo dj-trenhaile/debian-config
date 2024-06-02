@@ -92,8 +92,14 @@ eval $cmd
 # ======================== #
 
 
-i3lock -n -i $_BG
-
-restart_visualizer
-
-rm $_BG
+qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock
+while read event_line; do
+    if [ "$event_line" == 'boolean false' ]; then
+        echo restarting
+        restart_visualizer
+        break
+    fi
+done < <(dbus-monitor "type=signal, \
+                       path=/ScreenSaver, \
+                       interface=org.freedesktop.ScreenSaver, \
+                       member=ActiveChanged")
