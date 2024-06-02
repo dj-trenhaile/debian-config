@@ -126,5 +126,5 @@ In /shortcuts:
 'update-alternatives'
 
 ## TODO
-- migrate manual system settings to install.sh; looking at ~/.config, including kde.org/systemsettings.conf
+- migrate System Settings section to auto dotfile install
 - spotify pulseaudio sink input cleanup service
