@@ -54,11 +54,9 @@ Install Howdy: https://github.com/boltgolt/howdy
 ### Appearance
 Global Theme: Breeze Dark (appearance and desktop/window layout)
 ### Workspace Behavior
-- Desktop Effects
-    - Zoom: no
-- Screen Locking
-    - never lock screen automatically
-    - no keyboard shortcut
+Screen Locking
+- never lock screen automatically
+- no keyboard shortcut
 ### Startup and Shutdown
 - Autostart: none
 - Background Services: enable only:
