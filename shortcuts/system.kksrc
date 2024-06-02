@@ -1,6 +1,3 @@
-[ActivityManager][Global Shortcuts]
-switch-to-activity-58c7d575-5c48-49c7-8ed7-b0e4de685b9e=
-
 [KDE Keyboard Layout Switcher][Global Shortcuts]
 Switch to Next Keyboard Layout=
 
@@ -90,41 +87,24 @@ Zoom=
 ZoomIn=Ctrl+=
 ZoomOut=Ctrl+-
 
-[kaccess][Global Shortcuts]
-Toggle Screen Reader On and Off=
-
 [kcm_touchpad][Global Shortcuts]
 Disable Touchpad=Touchpad Off
 Enable Touchpad=Touchpad On
 Toggle Touchpad=Touchpad Toggle
 
-[khotkeys][Global Shortcuts]
-{d03619b6-9b3c-48cc-9d9c-a2aadb485550}=
-
-[kmix][Global Shortcuts]
-decrease_volume=Volume Down
-increase_volume=Volume Up
-mute=Volume Mute
-
-[knotes][Global Shortcuts]
-hide_all_notes=
-new_note=
-new_note_clipboard=
-show_all_notes=
-
 [ksmserver][Global Shortcuts]
 Halt Without Confirmation=
 Lock Session=
-Log Out=Power Off; Alt+Shift+E
+Log Out=Alt+Shift+E; Power Off
 Log Out Without Confirmation=
 Reboot Without Confirmation=
- 
+
 [org_kde_powerdevil][Global Shortcuts]
 Decrease Keyboard Brightness=Keyboard Brightness Down
-Decrease Screen Brightness=Monitor Brightness Down
+Decrease Screen Brightness=
 Hibernate=Hibernate
 Increase Keyboard Brightness=Keyboard Brightness Up
-Increase Screen Brightness=Monitor Brightness Up
+Increase Screen Brightness=
 PowerDown=
 PowerOff=
 Sleep=Sleep
