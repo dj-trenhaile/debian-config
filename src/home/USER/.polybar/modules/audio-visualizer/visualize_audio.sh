@@ -56,6 +56,8 @@ start_cava
 # ======================== #
 
 
+# TODO: laptop sleep bug
+
 while true; do
     if [ -p $_PIPE ]; then
         # read cava output
