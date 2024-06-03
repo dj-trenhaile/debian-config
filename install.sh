@@ -91,11 +91,18 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      rofi \
                      picom \
                      nitrogen \
-                     libinput-tools \
-                     blueman \
                      lxappearance
-    # settings
+
+    
+    # ========================= #
+    # core software
+    # ========================= #
+    
+    sudo apt install libinput-tools \
+                     blueman
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
+    sudo apt remove bluedevil
+
 
     # install script dependencies
     sudo apt install pulseaudio \
@@ -124,7 +131,11 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     fi
     fc-cache -vf /usr/share/fonts
 
-    # install other software
+
+    # ========================= #
+    # optional software
+    # ========================= #
+
     sudo apt install google-chrome-stable \
                      xdotool \
                      xclip \
@@ -155,12 +166,13 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
         code --install-extension $extension
     done
 
-    # install and configure anaconda
+    # anaconda
     if [ "$(which conda)" == '' ]; then
         wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
         bash Mambaforge-$(uname)-$(uname -m).sh
         conda config --set env_prompt '({name})'
     fi
+    
 
     cd $cwd
     echo '    ---- done.'
