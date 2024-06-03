@@ -52,14 +52,13 @@ Install Howdy: https://github.com/boltgolt/howdy
 
 ## System Settings
 ### Appearance
-Global Theme: Breeze Dark (appearance and desktop/window layout)
-### Workspace Behavior
-Screen Locking
-- never lock screen automatically
-- no keyboard shortcut
+- Global Theme: Breeze Dark (appearance and desktop/window layout)
+- Application Style > Configure GNOME/GTK Application Style... > GTK Theme: Breeze
+### Shortcuts
+Import /shortcuts/system.kkrc via Import Schema...
 ### Startup and Shutdown
 - Autostart: none
-- Background Services: enable only:
+- Background Services > enable only:
     - Accounts
     - Automatic Location for Night Color
     - Gnome/GTK Settings Synchronization Service
@@ -73,33 +72,27 @@ Screen Locking
     - (opt) Touchpad
     - Write Daemon
 - Desktop Session: start an empty session
-### KDE Wallet
-Enable the KDE wallet subsystem: no
 ### Input Devices
 - Keyboard
     - Hardware
         - NumLock on Plasma Startup: Turn on
     - Advanced
         - Position of Compose key: Left Win
-### Power Management
-- Energy Saving
-    - Screen Energy Saving: disable
-    - Suspend Session: disable
-    - Power Button: user discretion
+- (opt) Touchpad
+    - Pointer acceleration: 0.60
+    - enable all Tapping options
 
 ## Other appearance settings
 - `nitrogen`: set image to desired; see ~/.resources
 - `konsole` 
     - Enable provided profile, set as default
     - Disable system and session toolbars
-- `lxappearance`: set application theme to Breeze-Dark
-    - **Also run as root to configure root applications (e.g., GParted)
 - `code`: hide Gitlens's commit graph from Source Control and Commit views
 
-## Other shortcuts
-In /shortcuts:
-- system shortcuts provided as system.kksrc; imported from System Settings->Shortcuts->Import Schema...
-- application shortcuts provided as \<app name\>.shortcuts; imported from their cooresponding applications, from Settings->Configure Keyboard Shortcuts...->Manage Schemas->More Actions->Import Schema...
+## Shortcuts
+In /shortcuts, import:
+- system.kksrc via System Settings > Shortcuts > Import Schema...
+- \<app name\>.shortcuts via \<app\> > Settings > Configure Keyboard Shortcuts... > Manage Schemas > More Actions > Import Schema...
 
 ## Other software
 - Jupyter notebook
@@ -126,5 +119,5 @@ In /shortcuts:
 'update-alternatives'
 
 ## TODO
-- migrate System Settings section to auto dotfile install
+- migrate System Settings section to programmatic install
 - spotify pulseaudio sink input cleanup service
