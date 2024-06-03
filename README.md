@@ -115,6 +115,8 @@ In /shortcuts, import:
 ### Keycodes
 - `xev`
 - `showkey`
+### Window properties
+`xprop`
 ### Packages, maintain multiple versions
 'update-alternatives'
 

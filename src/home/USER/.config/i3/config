@@ -21,9 +21,6 @@ bindsym $mod+Shift+e exec --no-startup-id "qdbus org.kde.ksmserver /KSMServer lo
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# lock screen
-bindsym $mod+Shift+x exec --no-startup-id "~/.i3/lock_screen.sh"
-
 # sound control
 exec --no-startup-id "pulseaudio --start"
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
@@ -37,9 +34,15 @@ bindsym XF86AudioPrev exec --no-startup-id "playerctl previous"
 bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl set 10%+"
 bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 10%-"
 
-# screenshots
-bindsym Print exec --no-startup-id spectacle
-bindsym Control+Print exec --no-startup-id "spectacle -r"
+# lock screen
+bindsym $mod+Shift+x exec --no-startup-id "~/.i3/lock_screen.sh"
+
+# programmer launcher
+# TODO: debug alternating positions on run
+# for_window [class="krunner"] move up 30 ppt
+
+# terminal
+bindsym $mod+Return exec i3-sensible-terminal
 
 # ======================== #
 
@@ -116,8 +119,8 @@ bindsym $mod+f fullscreen toggle
 # ======================== #
 
 # focus related container
-bindsym $mod+a focus parent
-bindsym $mod+d focus child
+bindsym $mod+i focus parent
+bindsym $mod+. focus child
 # split container
 bindsym $mod+h split h
 bindsym $mod+v split v
@@ -216,18 +219,14 @@ bindsym $mod+Shift+p exec --no-startup-id "~/.polybar/extra_bars/terminate.sh"
 # ======================== #
 
 
-# applications =============================================================== #
+# other applications ========================================================= #
 
-# programmer launcher
-for_window [class="krunner"] floating enable, border none
-bindsym $mod+d exec --no-startup-id krunner
+# screenshots
+bindsym Print exec --no-startup-id spectacle
+bindsym Control+Print exec --no-startup-id "spectacle -r"
 
 # klipper
-for_window [class="Klipper"] floating enable, border none
 exec --no-startup-id "klipper &"
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
 
 # ======================== #
 
