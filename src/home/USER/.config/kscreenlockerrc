@@ -1,0 +1,7 @@
+[Daemon]
+Autolock=false
+LockGrace=0
+LockOnResume=false
+
+[Greeter][Wallpaper][org.kde.image][General]
+Image=file:///tmp/screen.png
