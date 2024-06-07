@@ -87,7 +87,6 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # install window management and appearance software
     sudo apt install i3 \
                      polybar \
-                     rofi \
                      picom \
                      nitrogen
 
