@@ -37,10 +37,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 10%-"
 # lock screen
 bindsym $mod+Shift+x exec --no-startup-id "~/.i3/lock_screen.sh"
 
-# TODO: debug positioning; use blueman as reference
-# program launcher
-# for_window [class="krunner"] move up 30 ppt
-
 # terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
