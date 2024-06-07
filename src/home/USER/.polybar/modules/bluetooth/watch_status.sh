@@ -1,8 +1,4 @@
 #!/bin/bash
-_WATCH_EXP="type=signal, \
-            path=/org/blueman/Applet, \
-            interface=org.blueman.Applet, \
-            member=IconNameChanged"
 _MSG_PREFIX='string "blueman-'
 
 
@@ -42,4 +38,7 @@ while read event_line; do
             print_connected
             ;;
     esac
-done < <(dbus-monitor "$_WATCH_EXP")
+done < <(dbus-monitor "type=signal, \
+                       path=/org/blueman/Applet, \
+                       interface=org.blueman.Applet, \
+                       member=IconNameChanged")
