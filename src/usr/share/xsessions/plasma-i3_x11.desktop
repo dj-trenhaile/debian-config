@@ -2,4 +2,4 @@
 Name=Plasma i3
 Exec=/usr/bin/startplasma-x11
 Type=Application
-DesktopNames=i3
+DesktopNames=KDE
