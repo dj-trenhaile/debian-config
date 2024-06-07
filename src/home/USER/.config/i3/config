@@ -37,8 +37,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 10%-"
 # lock screen
 bindsym $mod+Shift+x exec --no-startup-id "~/.i3/lock_screen.sh"
 
-# programmer launcher
-# TODO: debug alternating positions on run
+# TODO: debug positioning; use blueman as reference
+# program launcher
 # for_window [class="krunner"] move up 30 ppt
 
 # terminal
@@ -204,11 +204,11 @@ font pango:3270 Nerd Font Mono 10
 # font, it doesn’t scale on retina/hidpi displays.
 
 # generic window rules
-for_window [instance="systemsettings"] floating enable, border none, sticky enable, resize set width 75 ppt height 75 ppt, move position center
-no_focus [instance="systemsettings"]
+for_window [instance="systemsettings"] floating enable, border none, sticky enable, \
+                                       resize set width 75 ppt height 75 ppt, move position center
 for_window [window_type="dialog"] resize set width 50 ppt height 50 ppt, move position center
-for_window [instance="blueman-manager"] floating enable, border none, resize set width 25 ppt height 25 ppt, move position center, move right 20 ppt, move down 33 ppt
-no_focus [instance="blueman-manager"]
+for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
+                                        move position 69 ppt 71 ppt
 
 # polybar
 exec_always --no-startup-id "~/.polybar/launch.sh"

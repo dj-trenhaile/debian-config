@@ -1,0 +1,15 @@
+[$Version]
+update_info=kwinrules.upd:replace-placement-string-to-enum,kwinrules.upd:use-virtual-desktop-ids
+
+[7cc20a90-3468-4bb3-a5f9-7a211d704967]
+Description=enforce blueman-manager size
+ignoregeometry=true
+ignoregeometryrule=2
+size=600,450
+sizerule=2
+wmclass=blueman-manager
+wmclassmatch=1
+
+[General]
+count=1
+rules=7cc20a90-3468-4bb3-a5f9-7a211d704967
