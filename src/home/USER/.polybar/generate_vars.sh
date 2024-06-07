@@ -29,7 +29,7 @@ vars="${vars}BAR_BATTERY_ADAPTER=${ADP}\n"
 # ======================== #
 
 
-# write labels and variables ================================================= #
-cat $HOME/.config/polybar/labels.txt > $_POLYBAR_VARS
+# write formatting and generated variables =================================== #
+cat $HOME/.config/polybar/vars.txt > $_POLYBAR_VARS
 echo -e "\n\n${vars}" >> $_POLYBAR_VARS
 # ======================== #
