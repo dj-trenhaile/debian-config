@@ -7,7 +7,7 @@ _MSG_PREFIX='string "blueman-'
 
 
 print_disabled() {
-    echo "%{F$COLOR_DISABLED}%{F-}"
+    echo "%{F$_COLOR_DISABLED}%{F-}"
 }
 
 print_disconnected() {

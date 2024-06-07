@@ -9,7 +9,7 @@ source ${BASH_SOURCE%/*}/profiles.sh
 
 
 # set initial module state 
-echo "%{F$COLOR_DISABLED}unavailable%{F-}"
+echo "%{F$_COLOR_DISABLED}unavailable%{F-}"
 
 {
     # acquire compositor launch lock

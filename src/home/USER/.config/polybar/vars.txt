@@ -1,5 +1,6 @@
 _COLOR_PRIMARY=#F0C674
 _COLOR_ALERT=#A54242
+_COLOR_DISABLED=#707880
 
 
 BAR_FILESYSTEM_LABEL_MOUNTED="%{F$_COLOR_PRIMARY}%mountpoint%%{F-} %percentage_used%%"
@@ -17,10 +18,8 @@ BAR_BATTERY_FORMAT_DISCHARGING="$BAR_BATTERY_RAMP<label-discharging>"
 BAR_BATTERY_FORMAT_FULL="$BAR_BATTERY_RAMP<label-full>"
 BAR_BATTERY_FORMAT_LOW="%{F$_COLOR_ALERT}<animation-low>%{F-}<label-low>"
 
-BAR_WLAN_LABEL_CONNECTED="%essid%%{O8pt}%local_ip% %{F$_COLOR_PRIMARY}%{F-}%{O4pt}%downspeed%"
+BAR_NETWORK_LABEL_CONNECTED="%local_ip% %{F$_COLOR_PRIMARY}%{F-}%{O4pt}%downspeed%"
 BAR_WLAN_FORMAT_CONNECTED="%{F$_COLOR_PRIMARY}<ramp-signal>%{F-}<label-connected>"
-
-BAR_ETH_LABEL_CONNECTED="%{08pt}%local_ip% %{F$_COLOR_PRIMARY}%{F-}%{O4pt}%downspeed%"
 BAR_ETH_FORMAT_CONNECTED="%{F$_COLOR_PRIMARY}󰈁%{F-}<label-connected>"
 
 BAR_DATE_TIME="%%{F$_COLOR_PRIMARY}%H:%M%%{F-}" 
