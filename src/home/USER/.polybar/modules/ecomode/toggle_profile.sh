@@ -7,7 +7,7 @@ source ${BASH_SOURCE%/*}/profiles.sh
     flock -n 9 && {
 
         # apply power profile and update module
-        if [ "$(powerprofilesctl get)" == "power-saver" ]; then 
+        if [ "$(powerprofilesctl get)" == 'power-saver' ]; then 
             balanced
         else   
             power-saver
