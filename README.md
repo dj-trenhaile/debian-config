@@ -55,7 +55,7 @@ Install Howdy: https://github.com/boltgolt/howdy
 - Global Theme: Breeze Dark (appearance and desktop/window layout)
 - Application Style > Configure GNOME/GTK Application Style... > GTK Theme: Breeze
 ### Shortcuts
-Import /shortcuts/system.kkrc via Import Schema...
+Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
 ### Startup and Shutdown
 - Autostart: none
 - Background Services > enable only:
@@ -90,7 +90,7 @@ Import /shortcuts/system.kkrc via Import Schema...
 - `code`: hide Gitlens's commit graph from Source Control and Commit views
 
 ## Shortcuts
-In /shortcuts, import:
+In \<top-level\>/shortcuts, import:
 - system.kksrc via System Settings > Shortcuts > Import Schema...
 - \<app name\>.shortcuts via \<app\> > Settings > Configure Keyboard Shortcuts... > Manage Schemas > More Actions > Import Schema...
 
