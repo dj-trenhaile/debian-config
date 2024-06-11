@@ -4,55 +4,32 @@ DEST=$1
 
 if [ -f "$DEST/.last_external_replay" ]; then
 
-    readarray changes < <(git diff --name-status -z $(cat $DEST/.last_external_replay) HEAD | tr "\0" "\n")
-
+    readarray -t changes < <(git diff --name-status -z $(cat $DEST/.last_external_replay) HEAD | tr "\0" "\n")   
 
     i=0
     while [ $i -lt ${#changes[@]} ]; do
-        
-        case ${changes[i]} in
+        case ${changes[((i++))]} in
             R*)
-                # TODO
-                echo rename: ${changes[i]}
-
-                ((i++))
+                echo "rename: ${changes[i]}"
                 mv "$DEST/${changes[i]}" "$DEST/${changes[i + 1]}"
-                ((i++))
+                ((i += 2))
                 ;;
-            
             A | M)
-                # TODO
-                echo append or modify: ${changes[i]}
-            
-                
+                echo "append/modify: ${changes[i]}"
+                cp "${changes[((i++))]}" "$DEST"
                 ;;
-
             *)
-                # TODO
-                echo default: ${changes[i]}
-
-
-
+                echo "**unknown op: ${changes[((i++))]}"
                 ;;
         esac
+    done
 
 else
-
-
-
-
-    
-
-
-
-
-
-    objects=$(git ls-files)
+    echo "**copying all"
+    while read file; do
+        echo "$file"
+        cp "$file" "$DEST"
+    done < <(git ls-files -z | tr "\0" "\n")
 fi
 
-
-
-
-
-# TODO
 git rev-parse HEAD > $DEST/.last_external_replay
