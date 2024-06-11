@@ -81,9 +81,8 @@ while read overlay_offsets; do
   
     # add overlay offsets to ffmpeg filter
     filter_stage="[o$overlay_num]"
-    filter="$filter${filter_stage}\;$filter_stage[$overlay_num]overlay=$x_offset:$y_offset"
-  
-    overlay_num=$((overlay_num+1))
+    filter="$filter${filter_stage}\;$filter_stage[$((overlay_num++))]overlay=$x_offset:$y_offset"
+
 done < <(cat $_OVERLAY_OFFSETS)
 
 cmd="$cmd -filter_complex $filter -vframes 1 $_BG -loglevel quiet"

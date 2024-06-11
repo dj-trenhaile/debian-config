@@ -3,9 +3,8 @@
 # init visualizer values to zeroes
 bar_values=()
 i=0
-while [ $i -lt $BARS_CNT ]; do
+while [ $((i++)) -lt $BARS_CNT ]; do
     bar_values+=(0)
-    i=$((i+1))
 done
 
 # define wave start idx s.t. whole wave starts out of bar
@@ -19,8 +18,7 @@ print_visualizer() {
     bar_values_translated=''
     i=0
     while [ $i -lt $BARS_CNT ]; do
-        bar_values_translated="$bar_values_translated${bar_values[i]};"
-        i=$((i+1))
+        bar_values_translated="$bar_values_translated${bar_values[((i++))]};"
     done
     echo $bar_values_translated | sed $DICT
 }
@@ -45,7 +43,7 @@ while [ $quit -eq 0 ]; do
         i=$low_idx
         while [ $i -le $high_idx ]; do
             bar_values[$i]=$((bar_values[i] - 1))
-            i=$((i+1))
+            ((i++))
         done
     fi
     
@@ -63,14 +61,14 @@ while [ $quit -eq 0 ]; do
         i=$low_idx
         while [ $i -le $high_idx ]; do
             bar_values[$i]=$((bar_values[i] + 1))
-            i=$((i+1))
+            ((i++))
         done
     fi
 
     print_visualizer
     sleep $ANIM_DELAY
 
-    crest_idx=$((crest_idx+1))
+    ((crest_idx++))
     # reset if animation cycle finished
     if [ $crest_idx -ge $((top_idx + BARS_RANGE)) ]; then
         crest_idx=$wave_start_idx
@@ -111,14 +109,13 @@ if [ $high_idx -ge 0 ]; then
             # zero 3 old columns (crest_idx += 2, range -= 1)
             
             i=$((low_idx - 1))
-            lower_bound=$((i-2))  # inclusive
+            lower_bound=$((i - 2))  # inclusive
             if [ $lower_bound -lt 0 ]; then
                 lower_bound=0
             fi
             
             while [ $i -ge $lower_bound ]; do
-                bar_values[$i]=0
-                i=$((i-1))
+                bar_values[((i--))]=0
             done
         fi
 
@@ -134,10 +131,7 @@ if [ $high_idx -ge 0 ]; then
             idx=$((new_crest_idx - 1))
             value=$((new_crest_value - 1))
             while [ $idx -ge $low_idx ]; do
-                bar_values[$idx]=$value
-
-                idx=$((idx-1))
-                value=$((value-1))
+                bar_values[((idx--))]=$((value--))
             done
         fi
 
@@ -150,10 +144,7 @@ if [ $high_idx -ge 0 ]; then
             idx=$((new_crest_idx + 1))
             value=$((new_crest_value - 1))
             while [ $idx -le $high_idx ]; do
-                bar_values[$idx]=$value
-
-                idx=$((idx+1))
-                value=$((value-1))
+                bar_values[((idx++))]=$((value--))
             done
         fi
 

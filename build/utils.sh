@@ -19,7 +19,7 @@ replace_file() {
             
             # perform backup
             mv $local_file_path $backup_path
-            backups=$((backups+1))
+            ((backups++))
             echo $backup_path
         
         } || handle_failure
@@ -32,7 +32,7 @@ install_file() {
     echo -n '        install: '
     {
         cp $file_path $local_file_path
-        installs=$((installs+1))
+        ((installs++))
         echo $local_file_path
     
     } || handle_failure
@@ -56,7 +56,7 @@ print_file_path() {
 
 handle_failure() {
     echo FAILED
-    failures=$((failures+1))
+    ((failures++))
 }
 
 # ========================= # 
@@ -86,7 +86,7 @@ parse_log() {
     i=1
     for stat in ${_STATS[@]}; do
         declare -g -i $stat=$((${!stat} + $(echo $log_stats | cut -d ' ' -f$i)))
-        i=$((i+1))
+        ((i++))
     done
 }
 

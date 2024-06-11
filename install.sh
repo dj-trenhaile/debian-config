@@ -375,7 +375,7 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
 
         sed -i "$append_line_num a \\\\" $local_file_path
         sed -i "$append_line_num r $file_path" $local_file_path
-        installs=$((installs+1))
+        ((installs++))
     
     else
         # local file doesn't exist; copy from src

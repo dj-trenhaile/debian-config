@@ -25,7 +25,7 @@ dict="s/;//g;"
 i=0
 while [ $i -lt ${#bar} ]; do
     dict="${dict}s/$i/${bar:$i:1}/g;"
-    i=$((i+1))
+    ((i++))
 done
 
 # ======================== #
