@@ -1,6 +1,58 @@
 #!/bin/bash
+DEST=$1
 
-# TODO: implement
 
-# see manuals for git-replay (in-repo only) and various plumbing cmds, e.g., 
-# rev-parse
+if [ -f "$DEST/.last_external_replay" ]; then
+
+    readarray changes < <(git diff --name-status -z $(cat $DEST/.last_external_replay) HEAD | tr "\0" "\n")
+
+
+    i=0
+    while [ $i -lt ${#changes[@]} ]; do
+        
+        case ${changes[i]} in
+            R*)
+                # TODO
+                echo rename: ${changes[i]}
+
+                ((i++))
+                mv "$DEST/${changes[i]}" "$DEST/${changes[i + 1]}"
+                ((i++))
+                ;;
+            
+            A | M)
+                # TODO
+                echo append or modify: ${changes[i]}
+            
+                
+                ;;
+
+            *)
+                # TODO
+                echo default: ${changes[i]}
+
+
+
+                ;;
+        esac
+
+else
+
+
+
+
+    
+
+
+
+
+
+    objects=$(git ls-files)
+fi
+
+
+
+
+
+# TODO
+git rev-parse HEAD > $DEST/.last_external_replay
