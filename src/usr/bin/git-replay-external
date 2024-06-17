@@ -12,7 +12,8 @@ if [ -f "$DEST/.last_external_replay" ]; then
             R*)
                 echo "rename: ${changes[i]}"
                 mv "$DEST/${changes[i]}" "$DEST/${changes[i + 1]}"
-                ((i += 2))
+                cp "${changes[((++i))]}" "$DEST"
+                ((i += 1))
                 ;;
             A | M)
                 echo "append/modify: ${changes[i]}"
