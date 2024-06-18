@@ -204,7 +204,7 @@ for_window [instance="systemsettings"] floating enable, border none, sticky enab
                                        resize set width 75 ppt height 75 ppt, move position center
 for_window [window_type="dialog"] resize set width 50 ppt height 50 ppt, move position center
 for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
-                                        move position 69 ppt 67 ppt
+                                        move position 67 ppt 67 ppt
 
 # polybar
 exec_always --no-startup-id "~/.polybar/launch.sh"
