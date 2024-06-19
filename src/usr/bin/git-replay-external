@@ -11,9 +11,8 @@ if [ -f "$DEST/.last_external_replay" ]; then
         case ${changes[((i++))]} in
             R*)
                 echo "rename: ${changes[i]}"
-                mv "$DEST/${changes[i]}" "$DEST/${changes[i + 1]}"
-                cp "${changes[((++i))]}" "$DEST"
-                ((i += 1))
+                rm "$DEST/${changes[((i++))]}"
+                cp "${changes[((i++))]}" "$DEST"
                 ;;
             A | M)
                 echo "append/modify: ${changes[i]}"
