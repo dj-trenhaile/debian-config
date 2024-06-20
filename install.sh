@@ -170,8 +170,9 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     # anaconda
     if [ "$(which conda)" == '' ]; then
-        wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
-        bash Mambaforge-$(uname)-$(uname -m).sh
+        wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh
+        chmod +x Miniforge3-$(uname)-$(uname -m).sh
+        bash Miniforge3-$(uname)-$(uname -m).sh
         conda config --set env_prompt '({name})'
     fi
     
