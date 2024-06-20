@@ -20,7 +20,7 @@ BAR_BATTERY_FORMAT_LOW="%{F$_COLOR_ALERT}<animation-low>%{F-}<label-low>"
 
 BAR_NETWORK_LABEL_CONNECTED="%local_ip% %{F$_COLOR_PRIMARY}%{F-}%{O4pt}%downspeed%"
 BAR_WLAN_FORMAT_CONNECTED="%{F$_COLOR_PRIMARY}<ramp-signal>%{F-}<label-connected>"
-BAR_ETH_FORMAT_CONNECTED="%{F$_COLOR_PRIMARY}󰈁%{F-}<label-connected>"
+BAR_ETH_FORMAT_CONNECTED="%{F$_COLOR_PRIMARY}󰈁%{F-}%{O8pt}<label-connected>"
 
 BAR_DATE_TIME="%%{F$_COLOR_PRIMARY}%H:%M%%{F-}" 
 BAR_DATE_DATEALT="%%{F$_COLOR_PRIMARY}%Y-%m-%d%%{F-} "
