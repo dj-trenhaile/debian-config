@@ -83,9 +83,13 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
         - NumLock on Plasma Startup: Turn on
     - Advanced
         - Position of Compose key: Left Win
+- Mouse
+    - Pointer Speed: set desired
+    - Acceleration profile: Adaptive
 - (opt) Touchpad
     - Pointer acceleration: 0.60
     - enable all Tapping options
+    - Scrolling: Invert scroll direction
 
 ## Other appearance settings
 - `nitrogen`: set image to desired; see ~/.resources
