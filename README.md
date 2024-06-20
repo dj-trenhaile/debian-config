@@ -13,6 +13,11 @@
     - kde-standard
     - kde-plasma-desktop
 
+## Install core applications
+- chrome
+- git
+- vscode
+
 ## Files
 Clone repo and run install.sh.
 
