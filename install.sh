@@ -109,6 +109,9 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      net-tools
     sudo usermod –a –G video $USER
 
+
+    # TODO: refactor
+
     # install font(s)
     sudo apt install fonts-3270
     fonts=$(fc-list)
@@ -133,8 +136,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # optional software
     # ========================= #
 
-    sudo apt install google-chrome-stable \
-                     xdotool \
+    sudo apt install xdotool \
                      xclip \
                      ffmpeg \
                      font-manager \
@@ -162,6 +164,9 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     for extension in ${vscode_extensions[@]}; do
         code --install-extension $extension
     done
+
+
+    # TODO: refactor
 
     # anaconda
     if [ "$(which conda)" == '' ]; then

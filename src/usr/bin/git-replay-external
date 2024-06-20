@@ -6,6 +6,7 @@ if [ -f "$DEST/.last_external_replay" ]; then
 
     readarray -t changes < <(git diff --name-status -z $(cat $DEST/.last_external_replay) HEAD | tr "\0" "\n")   
 
+    # TODO: refactor
     i=0
     while [ $i -lt ${#changes[@]} ]; do
         case ${changes[((i++))]} in
