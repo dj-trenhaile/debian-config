@@ -297,6 +297,9 @@ for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
     done
 done
 
+
+# TODO: first-time install bug
+
 echo '    -------- top-level dotfile insertions...'
 HEADER='# >>> DE install >>>'
 FOOTER='# <<< DE install <<<'
