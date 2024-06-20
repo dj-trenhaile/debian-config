@@ -1,3 +1,0 @@
-#!/bin/bash
-
-rofi -show filebrowser -theme custom_theme
