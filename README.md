@@ -28,8 +28,8 @@ Clone repo and run install.sh.
     - if failing to write config, either copy raw output to file manually or
     try `sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit`
 - via xrandr (recommended; most flexible) - add startup configuration commands to ~/.xprofile
-    - rotate a display: `xrandr --output \<display\> --rotate \<direction\>`
-    - scale a display: `xrandr --output \<display\> --scale \<Px\>x\<Py\> --fb \<Sx\>x\<Sy\> --pos \<Ox\>x\<Oy\>`
+    - rotate a display: `xrandr --output <display> --rotate <direction>`
+    - scale a display: `xrandr --output <display> --scale <Px>x<Py> --fb <Sx>x<Sy> --pos <Ox>x<Oy>`
         - Px and Py: display picture width and height scalars, respectively
         - Sx and Sy: virtual screen width and height, respectively
         - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
