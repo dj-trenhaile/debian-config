@@ -133,3 +133,4 @@ In \<top-level\>/shortcuts, import:
 ## TODO
 - migrate System Settings section to programmatic install
 - spotify pulseaudio sink input cleanup service
+- partially revert bash string changes
