@@ -57,6 +57,8 @@ Install Howdy: https://github.com/boltgolt/howdy
 ### Appearance
 - Global Theme: Breeze Dark (appearance and desktop/window layout)
 - Application Style > Configure GNOME/GTK Application Style... > GTK Theme: Breeze
+### Workspace Behavior
+General Behavior: Click files or folders: Selects them
 ### Shortcuts
 Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
 ### Startup and Shutdown
