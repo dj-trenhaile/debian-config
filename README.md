@@ -27,13 +27,11 @@ Clone repo and run install.sh.
 - via nvidia - Nvidia X Server Settings
     - if failing to write config, either copy raw output to file manually or
     try `sudo chmod u+x /usr/share/screen-resolution-extra/nvidia-polkit`
-- via xrandr (recommended; most flexible) - add startup configuration commands to ~/.xprofile
-    - rotate a display: `xrandr --output <display> --rotate <direction>`
-    - scale a display: `xrandr --output <display> --scale <Px>x<Py> --fb <Sx>x<Sy> --pos <Ox>x<Oy>`
-        - Px and Py: display picture width and height scalars, respectively
-        - Sx and Sy: virtual screen width and height, respectively
-        - Ox and Oy: display output absolute x and y positions within virtual screen, respectively  
-        - When configuring multiple displays, do so with one `xrandr` call in which --fb is specified once and the --scale/--pos arguments are specified in sequential pairs for each display to configure
+- via xrandr (recommended) - to ~/.xprofile, append `xrandr [OPTION]`
+    - rotate display: `--rotate <direction>`
+    - individually scale display
+        - set virtual screen dims: `--fb <virtual width>x<virtual height>`
+        - for each display, set scale and position: `--output <display> --scale <scale x>x<scale y> --pos <pos x>x<pos y>`
 ### i3 integration
 One can assign i3 workspaces to specific displays. The provided config includes i3 commands for this purpose from ~/.local/i3/display_assignments.conf
 
