@@ -1,7 +1,7 @@
 #!/bin/bash
 _REL_PATH=${BASH_SOURCE%/*}
 
-source $_REL_PATH/build/utils.sh
+source "$_REL_PATH/build/utils.sh"
 
 DRY=0
 OVERWRITE=0
@@ -107,7 +107,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      brightnessctl \
                      cava \
                      net-tools
-    sudo usermod –a –G video $USER
+    sudo usermod –a –G video "$USER"
 
 
     # TODO: refactor
@@ -145,7 +145,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      kid3
     snaps=(spotify slack)
     for candidate in ${snaps[@]}; do
-        sudo snap install $candidate
+        sudo snap install "$candidate"
     done
     vscode_extensions=(rogalmic.bash-debug
                        ms-vscode.cpptools
@@ -162,7 +162,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                        lihui.vs-color-picker
                        13xforever.language-x86-64-assembly)
     for extension in ${vscode_extensions[@]}; do
-        code --install-extension $extension
+        code --install-extension "$extension"
     done
 
 
@@ -177,7 +177,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     fi
     
 
-    cd $cwd
+    cd "$cwd"
     echo '    ---- done.'
 
 fi
@@ -185,7 +185,7 @@ fi
 
 
 init_stats
-cd $_REL_PATH
+cd "$_REL_PATH"
 
 
 # root files ================================================================= #
@@ -195,23 +195,23 @@ echo Installing root files...
 FILE_PREFIX=src
 USER_PATH=$FILE_PREFIX/home/USER/
 DBUS_SERVICES_PATH=$FILE_PREFIX/usr/share/dbus-1/services/
-for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
-                                             ! -path ${DBUS_SERVICES_PATH}*); do
+for file_path in $(find "$FILE_PREFIX" -type f ! -path "$USER_PATH*" \
+                                               ! -path "$DBUS_SERVICES_PATH*"); do
     
     # define cooresponding local file path
     local_file_path=${file_path#$FILE_PREFIX}
     
-    if [ -f $local_file_path ]; then
+    if [ -f "$local_file_path" ]; then
         # local file exists; if local contents dissimilar, proceed
-        if [ "$(cat $local_file_path)" != "$(cat $file_path)" ]; then
+        if [ "$(cat "$local_file_path")" != "$(cat "$file_path")" ]; then
 
             print_file_path
             [ $DRY -eq 1 ] && continue
 
             # replace local file
-            log=$(sudo OVERWRITE=$OVERWRITE \
-                       file_path=$file_path \
-                       local_file_path=$local_file_path \
+            log=$(sudo OVERWRITE="$OVERWRITE" \
+                       file_path="$file_path" \
+                       local_file_path="$local_file_path" \
                        ./build/util_wrapper.sh replace_file)
             parse_log
         fi
@@ -223,13 +223,13 @@ for file_path in $(find $FILE_PREFIX -type f ! -path ${USER_PATH}* \
         [ $DRY -eq 1 ] && continue
 
         # create intermediate dir(s)
-        log=$(sudo local_file_path=$local_file_path \
+        log=$(sudo local_file_path="$local_file_path" \
                    ./build/util_wrapper.sh make_dirs)
         parse_log
         
         # install local file
-        log=$(sudo file_path=$file_path \
-                   local_file_path=$local_file_path \
+        log=$(sudo file_path="$file_path" \
+                   local_file_path="$local_file_path" \
                    ./build/util_wrapper.sh install_file)
         parse_log
     fi 
@@ -238,7 +238,7 @@ systemctl --user add-wants plasma-workspace-x11.target plasma-i3_x11.service
 
 echo '    -------- dbus services...'
 # iterate src dbus service files
-for file_path in $(find $DBUS_SERVICES_PATH | grep disabled); do
+for file_path in $(find "$DBUS_SERVICES_PATH" | grep disabled); do
     
     # define cooresponding local disabled file path
     local_service_disabled=${file_path#$FILE_PREFIX}
@@ -246,14 +246,14 @@ for file_path in $(find $DBUS_SERVICES_PATH | grep disabled); do
     local_service=${local_service_disabled%.disabled}
 
     # if local active file exists, proceed
-    if [ -f $local_service ]; then
+    if [ -f "$local_service" ]; then
         
         print_file_path
         [ $DRY -eq 1 ] && continue
         
         # disable local file
-        log=$(sudo local_service=$local_service \
-                   local_service_disabled=$local_service_disabled \
+        log=$(sudo local_service="$local_service" \
+                   local_service_disabled="$local_service_disabled" \
                    ./build/util_wrapper.sh disable_service)
         parse_log
     fi
@@ -269,17 +269,17 @@ echo '    ---- done.'
 echo Installing user files...
 # iterate src user home dirs
 LOCAL_USER_PATH=/home/$USER/
-for dir in $(find $USER_PATH -maxdepth 1 -type d ! -path $USER_PATH); do
+for dir in $(find "$USER_PATH" -maxdepth 1 -type d ! -path "$USER_PATH"); do
     
     # iterate dir files
-    for file_path in $(find $dir -type f ); do
+    for file_path in $(find "$dir" -type f ); do
         
         # define cooresponding local file path
         local_file_path=$LOCAL_USER_PATH${file_path#$USER_PATH}
         
-        if [ -f $local_file_path ]; then
+        if [ -f "$local_file_path" ]; then
             # local file exists; if contents dissimilar, replace it 
-            if [ "$(cat $local_file_path)" != "$(cat $file_path)" ]; then
+            if [ "$(cat "$local_file_path")" != "$(cat "$file_path")" ]; then
                 print_file_path
                 [ $DRY -eq 1 ] && continue
                 replace_file
@@ -304,15 +304,15 @@ echo '    -------- top-level dotfile insertions...'
 HEADER='# >>> DE install >>>'
 FOOTER='# <<< DE install <<<'
 # iterate src user home files
-for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
+for file_path in $(find "$USER_PATH" -maxdepth 1 -type f); do
     
     # define cooresponding local file path
     local_file_path=$LOCAL_USER_PATH${file_path#$USER_PATH}
 
-    if [ -f $local_file_path ]; then
+    if [ -f "$local_file_path" ]; then
         # local file exists
 
-        local_file_lines_cnt=$(cat $local_file_path | wc -l)
+        local_file_lines_cnt=$(cat "$local_file_path" | wc -l)
 
         # init: append new write section 2 lines below last line
         setup_cmd="$local_file_lines_cnt a \\\n$HEADER\n$FOOTER"
@@ -325,7 +325,7 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
         # ========================= #
 
         # search for line num of existing header
-        header_line_num=$(grep -n "$HEADER" $local_file_path | head -n 1 | cut -d ':' -f1)
+        header_line_num=$(grep -n "$HEADER" "$local_file_path" | head -n 1 | cut -d ':' -f1)
         if [ "$header_line_num" != '' ]; then
             # header exists; set append line num
             append_line_num=$header_line_num
@@ -337,7 +337,7 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
 
                 # search for offset from header to existing footer
                 footer_offset=$(grep -n "$FOOTER" <<< $(
-                                    cat $local_file_path | 
+                                    cat "$local_file_path" | 
                                     tail -n $((local_file_lines_cnt - header_line_num))
                                 ) | tail -n 1 | cut -d ':' -f1)
                 if [ "$footer_offset" != '' ]; then
@@ -346,8 +346,8 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
                     content_end_line_num=$((header_line_num + footer_offset - 1))
                     if [ $content_end_line_num -ge $content_start_line_num ]; then
 
-                        if [ "$(sed -n "$content_start_line_num,$content_end_line_num p" $local_file_path)" == \
-                             "$(cat $file_path)" ]; then
+                        if [ "$(sed -n "$content_start_line_num,$content_end_line_num p" "$local_file_path")" == \
+                             "$(cat "$file_path")" ]; then
                             # local file matches src file; continue to next src file
                             continue
 
@@ -375,35 +375,35 @@ for file_path in $(find $USER_PATH -maxdepth 1 -type f); do
         if [ $OVERWRITE -eq 0 ]; then
             backup_suffix=.$$.bak
         fi
-        sed -i$backup_suffix "$setup_cmd" $local_file_path
+        sed -i$backup_suffix "$setup_cmd" "$local_file_path"
         
 
         # ========================= #
         # insert src file into local file
         # ========================= #
 
-        sed -i "$append_line_num a \\\\" $local_file_path
-        sed -i "$append_line_num r $file_path" $local_file_path
+        sed -i "$append_line_num a \\\\" "$local_file_path"
+        sed -i "$append_line_num r $file_path" "$local_file_path"
         ((installs++))
     
     else
         # local file doesn't exist; copy from src
-        cp $file_path $local_file_path
+        cp "$file_path" "$local_file_path"
     fi
 done
 
 echo '    -------- resources...'
 RES_PREFIX=res
 LOCAL_RES_DIR=$LOCAL_USER_PATH.resources
-mkdir -p $LOCAL_RES_DIR
+mkdir -p "$LOCAL_RES_DIR"
 # iterate incoming resources
-for file_path in $(find $RES_PREFIX -type f); do
+for file_path in $(find "$RES_PREFIX" -type f); do
     
     # define cooresponding local res path
     local_file_path=$LOCAL_RES_DIR${file_path#$RES_PREFIX}
     
     # if local res doesn't exist, install it
-    if [ ! -f $local_file_path ]; then
+    if [ ! -f "$local_file_path" ]; then
         print_file_path
         [ $DRY -eq 1 ] && continue
         install_file

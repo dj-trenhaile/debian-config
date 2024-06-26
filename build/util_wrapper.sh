@@ -1,5 +1,5 @@
 #!/bin/bash
-source ${BASH_SOURCE%/*}/utils.sh
+source "${BASH_SOURCE%/*}/utils.sh"
 
 CMD=$1
 

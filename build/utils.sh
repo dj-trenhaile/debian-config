@@ -5,7 +5,7 @@
 # local_file_path - rel path to nested file (i.e., expects at least 1 intermediate dir, otherwise
 #                   file name will be erroneously created as dir)
 make_dirs() {
-    mkdir -p ${local_file_path%/*}
+    mkdir -p "${local_file_path%/*}"
 }
 
 replace_file() {    
@@ -18,7 +18,7 @@ replace_file() {
             backup_path=${local_file_path%/*}/.${file_name#.}.$$.bak
             
             # perform backup
-            mv $local_file_path $backup_path
+            mv "$local_file_path" "$backup_path"
             ((backups++))
             echo $backup_path
         
@@ -31,7 +31,7 @@ replace_file() {
 install_file() {
     echo -n '        install: '
     {
-        cp $file_path $local_file_path
+        cp "$file_path" "$local_file_path"
         ((installs++))
         echo $local_file_path
     
@@ -39,9 +39,9 @@ install_file() {
 }
 
 disable_service() {
-    echo -n "        disable ${local_service}: "
+    echo -n "        disable $local_service: "
     {
-        mv $local_service $local_service_disabled
+        mv "$local_service" "$local_service_disabled"
         echo done
     
     } || handle_failure 
