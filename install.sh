@@ -325,7 +325,7 @@ for file_path in $(find "$USER_PATH" -maxdepth 1 -type f); do
         # ========================= #
 
         # search for line num of existing header
-        header_line_num=$(grep -n "$HEADER" "$local_file_path" | head -n 1 | cut -d ':' -f1)
+        header_line_num=$(grep -n "$HEADER" "$local_file_path" | head -n 1 | cut -d : -f1)
         if [ "$header_line_num" != '' ]; then
             # header exists; set append line num
             append_line_num=$header_line_num
