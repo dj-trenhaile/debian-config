@@ -95,7 +95,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # core software
     # ========================= #
     
-    sudo apt install libinput-tools \
+    sudo apt install ffmpeg \
                      blueman
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
     sudo apt remove bluedevil
@@ -138,9 +138,11 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     sudo apt install xdotool \
                      xclip \
-                     ffmpeg \
-                     font-manager \
+                     libinput-tools \
                      gparted \
+                     gcc \
+                     curl \
+                     font-manager \
                      audacity \
                      kid3
     snaps=(spotify slack)
