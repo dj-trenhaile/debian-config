@@ -84,30 +84,23 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     systemctl --user mask plasma-kwin_x11.service
     systemctl --user mask plasma-plasmashell.service
 
-    # install window management and appearance software
+    # install core window management and appearance applications
     sudo apt install i3 \
                      polybar \
                      picom \
                      nitrogen
-
-    
-    # ========================= #
-    # core software
-    # ========================= #
-    
-    sudo apt install libinput-tools \
-                     blueman
-    dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
-    sudo apt remove bluedevil
-
-
-    # install script dependencies
+                    
+    # manage other script dependencies
     sudo apt install pulseaudio \
                      playerctl \
                      brightnessctl \
+                     ffmpeg \
+                     blueman \
                      cava \
                      net-tools
     sudo usermod –a –G video "$USER"
+    dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
+    sudo apt remove bluedevil
 
 
     # TODO: refactor
@@ -138,9 +131,11 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     sudo apt install xdotool \
                      xclip \
-                     ffmpeg \
-                     font-manager \
+                     libinput-tools \
                      gparted \
+                     gcc \
+                     curl \
+                     font-manager \
                      audacity \
                      kid3
     snaps=(spotify slack)
