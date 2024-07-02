@@ -93,14 +93,17 @@ eval $cmd
 
 # TODO: revert to i3lock + modified PAM
 
-qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock
-while read event_line; do
-    if [ "$event_line" == 'boolean false' ]; then
-        echo restarting
-        restart_visualizer
-        break
-    fi
-done < <(dbus-monitor "type=signal, \
-                       path=/ScreenSaver, \
-                       interface=org.freedesktop.ScreenSaver, \
-                       member=ActiveChanged")
+i3lock -i $_BG -n
+restart_visualizer
+
+# qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock
+# while read event_line; do
+#     if [ "$event_line" == 'boolean false' ]; then
+#         echo restarting
+#         restart_visualizer
+#         break
+#     fi
+# done < <(dbus-monitor "type=signal, \
+#                        path=/ScreenSaver, \
+#                        interface=org.freedesktop.ScreenSaver, \
+#                        member=ActiveChanged")
