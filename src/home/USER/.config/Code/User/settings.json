@@ -31,4 +31,5 @@
     "workbench.startupEditor": "none",
     "window.restoreWindows": "none",
     "editor.detectIndentation": false,
+    "window.confirmSaveUntitledWorkspace": false,
 }
