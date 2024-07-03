@@ -125,16 +125,17 @@ In \<top-level\>/shortcuts, import:
 - `xev`
 - `showkey`
 ### TLS certificates
-- root CA: `openssl req -x509 -keyout rootCA.key -noenc -out rootCA.crt -days <valid days>`
+- root CA: `openssl req -x509 -out rootCA.crt -keyout rootCA.key -noenc -days <valid days>`
 - SAN-compliant certificate:
-    - `openssl req -new -keyout <private key> -noenc -out <csr>`
+    - `openssl req -new -out <domain>.csr -keyout <domain>.key -noenc`
     - \<domain\>.ext:
         - authorityKeyIdentifier = keyid,issuer
         - basicConstraints = CA:FALSE
         - subjectAltName = @alt_names
         - [alt_names]
         - DNS.1 = \<domain\>
-    - `openssl x509 -req -in <csr> -CA <CA cert> -CAkey <CA private key> -out <domain cert> -days <valid days> -extfile <domain>.ext`
+    - `openssl x509 -req -in <domain>.csr -CA <CA>.crt -CAkey <CA>.key -out <domain>.crt -days <valid days> -extfile <domain>.ext`
+- package certificate and private key: `openssl pkcs12 -export -in <domain>.crt -inkey <domain>.key -out <domain>.p12`
 ### Package versions, maintain multiple
 `update-alternatives`
 ### X11 windows
