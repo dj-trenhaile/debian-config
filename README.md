@@ -112,23 +112,34 @@ In \<top-level\>/shortcuts, import:
 ## Command Line Appendix
 ### Convert b/w file formats
 - Documents: best to use online converter; yet to find good linux solution
-- Images: 'magick <file>.<source format> <target name>.<target format>'
-### Set global DPI
+- Images: `convert <file>.<source format> <target name>.<target format>` (from apt package imagemagick)
+### DPI, set global
 - In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
-### Purge GNOME desktop environemnt
+### GNOME desktop environemnt, purge
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove *gnome*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
 3. (opt) Remove all associated xsession configs from /usr/share/xsessions
-### Keycodes
+### Keycodes, show
 - `xev`
 - `showkey`
-### Windows
+### TLS certificates
+- root CA: `openssl req -x509 -keyout rootCA.key -noenc -out rootCA.crt -days <valid days>`
+- SAN-compliant certificate:
+    - `openssl req -new -keyout <private key> -noenc -out <csr>`
+    - \<domain\>.ext:
+        - authorityKeyIdentifier = keyid,issuer
+        - basicConstraints = CA:FALSE
+        - subjectAltName = @alt_names
+        - [alt_names]
+        - DNS.1 = \<domain\>
+    - `openssl x509 -req -in <csr> -CA <CA cert> -CAkey <CA private key> -out <domain cert> -days <valid days> -extfile <domain>.ext`
+### Package versions, maintain multiple
+`update-alternatives`
+### X11 windows
 - properties: `xprop`
 - info: `xwininfo`
-### Packages, maintain multiple versions
-'update-alternatives'
 
 ## TODO
 - migrate System Settings section to programmatic install
