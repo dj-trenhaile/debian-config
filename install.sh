@@ -84,7 +84,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     systemctl --user mask plasma-kwin_x11.service
     systemctl --user mask plasma-plasmashell.service
 
-    # install core window management and appearance applications
+    # install core window management and appearance packages
     sudo apt install i3 \
                      polybar \
                      picom \
@@ -98,13 +98,11 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      blueman \
                      cava \
                      net-tools
-    sudo usermod –a –G video "$USER"
+    sudo usermod -a -G video "$USER"
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
     sudo apt remove bluedevil
 
-
     # TODO: refactor
-
     # install font(s)
     sudo apt install fonts-3270
     fonts=$(fc-list)
@@ -123,6 +121,9 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
         sudo mv JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/jetbrainsmono/
     fi
     fc-cache -vf /usr/share/fonts
+
+    # remove packages
+    sudo snap remove snapd-desktop-integration
 
 
     # ========================= #
@@ -160,9 +161,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
         code --install-extension "$extension"
     done
 
-
     # TODO: refactor
-
     # anaconda
     if [ "$(which conda)" == '' ]; then
         wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh
