@@ -97,10 +97,12 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      ffmpeg \
                      blueman \
                      cava \
-                     net-tools
+                     gnome-screenshot \
+                     net-tools \
     sudo usermod -a -G video "$USER"
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
     sudo apt remove bluedevil
+    dconf write /org/gnome/gnome-screenshot/auto-save-directory "'/home/$USER/Pictures/Screenshots'"
 
     # TODO: refactor
     # install font(s)

@@ -205,6 +205,7 @@ for_window [instance="systemsettings"] floating enable, border none, sticky enab
 for_window [window_type="dialog"] resize set width 50 ppt height 50 ppt, move position center
 for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
                                         move position 67 ppt 67 ppt
+for_window [instance="gnome-screenshot"] floating enable, border none
 
 # polybar
 exec_always --no-startup-id "~/.polybar/launch.sh"
@@ -218,9 +219,8 @@ bindsym $mod+Shift+p exec --no-startup-id "~/.polybar/extra_bars/terminate.sh"
 # other applications ========================================================= #
 
 # screenshots
-# TODO: fullscreen bug
-bindsym Print exec --no-startup-id spectacle
-bindsym Control+Print exec --no-startup-id "spectacle -r"
+bindsym Print exec --no-startup-id "spectacle -m -b"
+bindsym Control+Print exec --no-startup-id "gnome-screenshot -a"
 
 # klipper
 exec --no-startup-id "klipper &"
