@@ -106,7 +106,7 @@ cyclePrevAction=
 edit_clipboard=
 repeat_action=
 show-barcode=
-show-on-mouse-pos=Ctrl+B
+show-on-mouse-pos=Ctrl+M
 
 [knotes][Global Shortcuts]
 hide_all_notes=

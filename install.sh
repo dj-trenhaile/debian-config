@@ -98,7 +98,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      blueman \
                      cava \
                      gnome-screenshot \
-                     net-tools \
+                     net-tools
     sudo usermod -a -G video "$USER"
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
     sudo apt remove bluedevil
