@@ -32,4 +32,6 @@
     "window.restoreWindows": "none",
     "editor.detectIndentation": false,
     "window.confirmSaveUntitledWorkspace": false,
+    "notebook.lineNumbers": "on",
+    "workbench.statusBar.visible": false,
 }

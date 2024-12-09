@@ -69,24 +69,20 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
     - Gnome/GTK Settings Synchronization Service
     - Keyboard Daemon
     - Plasma Vault module
-    - Removable Device Automounter
+    - (opt) Removable Device Automounter
     - Search Folder Updater
     - SMART
     - Thunderbolt Device Monitor
     - Time Zone
-    - (opt) Touchpad
+    - Touchpad
     - Write Daemon
 - Desktop Session: start an empty session
 ### Input Devices
 - Keyboard
-    - Hardware
-        - NumLock on Plasma Startup: Turn on
-    - Advanced
-        - Position of Compose key: Left Win
-- Mouse
-    - Pointer Speed: set desired
-    - Acceleration profile: Adaptive
-- (opt) Touchpad
+    - Hardware: NumLock on Plasma Startup: Turn on
+    - Advanced: Position of Compose key: Left Win
+- Mouse: Acceleration profile: Adaptive
+- Touchpad
     - Pointer acceleration: 0.60
     - enable all Tapping options
     - Scrolling: Invert scroll direction
@@ -96,7 +92,15 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
 - `konsole` 
     - Enable provided profile, set as default
     - Disable system and session toolbars
-- `code`: hide Gitlens's commit graph from Source Control and Commit views
+- `code`
+    - Left sidebar: enable only:
+        - Explorer
+        - Search
+        - Source Control
+        - Run and Debug
+        - Extensions
+        - (Note: New extensions will add themselves to the sidebar)
+    - Source Control > Source Control: disable Gitlens's "Show Commit Graph"
 
 ## Shortcuts
 In \<top-level\>/shortcuts, import:
