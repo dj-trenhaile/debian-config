@@ -150,3 +150,4 @@ In \<top-level\>/shortcuts, import:
 - migrate System Settings section to programmatic install
 - spotify pulseaudio sink input cleanup service
 - partially revert bash string changes
+- remove Jupyter instructions
