@@ -25,12 +25,12 @@ help() {
     -h, --help             display this help and exit"
 }
 
-if ! args=$(getopt -o d,r,o,h -l dry,refresh,overwrite,help -- $@); then
+# validate conformance of command line args
+if ! getopt -o d,r,o,h -l dry,refresh,overwrite,help -- $@ > /dev/null; then
     help
     exit 1
 fi
 
-eval set -- $args
 for arg in $@; do
     case $arg in 
         -d | --dry)
@@ -45,8 +45,6 @@ for arg in $@; do
         -h | --help)
             help
             exit 0
-            ;;
-        --)
             ;;
     esac  
     shift  
@@ -90,7 +88,9 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      picom \
                      nitrogen
                     
+    
     # manage other script dependencies
+    
     sudo apt install pulseaudio \
                      playerctl \
                      brightnessctl \
@@ -99,32 +99,57 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      cava \
                      gnome-screenshot \
                      net-tools
+    
     sudo usermod -a -G video "$USER"
+    
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
     sudo apt remove bluedevil
+
     dconf write /org/gnome/gnome-screenshot/auto-save-directory "'/home/$USER/Pictures/Screenshots'"
 
-    # TODO: refactor
-    # install font(s)
-    sudo apt install fonts-3270
-    fonts=$(fc-list)
-    if [ "$(echo $fonts | grep 3270NerdFontMono-Regular.ttf)" == '' ]; then
-        wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/3270/Regular/3270NerdFontMono-Regular.ttf
-        sudo mv 3270NerdFontMono-Regular.ttf /usr/share/fonts/truetype/3270/
-    fi
-    if [ "$(echo $fonts | grep SymbolsNerdFont-Regular.ttf)" == '' ]; then
-        wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf
-        sudo mkdir /usr/share/fonts/truetype/symbols-nerdfont 2> /dev/null
-        sudo mv SymbolsNerdFont-Regular.ttf /usr/share/fonts/truetype/symbols-nerdfont/
-    fi
-    if [ "$(echo $fonts | grep JetBrainsMono-Regular.ttf)" == '' ]; then
-        wget https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf
-        sudo mkdir /usr/share/fonts/truetype/jetbrainsmono 2> /dev/null
-        sudo mv JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/jetbrainsmono/
-    fi
-    fc-cache -vf /usr/share/fonts
 
-    # remove packages
+    # install font(s)
+    
+    sudo apt install fonts-3270
+
+    fonts_dir='/usr/share/fonts'
+
+    fonts=$(fc-list)
+    fonts_truetype_dir="$fonts_dir/truetype"
+    # $1 - url of the font to download
+    # $2 - dir in $fonts_truetype_dir in which to install the font
+    install_font() {
+        URL=$1
+        DEST_DIR=$2
+
+        installed=0
+        
+        file=${URL##*/}
+        if [ "$(echo $fonts | grep "$file")" == '' ]; then
+            
+            wget "$URL"
+            dest_dir_path=$fonts_truetype_dir/$DEST_DIR 
+            sudo mkdir "$dest_dir_path" 2> /dev/null
+            sudo mv "$file" "$dest_dir_path" 
+
+            installed=1 
+        fi
+
+        echo $installed
+    }
+
+    if [ "$(install_font 'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/3270/Regular/3270NerdFontMono-Regular.ttf' \
+                         '3270')" -eq 1 ] ||
+       [ "$(install_font 'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf' \
+                         'symbols-nerdfont')" -eq 1 ] ||
+       [ "$(install_font 'https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf' \
+                         'jetbrainsmono')" -eq 1 ]; then
+       echo 'test; rebuilding font cache'
+       fc-cache -v $fonts_dir
+    fi
+
+
+    # remove select packages
     sudo snap remove snapd-desktop-integration
 
 
@@ -141,34 +166,37 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      font-manager \
                      audacity \
                      kid3
-    snaps=(spotify slack)
-    for candidate in ${snaps[@]}; do
-        sudo snap install "$candidate"
+
+    snaps=(spotify slack)     
+    for snap in ${snaps[@]}; do
+        sudo snap install "$snap"
     done
-    vscode_extensions=(rogalmic.bash-debug
-                       ms-vscode.cpptools
-                       ms-vscode.cpptools-themes
-                       eamodio.gitlens
-                       mhutchie.git-graph
-                       ms-vscode.live-server 
-                       webfreak.debug
-                       chrisdias.vscode-opennewinstance
-                       ms-python.python
-                       ms-python.vscode-pylance
-                       ms-python.debugpy
-                       lihui.vs-color-picker
-                       13xforever.language-x86-64-assembly
-                       ms-toolsai.jupyter)
-    for extension in ${vscode_extensions[@]}; do
+
+    extensions=(rogalmic.bash-debug
+                ms-vscode.cpptools
+                ms-vscode.cpptools-themes
+                eamodio.gitlens
+                mhutchie.git-graph
+                ms-vscode.live-server 
+                webfreak.debug
+                chrisdias.vscode-opennewinstance
+                ms-python.python
+                ms-python.vscode-pylance
+                ms-python.debugpy
+                lihui.vs-color-picker
+                13xforever.language-x86-64-assembly
+                ms-toolsai.jupyter)
+    for extension in ${extensions[@]}; do
         code --install-extension "$extension"
     done
 
-    # TODO: refactor
     # anaconda
     if [ "$(which conda)" == '' ]; then
-        wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh
-        chmod +x Miniforge3-$(uname)-$(uname -m).sh
-        bash Miniforge3-$(uname)-$(uname -m).sh
+        
+        file=Miniforge3-$(uname)-$(uname -m).sh
+        wget https://github.com/conda-forge/miniforge/releases/latest/download/$file
+        chmod +x $file
+        bash $file
         conda config --set env_prompt '({name})'
     fi
     

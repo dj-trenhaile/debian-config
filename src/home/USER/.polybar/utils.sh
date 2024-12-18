@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Given a randr display identifier, a fraction, and a monospace font width (pts), get the number 
+# Given a randr display identifier, a fraction, and a monospace font width (pts), print the number 
 # of chars (floored to the first integer) that can fit in the fraction of one row of the display 
 # 
 # $1 - display randr ID of which to find fractional char capacity

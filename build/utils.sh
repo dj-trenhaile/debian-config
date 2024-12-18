@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Creates intermediate dirs of given file path
+# Create intermediate dirs of given file path
 # 
 # local_file_path - rel path to nested file (i.e., expects at least 1 intermediate dir, otherwise
 #                   file name will be erroneously created as dir)
