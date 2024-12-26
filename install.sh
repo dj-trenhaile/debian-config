@@ -47,7 +47,7 @@ for arg in $@; do
             exit 0
             ;;
     esac  
-    shift  
+    shift
 done
 
 # ========================= # 
@@ -144,7 +144,6 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                          'symbols-nerdfont')" -eq 1 ] ||
        [ "$(install_font 'https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf' \
                          'jetbrainsmono')" -eq 1 ]; then
-       echo 'test; rebuilding font cache'
        fc-cache -v $fonts_dir
     fi
 
@@ -320,9 +319,6 @@ for dir in $(find "$USER_PATH" -maxdepth 1 -type d ! -path "$USER_PATH"); do
         fi 
     done
 done
-
-
-# TODO: first-time install bug
 
 echo '    -------- top-level dotfile insertions...'
 HEADER='# >>> DE install >>>'
