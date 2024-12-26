@@ -359,7 +359,7 @@ for file_path in $(find "$USER_PATH" -maxdepth 1 -type f); do
                 footer_offset=$(grep -n "$FOOTER" <<< $(
                                     cat "$local_file_path" | 
                                     tail -n $((local_file_lines_cnt - header_line_num))
-                                ) | tail -n 1 | cut -d ':' -f1)
+                                ) | tail -n 1 | cut -d : -f1)
                 if [ "$footer_offset" != '' ]; then
 
                     # if content region gt 0 lines, proceed
