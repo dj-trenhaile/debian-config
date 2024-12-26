@@ -13,7 +13,7 @@ replace_file() {
     if [ $OVERWRITE -eq 0 ]; then
         echo -n '        backup: '
         {
-            file_name=$(echo $file_path | tr / "\n" | tail -n 1)
+            file_name=$(echo $file_path | tr / \\n | tail -n 1)
             # define backup_path as path to cooresponding local hidden file with unique suffix
             backup_path=${local_file_path%/*}/.${file_name#.}.$$.bak
             
