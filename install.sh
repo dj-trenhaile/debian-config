@@ -1,5 +1,5 @@
 #!/bin/bash
-_REL_PATH=${BASH_SOURCE%/*}
+ _REL_PATH=${BASH_SOURCE%/*}
 
 source "$_REL_PATH/build/utils.sh"
 
@@ -31,8 +31,9 @@ if ! getopt -o d,r,o,h -l dry,refresh,overwrite,help -- $@ > /dev/null; then
     exit 1
 fi
 
-for arg in $@; do
-    case $arg in 
+i=1
+while [ $i -le $# ]; do
+    case ${!i} in
         -d | --dry)
             DRY=1
             ;;
@@ -46,8 +47,8 @@ for arg in $@; do
             help
             exit 0
             ;;
-    esac  
-    shift
+    esac
+    ((i++))
 done
 
 # ========================= # 
