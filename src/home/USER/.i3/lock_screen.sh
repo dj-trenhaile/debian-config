@@ -5,14 +5,21 @@ _OVERLAY=~/.resources/lock.png
 _BG=/tmp/screen.png
 
 
+# init post-unlock function
 pid_idle=$(pgrep -f idle.sh)
-restart_visualizer() {
+cont_visualizer_idle() {
     kill -CONT $pid_idle
 }
+
 if [ "$pid_idle" == '' ]; then
+    # visualizer not idle; pause audio and set post-unlock function to void
+
     playerctl pause
-    restart_visualizer() { : ; }
+    cont_visualizer_idle() { : ; }
+
 else
+    # visualizer idle; stop visualizer idle animation
+    
     kill -STOP $pid_idle
 fi
 
@@ -65,7 +72,7 @@ fi
 # init cmd
 current_screen=$(xrandr | grep current)
 cmd="ffmpeg -f x11grab -video_size $(echo $current_screen | cut -d ' ' -f8)x\
-$(echo $current_screen | cut -d ' ' -f10 | cut -d ',' -f1) -y -i $DISPLAY"
+$(echo $current_screen | cut -d ' ' -f10 | cut -d , -f1) -y -i $DISPLAY"
 
 # init filter
 filter='[0]boxblur=10:1'
@@ -94,13 +101,13 @@ eval $cmd
 # TODO: revert to i3lock + modified PAM
 
 i3lock -i $_BG -n
-restart_visualizer
+cont_visualizer_idle
 
 # qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock
 # while read event_line; do
 #     if [ "$event_line" == 'boolean false' ]; then
 #         echo restarting
-#         restart_visualizer
+#         cont_visualizer_idle
 #         break
 #     fi
 # done < <(dbus-monitor "type=signal, \
