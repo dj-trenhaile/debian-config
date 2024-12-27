@@ -8,7 +8,7 @@ trap "cleanup; exit" SIGTERM
 
 export _CAVA_CONFIG=/tmp/cava.config
 
-source $_DIR/../../utils.sh
+source "$_DIR/../../utils.sh"
 
 DISPLAY_FRACTION=$1
 

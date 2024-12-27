@@ -78,13 +78,13 @@ done
 # ======================== #
 
 
-# $1 - crest_idx
-# $2 - range
 get_bounds() {
-    offset=$(($2 - 1))
-
-    low_idx=$(($1 - offset))
-    high_idx=$(($1 + offset))
+    crest_idx=$1
+    range=$2
+    
+    offset=$(($range - 1))
+    low_idx=$(($crest_idx - offset))
+    high_idx=$(($crest_idx + offset))
 }
 
 crest_value=$BARS_RANGE
