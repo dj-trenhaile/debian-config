@@ -3,16 +3,18 @@ _TIMEOUT_SECS=5
 _TIMER_LOCK=/var/lock/polybar_audio-descriptor_timer.lock
 _VISUALIZER_STATE_LOCK=/var/lock/polybar_audio-descriptor_visualizer-state.lock
 cleanup() {
-    rm -f $_TIMER_LOCK $_VISUALIZER_STATE_LOCK
+    rm -f "$_TIMER_LOCK" "$_VISUALIZER_STATE_LOCK"
 }
 cleanup
-trap "rm -f $_TIMER_LOCK $_VISUALIZER_STATE_LOCK; exit" SIGTERM
+trap "cleanup; exit" SIGTERM
 
 dir=${BASH_SOURCE%/*}
-source $dir/../utils.sh
-source $dir/audio-visualizer/toggle_state.sh
+source "$dir/../utils.sh"
+source "$dir/audio-visualizer/toggle_state.sh"
 
+# float - see $dir/../utils.sh
 DISPLAY_FRACTION=$1
+# int - whether or not to include the prefix in the description
 USE_PREFIX=$2
 
 
@@ -39,9 +41,11 @@ idle_timer() {
     } 9> $_TIMER_LOCK  # redirect changes on lock file descriptor to lock file
 }
 
-char_limit=$(($(get_num_chars_20_mono $BAR_MONITOR $DISPLAY_FRACTION) - 3))
+char_limit=$(($(get_num_chars_20_mono "$BAR_MONITOR" $DISPLAY_FRACTION) - 3))
 echo_inputs() {
-    output="$prefix$1"
+    inputs=$1
+    
+    output="$prefix$inputs"
     output_truncated=${output:0:char_limit}
     if [ ${#output} -gt $char_limit ]; then
         output_truncated="$output_truncated..."
@@ -52,10 +56,10 @@ echo_inputs() {
 get_inputs() {
     # get inputs
     inputs_raw=$(pactl list sink-inputs | grep 'application.name = ' | cut -d = -f 2 | tr -d '"')
-    inputs=$(echo "$inputs_raw" | head -1)
-    while read input; do
+    inputs=$(echo "$inputs_raw" | head -n 1)
+    echo "$inputs_raw" | tail -n +2 | while read input; do
         inputs="$inputs | $input"
-    done < <(tail +2 < <(echo "$inputs_raw"))
+    done
 
 
     # ==================== #
@@ -134,12 +138,13 @@ get_inputs() {
     fi
 }
 
+
 # get initial inputs
 get_inputs  
 
 # update inputs on sink-input change event
-while read event; do
+pactl subscribe | while read event; do
     if [ "$(echo $event | grep "Event '.*' on sink-input")" != '' ]; then
         get_inputs
     fi
-done < <(pactl subscribe)
+done
