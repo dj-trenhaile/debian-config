@@ -8,6 +8,9 @@ set $mod Mod1
 # startup handler for compositor, splash screen, and wallpaper 
 exec --no-startup-id "~/.i3/background.sh"
 
+# set initial bluetooth state
+exec --no-startup-id "bluetoothctl power off"
+
 
 # basic functions ============================================================ #
 
