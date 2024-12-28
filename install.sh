@@ -117,10 +117,10 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     fonts=$(fc-list)
     fonts_truetype_dir="$fonts_dir/truetype"
-    # $1 - url of the font to download
-    # $2 - dir in $fonts_truetype_dir in which to install the font
     install_font() {
+        # url of the font to download
         URL=$1
+        # dir in $fonts_truetype_dir in which to install the font
         DEST_DIR=$2
 
         installed=0

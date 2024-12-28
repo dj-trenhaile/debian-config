@@ -1,5 +1,5 @@
 #!/bin/bash
-source ${BASH_SOURCE%/*}/profiles.sh
+source "${BASH_SOURCE%/*}/profiles.sh"
 
 
 {

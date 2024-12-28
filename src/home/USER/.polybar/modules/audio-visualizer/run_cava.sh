@@ -1,6 +1,8 @@
 #!/bin/bash
+CONFIG_PATH=$1
 
-cmd="cava -p $_CAVA_CONFIG"
+
+cmd="cava -p \"$CONFIG_PATH\""
 eval "$cmd &"
 
 # pulseaudio server state change ==> cava timeout ==> pipe input closure; pipe 

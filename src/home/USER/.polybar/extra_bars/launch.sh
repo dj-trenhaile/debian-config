@@ -2,10 +2,9 @@
 
 # set variables
 set -a
-source $_POLYBAR_VARS
+source "$_POLYBAR_VARS"
+BAR_MONITOR=$(get-current-display)
 set +a
-export BAR_MONITOR=$(get-current-display)
-echo "monitor: $BAR_MONITOR"
 
 # launch bar
 polybar extras-secondary &
