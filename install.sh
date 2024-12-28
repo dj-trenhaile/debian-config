@@ -1,5 +1,5 @@
 #!/bin/bash
-_REL_PATH=${BASH_SOURCE%/*}
+ _REL_PATH=${BASH_SOURCE%/*}
 
 source "$_REL_PATH/build/utils.sh"
 
@@ -31,8 +31,9 @@ if ! getopt -o d,r,o,h -l dry,refresh,overwrite,help -- $@ > /dev/null; then
     exit 1
 fi
 
-for arg in $@; do
-    case $arg in 
+i=1
+while [ $i -le $# ]; do
+    case ${!i} in
         -d | --dry)
             DRY=1
             ;;
@@ -46,8 +47,8 @@ for arg in $@; do
             help
             exit 0
             ;;
-    esac  
-    shift  
+    esac
+    ((i++))
 done
 
 # ========================= # 
@@ -116,10 +117,10 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
 
     fonts=$(fc-list)
     fonts_truetype_dir="$fonts_dir/truetype"
-    # $1 - url of the font to download
-    # $2 - dir in $fonts_truetype_dir in which to install the font
     install_font() {
+        # url of the font to download
         URL=$1
+        # dir in $fonts_truetype_dir in which to install the font
         DEST_DIR=$2
 
         installed=0
@@ -144,7 +145,6 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                          'symbols-nerdfont')" -eq 1 ] ||
        [ "$(install_font 'https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/ttf/JetBrainsMono-Regular.ttf' \
                          'jetbrainsmono')" -eq 1 ]; then
-       echo 'test; rebuilding font cache'
        fc-cache -v $fonts_dir
     fi
 
@@ -321,9 +321,6 @@ for dir in $(find "$USER_PATH" -maxdepth 1 -type d ! -path "$USER_PATH"); do
     done
 done
 
-
-# TODO: first-time install bug
-
 echo '    -------- top-level dotfile insertions...'
 HEADER='# >>> DE install >>>'
 FOOTER='# <<< DE install <<<'
@@ -363,7 +360,7 @@ for file_path in $(find "$USER_PATH" -maxdepth 1 -type f); do
                 footer_offset=$(grep -n "$FOOTER" <<< $(
                                     cat "$local_file_path" | 
                                     tail -n $((local_file_lines_cnt - header_line_num))
-                                ) | tail -n 1 | cut -d ':' -f1)
+                                ) | tail -n 1 | cut -d : -f1)
                 if [ "$footer_offset" != '' ]; then
 
                     # if content region gt 0 lines, proceed

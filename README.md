@@ -101,6 +101,16 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
         - Extensions
         - (Note: New extensions will add themselves to the sidebar)
     - Source Control > Source Control: disable Gitlens's "Show Commit Graph"
+    - Status Bar: enable only:
+        - Problems
+        - Debug
+        - GitLens Current Line Blame
+        - Editor Selection
+        - Editor Indentation
+        - Editor Encoding
+        - Editor End of Line
+        - Editor Language
+        - Notifications
 
 ## Shortcuts
 In \<top-level\>/shortcuts, import:

@@ -12,8 +12,9 @@ replace_file() {
     # if not OVERWRITE, backup local file
     if [ $OVERWRITE -eq 0 ]; then
         echo -n '        backup: '
+        
         {
-            file_name=$(echo $file_path | tr / "\n" | tail -n 1)
+            file_name=$(echo $file_path | tr / \\n | tail -n 1)
             # define backup_path as path to cooresponding local hidden file with unique suffix
             backup_path=${local_file_path%/*}/.${file_name#.}.$$.bak
             
@@ -30,6 +31,7 @@ replace_file() {
 
 install_file() {
     echo -n '        install: '
+    
     {
         cp "$file_path" "$local_file_path"
         ((installs++))
@@ -40,6 +42,7 @@ install_file() {
 
 disable_service() {
     echo -n "        disable $local_service: "
+    
     {
         mv "$local_service" "$local_service_disabled"
         echo done

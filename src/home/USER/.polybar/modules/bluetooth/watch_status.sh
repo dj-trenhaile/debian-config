@@ -15,6 +15,7 @@ print_connected() {
 }
 
 
+# print init status
 if [ "$(bluetoothctl show | grep 'Powered: yes')" == '' ]; then
     print_disabled
 else
@@ -25,6 +26,13 @@ else
     fi
 fi
 
+
+# watch status changes
+
+dbus-monitor "type=signal, \
+              path=/org/blueman/Applet, \
+              interface=org.blueman.Applet, \
+              member=IconNameChanged" |
 
 while read event_line; do
     case $event_line in
@@ -38,7 +46,4 @@ while read event_line; do
             print_connected
             ;;
     esac
-done < <(dbus-monitor "type=signal, \
-                       path=/org/blueman/Applet, \
-                       interface=org.blueman.Applet, \
-                       member=IconNameChanged")
+done

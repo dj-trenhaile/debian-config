@@ -1,3 +1,4 @@
+
 # i3 variables
 export TERMINAL=konsole
 export _COMPOSITOR_LAUNCH_LOCK=/var/lock/compositor_launch.lock

@@ -8,7 +8,7 @@ vars=''
 # BAR_TEMPERATURE_ZONE
 ZONE=0
 for zone in /sys/class/thermal/thermal_zone*; do
-    if [ "$(cat $zone/type)" == 'x86_pkg_temp' ]; then
+    if [ "$(cat "$zone/type")" == 'x86_pkg_temp' ]; then
         ZONE=${zone: -1}
     fi
 done
@@ -30,6 +30,6 @@ vars="${vars}BAR_BATTERY_ADAPTER=${ADP}\n"
 
 
 # write formatting and generated variables =================================== #
-cat $HOME/.config/polybar/vars.txt > $_POLYBAR_VARS
-echo -e "\n\n${vars}" >> $_POLYBAR_VARS
+cat "$HOME/.config/polybar/vars.txt" > "$_POLYBAR_VARS"
+echo -e "\n\n${vars}" >> "$_POLYBAR_VARS"
 # ======================== #

@@ -5,7 +5,7 @@ if [ "$BAR_BATTERY" == '' ]; then
     exit 1
 fi
 
-source ${BASH_SOURCE%/*}/profiles.sh
+source "${BASH_SOURCE%/*}/profiles.sh"
 
 
 # set initial module state 

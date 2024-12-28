@@ -1,4 +1,8 @@
 #!/bin/bash
+BARS_CNT=$1
+DICT=$2
+ANIM_DELAY=$3
+
 
 # init visualizer values to zeroes
 bar_values=()
@@ -78,13 +82,13 @@ done
 # ======================== #
 
 
-# $1 - crest_idx
-# $2 - range
 get_bounds() {
-    offset=$(($2 - 1))
-
-    low_idx=$(($1 - offset))
-    high_idx=$(($1 + offset))
+    CREST_IDX=$1
+    RANGE=$2
+    
+    offset=$(($RANGE - 1))
+    low_idx=$(($CREST_IDX - offset))
+    high_idx=$(($CREST_IDX + offset))
 }
 
 crest_value=$BARS_RANGE
