@@ -99,7 +99,9 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      blueman \
                      cava \
                      gnome-screenshot \
-                     net-tools
+                     net-tools \
+                     xdotool \
+                     tree
     
     sudo usermod -a -G video "$USER"
     
@@ -157,12 +159,19 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # optional software
     # ========================= #
 
-    sudo apt install xdotool \
-                     xclip \
-                     libinput-tools \
+    sudo apt install asdf
+
+
+
+    sudo apt install xclip \
+                     curl \
+                     ploate
+
+
+
+    sudo apt install libinput-tools \
                      gparted \
                      gcc \
-                     curl \
                      font-manager \
                      audacity \
                      kid3
@@ -171,21 +180,27 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     for snap in ${snaps[@]}; do
         sudo snap install "$snap"
     done
-
-    extensions=(rogalmic.bash-debug
+    extensions=(eamodio.gitlens
+                mhutchie.git-graph
+                chrisdias.vscode-opennewinstance
+                ms-vscode.live-server
+                13xforever.language-x86-64-assembly
                 ms-vscode.cpptools
                 ms-vscode.cpptools-themes
-                eamodio.gitlens
-                mhutchie.git-graph
-                ms-vscode.live-server 
                 webfreak.debug
-                chrisdias.vscode-opennewinstance
+                rogalmic.bash-debug
                 ms-python.python
                 ms-python.vscode-pylance
                 ms-python.debugpy
+                ms-toolsai.jupyter
                 lihui.vs-color-picker
-                13xforever.language-x86-64-assembly
-                ms-toolsai.jupyter)
+                mechatroner.rainbow-csv
+                James-Yu.latex-workshop)
+
+
+
+
+
     for extension in ${extensions[@]}; do
         code --install-extension "$extension"
     done
