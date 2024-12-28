@@ -159,22 +159,18 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # optional software
     # ========================= #
 
-    sudo apt install asdf
-
-
-
-    sudo apt install xclip \
-                     curl \
-                     ploate
-
-
-
     sudo apt install libinput-tools \
-                     gparted \
+                     gparted exfatprogs \
                      gcc \
                      font-manager \
                      audacity \
-                     kid3
+                     kid3 \
+                     texlive latexmk texlive-xetex \
+
+    # shell utils
+    sudo apt install xclip \
+                     curl \
+                     plocate \
 
     snaps=(spotify slack)     
     for snap in ${snaps[@]}; do
@@ -196,11 +192,6 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                 lihui.vs-color-picker
                 mechatroner.rainbow-csv
                 James-Yu.latex-workshop)
-
-
-
-
-
     for extension in ${extensions[@]}; do
         code --install-extension "$extension"
     done
