@@ -33,4 +33,8 @@
     "editor.detectIndentation": false,
     "window.confirmSaveUntitledWorkspace": false,
     "notebook.lineNumbers": "on",
+    "[makefile]": {
+        "editor.autoIndent": "none"
+    },
+    "editor.acceptSuggestionOnEnter": "off",
 }
