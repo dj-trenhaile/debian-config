@@ -1,5 +1,5 @@
 #!/bin/bash
 
-while read process; do
+ps -A -o args:200,pid= | grep polybar | while read process; do
     kill -9 ${process##* }
-done < <(ps -e -o args:200,pid= | grep polybar)
+done

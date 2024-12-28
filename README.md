@@ -123,7 +123,7 @@ In \<top-level\>/shortcuts, import:
     - In new envs, `conda install ipykernel`
     - Start notebook servers from base env, then select desired kernel in target env
 
-## Command Line Appendix
+## Shell Appendix
 ### Convert b/w file formats
 - Documents: best to use online converter; yet to find good linux solution
 - Images: `convert <file>.<source format> <target name>.<target format>` (from apt package imagemagick)
@@ -138,6 +138,10 @@ In \<top-level\>/shortcuts, import:
 ### Keycodes, show
 - `xev`
 - `showkey`
+### Pipelines
+Remember: pipes create asynchronous subshells. As with any other subshell, variable assignments occur within the subshell's scope and therefore have no effect in the parent shell.
+
+Consider a common case in which this wrinkle becomes relevant: a `while read` loop at the end of a pipeline that iterates the pipeline's results. One must be sure that no commands following such a loop rely on variable assignments therein. 
 ### TLS certificates
 - root CA: `openssl req -x509 -out rootCA.crt -keyout rootCA.key -noenc -days <valid days>`
 - SAN-compliant certificate:
@@ -157,7 +161,8 @@ In \<top-level\>/shortcuts, import:
 - info: `xwininfo`
 
 ## TODO
-- migrate System Settings section to programmatic install
+- programatic install:
+    - System Settings
+    - VSCode
 - spotify pulseaudio sink input cleanup service
-- partially revert bash string changes
-- remove Jupyter instructions
+- update Jupyter instructions
