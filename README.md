@@ -1,9 +1,13 @@
 # Setup instructions
 
+
 ## Environment details
 - display manager: gdm3 (better compatibility than sddm)
 - desktop environment: kde plasma
 - window manager: i3
+
+<br></br>
+
 
 ## OS setup resources
 - swap: https://opensource.com/article/19/2/swap-space-poll
@@ -12,14 +16,23 @@
     - kde-full
     - kde-standard
     - kde-plasma-desktop
+    
+<br></br>
+
 
 ## Install core applications
 - chrome
 - git
 - vscode
 
+<br></br>
+
+
 ## Files
 Clone repo and run install.sh.
+
+<br></br>
+
 
 ## Display(s) configuration
 ### Position and scale
@@ -34,6 +47,9 @@ Clone repo and run install.sh.
         - for each display, set scale and position: `--output <display> --scale <scale x>x<scale y> --pos <pos x>x<pos y>`
 ### i3 integration
 One can assign i3 workspaces to specific displays. The provided config includes i3 commands for this purpose from ~/.local/i3/display_assignments.conf
+
+<br></br>
+
 
 ## Security setup
 ### Fingerprint
@@ -52,6 +68,9 @@ Install Howdy: https://github.com/boltgolt/howdy
 <sup>1</sup>See https://github.com/boltgolt/howdy/issues/781 for more details
 ### Enable new auth methods
 `pam-auth-update`
+
+<br></br>
+
 
 ## System Settings
 ### Appearance
@@ -87,6 +106,22 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
     - enable all Tapping options
     - Scrolling: Invert scroll direction
 
+<br></br>
+
+
+## Other settings
+File manager places:
+- Home
+- Pictures
+- Downloads
+- Trash
+- Desktop
+- debian-config
+- projects
+
+<br></br>
+
+
 ## Other appearance settings
 - `nitrogen`: set image to desired; see ~/.resources
 - `konsole` 
@@ -112,16 +147,25 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
         - Editor Language
         - Notifications
 
+<br></br>
+
+
 ## Shortcuts
 In \<top-level\>/shortcuts, import:
 - system.kksrc via System Settings > Shortcuts > Import Schema...
 - \<app name\>.shortcuts via \<app\> > Settings > Configure Keyboard Shortcuts... > Manage Schemas > More Actions > Import Schema...
+
+<br></br>
+
 
 ## Other software
 - Jupyter notebook
     - Activate base conda env and `conda install nb_conda_kernels`
     - In new envs, `conda install ipykernel`
     - Start notebook servers from base env, then select desired kernel in target env
+
+<br></br>
+
 
 ## Shell Appendix
 ### Convert b/w file formats
@@ -159,6 +203,9 @@ Consider a common case in which this wrinkle becomes relevant: a `while read` lo
 ### X11 windows
 - properties: `xprop`
 - info: `xwininfo`
+
+<br></br>
+
 
 ## TODO
 - programatic install:
