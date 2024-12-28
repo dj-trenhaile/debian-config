@@ -170,7 +170,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     # shell utils
     sudo apt install xclip \
                      curl \
-                     ploate \
+                     plocate \
 
     snaps=(spotify slack)     
     for snap in ${snaps[@]}; do
