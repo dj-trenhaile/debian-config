@@ -2,6 +2,11 @@
 DEST=$1
 
 
+if [ ! -d "$DEST" ]; then
+    echo "$DEST" not a directory.
+    exit 1
+fi
+
 if [ -f "$DEST/.last_external_replay" ]; then
 
     readarray -t changes < <(git diff --name-status -z $(cat $DEST/.last_external_replay) HEAD | tr "\0" "\n")   
@@ -29,11 +34,18 @@ if [ -f "$DEST/.last_external_replay" ]; then
     done
 
 else
-    echo "**copying all"
-    while read file; do
+
+    read -p "No commit marker $DEST/.last_external_replay. Delete destination dir and copy all files? [Y/n] " user_confirmation
+    if [ "$user_confirmation" != 'Y' ]; then
+        echo Abort.
+        exit 1
+    fi
+
+    echo Copying...
+    git ls-files -z | tr "\0" "\n" | while read file; do
         echo "$file"
         cp "$file" "$DEST"
-    done < <(git ls-files -z | tr "\0" "\n")
+    done
 fi
 
 git rev-parse HEAD > $DEST/.last_external_replay
