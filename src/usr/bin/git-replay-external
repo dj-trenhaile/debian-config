@@ -20,7 +20,7 @@ if [ -f "$DEST/.last_external_replay" ]; then
                 ;;
             D)
                 echo "delete: ${changes[i]}"
-                rm "$DEST${changes[((i++))]}"
+                rm "$DEST/${changes[((i++))]}"
                 ;;
             *)
                 echo "**unknown op: ${changes[((i++))]}"
