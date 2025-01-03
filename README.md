@@ -116,6 +116,7 @@ File manager places:
 - Downloads
 - Trash
 - Desktop
+- Music
 - debian-config
 - projects
 
