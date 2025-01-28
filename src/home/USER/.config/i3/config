@@ -213,15 +213,13 @@ assign [instance="systemsettings"] output primary
 for_window [instance="systemsettings"] floating enable, border none, sticky enable, \
                                        resize set width 75 ppt height 75 ppt, \
                                        move position center
-
-
-
 for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
                                         resize set width 25 ppt height 25 ppt
-
-
-
 for_window [instance="gnome-screenshot"] floating enable, border none
+
+include ~/.local/i3/local-window-rules.conf
+
+
 
 # polybar
 exec_always --no-startup-id "~/.polybar/launch.sh"
