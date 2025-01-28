@@ -217,7 +217,7 @@ for_window [instance="systemsettings"] floating enable, border none, sticky enab
 
 
 for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
-                                        resize set width 25 ppt height 30 ppt
+                                        resize set width 25 ppt height 25 ppt
 
 
 
