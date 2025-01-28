@@ -214,7 +214,7 @@ for_window [instance="systemsettings"] floating enable, border none, sticky enab
                                        resize set width 75 ppt height 75 ppt, \
                                        move position center
 for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
-                                        resize set width 25 ppt height 25 ppt
+                                        resize set width 30 ppt height 30 ppt
 for_window [instance="gnome-screenshot"] floating enable, border none
 
 include ~/.local/i3/local-window-rules.conf
