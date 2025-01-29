@@ -9,7 +9,6 @@ _MSG='string "org.kde.systemsettings"'
 watch_acquisitions() {
     dbus-monitor "$_WATCH_EXP, \
                   member=NameAcquired" | 
-    
     while read event_line; do
         if [ "$event_line" == "$_MSG" ]; then
             polybar-msg hook settings 3
@@ -20,7 +19,6 @@ watch_acquisitions() {
 watch_losses() {
     dbus-monitor "$_WATCH_EXP, \
                   member=NameLost" | 
-    
     while read event_line; do
         if [ "$event_line" == "$_MSG" ]; then
             polybar-msg hook settings 2
