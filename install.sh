@@ -106,6 +106,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     sudo usermod -a -G video "$USER"
     
     dconf write /org/blueman/general/plugin-list "['\!ConnectionNotifier', '\!AutoConnect']"
+    dconf write /org/blueman/plugins/powermanager/auto-power-on '@mb false'
     sudo apt remove bluedevil
 
     dconf write /org/gnome/gnome-screenshot/auto-save-directory "'/home/$USER/Pictures/Screenshots'"

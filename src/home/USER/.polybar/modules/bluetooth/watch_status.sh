@@ -26,14 +26,11 @@ else
     fi
 fi
 
-
 # watch status changes
-
 dbus-monitor "type=signal, \
               path=/org/blueman/Applet, \
               interface=org.blueman.Applet, \
-              member=IconNameChanged" |
-
+              member=IconNameChanged" | 
 while read event_line; do
     case $event_line in
         "${_MSG_PREFIX}disabled\"")

@@ -1,7 +1,11 @@
 #!/bin/bash
 
-if [ "$(bluetoothctl show | grep 'Powered: yes')" == '' ]; then
-    bluetoothctl power on
+if [ "$(rfkill list bluetooth | grep 'Soft blocked: no')" == '' ]; then
+    rfkill unblock bluetooth
 else
-    bluetoothctl power off
+    if [ "$(bluetoothctl show | grep 'Powered: yes')" == '' ]; then
+        bluetoothctl power on
+    else
+        bluetoothctl power off
+    fi
 fi

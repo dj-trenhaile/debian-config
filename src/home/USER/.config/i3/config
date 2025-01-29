@@ -8,9 +8,6 @@ set $mod Mod1
 # startup handler for compositor, splash screen, and wallpaper 
 exec --no-startup-id "~/.i3/background.sh"
 
-# set initial bluetooth state
-exec --no-startup-id "bluetoothctl power off"
-
 
 # basic functions ============================================================ #
 
@@ -134,7 +131,7 @@ bindsym $mod+e layout toggle split
 # ======================== #
 
 # import workspace display assignments
-include ~/.local/i3/display_assignments.conf
+include ~/.local/i3/display-assignments.conf
 # focus workspace
 bindsym $mod+1 workspace 1
 bindcode $mod+87 workspace 1
@@ -195,20 +192,31 @@ bindcode $mod+Shift+90 move container to workspace 10; workspace 10
 
 # font pango:DejaVu Sans Mono 8
 font pango:3270 Nerd Font Mono 10
-# Before i3 v4.8, we used to recommend this one as the default:
+# "Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+# font, it doesn't scale on retina/hidpi displays."
 
 # generic window rules
+
+
+# for_window [class="xdg-desktop-portal-kde"]
+
+
+
+assign [instance="systemsettings"] output primary
 for_window [instance="systemsettings"] floating enable, border none, sticky enable, \
-                                       resize set width 75 ppt height 75 ppt, move position center
-for_window [window_type="dialog"] resize set width 50 ppt height 50 ppt, move position center
+                                       resize set width 75 ppt height 75 ppt, \
+                                       move position center
 for_window [instance="blueman-manager"] floating enable, border none, sticky enable, \
-                                        move position 67 ppt 67 ppt
+                                        resize set width 30 ppt height 30 ppt
 for_window [instance="gnome-screenshot"] floating enable, border none
+
+include ~/.local/i3/local-window-rules.conf
+
+
 
 # polybar
 exec_always --no-startup-id "~/.polybar/launch.sh"
