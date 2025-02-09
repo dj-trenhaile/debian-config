@@ -34,7 +34,6 @@ if [ -f "$DEST/.last_external_replay" ]; then
     done
 
 else
-
     read -p "No commit marker $DEST/.last_external_replay. Delete destination dir and copy all files? [Y/n] " user_confirmation
     if [ "$user_confirmation" != 'Y' ]; then
         echo Abort.
