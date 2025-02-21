@@ -12,11 +12,18 @@
         {
             "label": "Python: run current file",
             "type": "shell",
-            "command": "${config:python.pythonPath} ${file}",
+            "command": "${config:python.pythonPath} ${file} ${input:args}",
             "group": "build",
             "options": {
                 "cwd": "${fileDirname}"
             }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "args",
+            "type": "promptString",
+            "description": "Variable-length, space-separated arguments"
         }
     ]
 }
