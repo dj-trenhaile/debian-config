@@ -41,6 +41,9 @@
     "[r]": {
         "editor.tabSize": 2
     },
+    "[rmd]": {
+        "editor.tabSize": 2
+    },
     "notebook.lineNumbers": "on",
 
     "update.mode": "none",
