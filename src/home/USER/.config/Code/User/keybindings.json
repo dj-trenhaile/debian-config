@@ -1,6 +1,23 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     {
+        "key": "ctrl+space",
+        "command": "type",
+        "when": "editorTextFocus && editorLangId == 'makefile'",
+        "args": {
+            "text": "    "
+        }
+    },
+    {
+        "key": "ctrl+q",
+        "command": "runCommands",
+        "args": {"commands": [
+            "workbench.action.closeFolder",
+            "workbench.action.closeWindow"
+        ]}
+    },
+
+    {
         "key": "ctrl+r",
         "command": "-workbench.action.openRecent"
     },
@@ -1585,13 +1602,5 @@
         "key": "ctrl+space",
         "command": "-workbench.action.terminal.sendSequence",
         "when": "config.terminal.integrated.shellIntegration.suggestEnabled && terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'"
-    },
-    {
-        "key": "ctrl+space",
-        "command": "type",
-        "when": "editorTextFocus && editorLangId == 'makefile'",
-        "args": {
-            "text": "    "
-        }
     }
 ]

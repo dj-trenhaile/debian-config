@@ -1,13 +1,14 @@
 {
-    "files.autoSave": "afterDelay",
+    "workbench.startupEditor": "none",
+    "editor.fontFamily": "'Symbols Nerd Font', 'JetBrains Mono', 'monospace'",
     "editor.rulers": [
         80,
         100
     ],
-    "editor.fontFamily": "'Symbols Nerd Font', 'JetBrains Mono', 'monospace'",
+    "editor.detectIndentation": false,
+    "editor.acceptSuggestionOnEnter": "off",
     "editor.mouseWheelZoom": true,
-    "update.mode": "none",
-    "python.terminal.executeInFileDir": true,
+    "files.autoSave": "afterDelay",
     "launch": {
         "configurations": [
             {
@@ -28,16 +29,22 @@
             }
         ]
     }, 
-    "git.openRepositoryInParentFolders": "never",
     "terminal.integrated.inheritEnv": false,
     "search.quickOpen.includeHistory": false,
-    "workbench.startupEditor": "none",
-    "window.restoreWindows": "none",
-    "editor.detectIndentation": false,
-    "window.confirmSaveUntitledWorkspace": false,
-    "notebook.lineNumbers": "on",
+    "git.openRepositoryInParentFolders": "never",
+    
+    "python.terminal.executeInFileDir": true,
+    "python.terminal.activateEnvironment": false,
     "[makefile]": {
         "editor.autoIndent": "none"
     },
-    "editor.acceptSuggestionOnEnter": "off",
+    "[r]": {
+        "editor.tabSize": 2
+    },
+    "notebook.lineNumbers": "on",
+
+    "update.mode": "none",
+    "files.hotExit": "off",
+    "window.confirmSaveUntitledWorkspace": false,
+    "window.restoreWindows": "none",
 }
