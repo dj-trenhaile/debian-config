@@ -98,7 +98,10 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
 - Desktop Session: start an empty session
 ### Input Devices
 - Keyboard
-    - Hardware: NumLock on Plasma Startup: Turn on
+    - Hardware
+        - NumLock on Plasma Startup: Turn on
+        - Delay: 300 ms
+        - Rate: 100 repeats/s
     - Advanced: Position of Compose key: Left Win
 - Mouse: Acceleration profile: Adaptive
 - Touchpad
