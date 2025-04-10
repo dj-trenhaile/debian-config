@@ -170,24 +170,40 @@ In \<top-level\>/shortcuts, import:
 
 
 ## Shell Appendix
+
 ### Convert b/w file formats
 - Documents: best to use online converter; yet to find good linux solution
 - Images: `convert <file>.<source format> <target name>.<target format>` (from apt package imagemagick)
+
 ### DPI, set global
 - In ~/.Xresources, create/modify the line `Xft.dpi: <global dpi>`
 - Ensure ~/.initrc has `xrdb -merge ~/.Xresources`
+
 ### GNOME desktop environemnt, purge
 1. `sudo apt remove ubuntu-desktop`
 2. `sudo apt remove *gnome*`
     - If using gdm3, reinstall with `sudo apt install gdm3`
 3. (opt) Remove all associated xsession configs from /usr/share/xsessions
+
+### GRUB, set kernel params
+1. /etc/default/grub: GRUB_CMDLINE_LINUX_DEFAULT:
+    - "quiet splash"
+    - "nomodeset"
+    - ""
+2. `sudo update-grub` (writes to /boot/grub/grub.cfg)
+
 ### Keycodes, show
 - `xev`
 - `showkey`
+
+
 ### Pipelines
+
 Remember: pipes create asynchronous subshells. As with any other subshell, variable assignments occur within the subshell's scope and therefore have no effect in the parent shell.
 
 Consider a common case in which this wrinkle becomes relevant: a `while read` loop at the end of a pipeline that iterates the pipeline's results. One must be sure that no commands following such a loop rely on variable assignments therein. 
+
+
 ### TLS certificates
 - root CA: `openssl req -x509 -out rootCA.crt -keyout rootCA.key -noenc -days <valid days>`
 - SAN-compliant certificate:
@@ -200,8 +216,10 @@ Consider a common case in which this wrinkle becomes relevant: a `while read` lo
         - DNS.1 = \<domain\>
     - `openssl x509 -req -in <domain>.csr -CA <CA>.crt -CAkey <CA>.key -out <domain>.crt -days <valid days> -extfile <domain>.ext`
 - package certificate and private key: `openssl pkcs12 -export -in <domain>.crt -inkey <domain>.key -out <domain>.p12`
+
 ### Package versions, maintain multiple
 `update-alternatives`
+
 ### X11 windows
 - properties: `xprop`
 - info: `xwininfo`
