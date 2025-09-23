@@ -1,12 +1,16 @@
 # Setup instructions
 
+<br/>
+<br/>
+
+
 
 ## Environment details
 - display manager: gdm3 (better compatibility than sddm)
 - desktop environment: kde plasma
 - window manager: i3
 
-<br></br>
+<br/>
 
 
 ## OS setup resources
@@ -17,7 +21,7 @@
     - kde-standard
     - kde-plasma-desktop
     
-<br></br>
+<br/>
 
 
 ## Install core applications
@@ -25,13 +29,13 @@
 - git
 - vscode
 
-<br></br>
+<br/>
 
 
 ## Files
 Clone repo and run install.sh.
 
-<br></br>
+<br/>
 
 
 ## Display(s) configuration
@@ -48,7 +52,7 @@ Clone repo and run install.sh.
 ### i3 integration
 One can assign i3 workspaces to specific displays. The provided config includes i3 commands for this purpose from ~/.local/i3/display_assignments.conf
 
-<br></br>
+<br/>
 
 
 ## Security setup
@@ -69,7 +73,7 @@ Install Howdy: https://github.com/boltgolt/howdy
 ### Enable new auth methods
 `pam-auth-update`
 
-<br></br>
+<br/>
 
 
 ## System Settings
@@ -106,7 +110,7 @@ Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
     - enable all Tapping options
     - Scrolling: Invert scroll direction
 
-<br></br>
+<br/>
 
 
 ## Other settings
@@ -121,7 +125,7 @@ File manager places:
 - debian-config
 - projects
 
-<br></br>
+<br/>
 
 
 ## Other appearance settings
@@ -149,7 +153,7 @@ File manager places:
         - Editor Language
         - Notifications
 
-<br></br>
+<br/>
 
 
 ## Shortcuts
@@ -157,7 +161,7 @@ In \<top-level\>/shortcuts, import:
 - system.kksrc via System Settings > Shortcuts > Import Schema...
 - \<app name\>.shortcuts via \<app\> > Settings > Configure Keyboard Shortcuts... > Manage Schemas > More Actions > Import Schema...
 
-<br></br>
+<br/>
 
 
 ## Other software
@@ -166,7 +170,7 @@ In \<top-level\>/shortcuts, import:
     - In new envs, `conda install ipykernel`
     - Start notebook servers from base env, then select desired kernel in target env
 
-<br></br>
+<br/>
 
 
 ## Shell Appendix
@@ -220,11 +224,15 @@ Consider a common case in which this wrinkle becomes relevant: a `while read` lo
 ### Package versions, maintain multiple
 `update-alternatives`
 
+### Ventoy, write safely
+- Always check hashes
+- After writing new ISO, `sync`
+
 ### X11 windows
 - properties: `xprop`
 - info: `xwininfo`
 
-<br></br>
+<br/>
 
 
 ## TODO
