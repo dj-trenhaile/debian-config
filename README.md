@@ -7,7 +7,7 @@
 
 ## Environment details
 - display manager: gdm3 (better compatibility than sddm)
-- desktop environment: kde plasma
+- desktop environment: KDE Plasma
 - window manager: i3
 
 <br/>
@@ -33,7 +33,7 @@
 
 
 ## Files
-Clone repo and run install.sh.
+Clone debian-config and run install.sh.
 
 <br/>
 
@@ -83,7 +83,7 @@ Install Howdy: https://github.com/boltgolt/howdy
 ### Workspace Behavior
 General Behavior: Click files or folders: Selects them
 ### Shortcuts
-Import \<top-level\>/shortcuts/system.kkrc via Import Schema...
+Import debian-config/shortcuts/system.kkrc via Import Schema...
 ### Startup and Shutdown
 - Autostart: none
 - Background Services > enable only:
@@ -156,10 +156,8 @@ File manager places:
 <br/>
 
 
-## Shortcuts
-In \<top-level\>/shortcuts, import:
-- system.kksrc via System Settings > Shortcuts > Import Schema...
-- \<app name\>.shortcuts via \<app\> > Settings > Configure Keyboard Shortcuts... > Manage Schemas > More Actions > Import Schema...
+## App shortcuts
+Import debian-config/shortcuts/\<app name\>.shortcuts via \<app\> > Settings > Configure Keyboard Shortcuts... > Manage Schemas > More Actions > Import Schema...
 
 <br/>
 
@@ -231,13 +229,3 @@ Consider a common case in which this wrinkle becomes relevant: a `while read` lo
 ### X11 windows
 - properties: `xprop`
 - info: `xwininfo`
-
-<br/>
-
-
-## TODO
-- programatic install:
-    - System Settings
-    - VSCode
-- spotify pulseaudio sink input cleanup service
-- update Jupyter instructions
