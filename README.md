@@ -26,7 +26,11 @@
 
 ## Install core applications
 - chrome
+- git-credential-oauth
 - git
+    - `git config --global --unset-all credential.helper`
+    - `git config --global --add credential.helper 'cache timeout=86400'`
+    - `git config --global --add credential.helper oauth`
 - vscode
 
 <br/>
