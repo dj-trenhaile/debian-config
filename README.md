@@ -194,12 +194,23 @@ Import debian-config/shortcuts/\<app name\>.shortcuts via \<app\> > Settings > C
     - If using gdm3, reinstall with `sudo apt install gdm3`
 3. (opt) Remove all associated xsession configs from /usr/share/xsessions
 
-### GRUB, set kernel params
-1. /etc/default/grub: GRUB_CMDLINE_LINUX_DEFAULT:
-    - "quiet splash"
-    - "nomodeset"
-    - ""
-2. `sudo update-grub` (writes to /boot/grub/grub.cfg)
+
+### GRUB, kernel params
+
+Configured in /etc/default/grub, which `sudo update-grub` parses in order to generate /boot/grub/grub.cfg.
+
+- GRUB_CMDLINE_LINUX="\<cmdline args used for every boot\>"
+- GRUB_CMDLINE_LINUX_DEEFAULT="\<cmdline args used for normal/non-recovery boots\>"
+- cmdline args:
+    - `quiet`: don't show boot messages
+    - `splash`: show the boot splash screen
+    - `nomodeset`: don't start kernel video drivers. Use BIOS video modes. When display server is loaded, hand off to its video drivers. (better compatibility)
+
+- GRUB_TIMEOUT_STYLE
+    - 'menu': show GRUB by default
+    - 'hidden': don't show GRUB by default
+- GRUB_TIMEOUT: amnt. of time (s) to wait at GRUB before it boots the boot entry at idx. GRUB_DEFAULT
+
 
 ### Keycodes, show
 - `xev`
