@@ -156,9 +156,7 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
     sudo snap remove snapd-desktop-integration
 
 
-    # ========================= #
     # optional software
-    # ========================= #
 
     sudo apt install libinput-tools \
                      gparted exfatprogs \
@@ -167,16 +165,19 @@ if [ $REFRESH_ONLY -eq 0 ] && [ $DRY -eq 0 ]; then
                      audacity \
                      kid3 \
                      texlive latexmk texlive-xetex \
+                     print-manager \
+                     simplescreenrecorder
 
     # shell utils
     sudo apt install xclip \
                      curl \
-                     plocate \
+                     plocate
 
-    snaps=(spotify slack)     
-    for snap in ${snaps[@]}; do
-        sudo snap install "$snap"
-    done
+    # snaps=()     
+    # for snap in ${snaps[@]}; do
+    #     sudo snap install "$snap"
+    # done
+
     extensions=(eamodio.gitlens
                 mhutchie.git-graph
                 chrisdias.vscode-opennewinstance
