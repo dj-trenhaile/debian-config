@@ -20,12 +20,13 @@
 
 
 # Install core applications
-- git-credential-oauth
-- git
+- `firefox`; see https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions-recommended
+- `git-credential-oauth`
+- `git`
     - `git config --global --unset-all credential.helper`
     - `git config --global --add credential.helper 'cache timeout=86400'`
     - `git config --global --add credential.helper oauth`
-- vscode
+- VS Code
 
 <br/><br/>
 
@@ -57,6 +58,11 @@ One can assign i3 workspaces to specific displays. The provided config includes 
 
 
 # Security setup
+## /etc/pam.d/gdm-password
+### @include common-auth
+auth optional pam_kwallet5.so
+### @include common-session
+session optional pam_kwallet5.so auto_start kwalletd=/usr/bin/kwalletd5
 ## Fingerprint
 1. `sudo apt install fprintd libpam-fprintd`
 2. Add fingerprints via System Settings or `fprintd-enroll`
@@ -103,6 +109,14 @@ Import debian-config/shortcuts/system.kkrc via Import Schema...
     - Touchpad
     - Write Daemon
 - Desktop Session: start an empty session
+## Applications
+Default Applications:
+- Web browser: Firefox
+- File manager: Dolphin
+- Email client: Firefox
+- Terminal emulator: Konsole
+- Map: Google Maps
+- Dialer: Other...
 ## Input Devices
 - Keyboard
     - Hardware
@@ -120,8 +134,8 @@ Import debian-config/shortcuts/system.kkrc via Import Schema...
 
 
 
-# Other settings
-File manager places:
+# Dolphin
+Places:
 - Home
 - Pictures
 - Downloads
@@ -131,6 +145,7 @@ File manager places:
 - Videos
 - debian-config
 - projects
+Configure > Configure Dolphin... > Context Menu: check Delete
 
 <br/><br/>
 
@@ -150,16 +165,7 @@ File manager places:
         - Extensions
         - (Note: New extensions will add themselves to the sidebar)
     - Source Control > Source Control: disable Gitlens's "Show Commit Graph"
-    - Status Bar: enable only:
-        - Problems
-        - Debug
-        - GitLens Current Line Blame
-        - Editor Selection
-        - Editor Indentation
-        - Editor Encoding
-        - Editor End of Line
-        - Editor Language
-        - Notifications
+    - Status Bar: disable all GitLens options except Current Line Blame
 
 <br/><br/>
 
