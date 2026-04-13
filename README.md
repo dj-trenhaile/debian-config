@@ -58,6 +58,11 @@ One can assign i3 workspaces to specific displays. The provided config includes 
 
 
 # Security setup
+## /etc/pam.d/gdm-password
+### @include common-auth
+auth optional pam_kwallet5.so
+### @include common-session
+session optional pam_kwallet5.so auto_start kwalletd=/usr/bin/kwalletd5
 ## Fingerprint
 1. `sudo apt install fprintd libpam-fprintd`
 2. Add fingerprints via System Settings or `fprintd-enroll`
