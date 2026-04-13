@@ -226,6 +226,13 @@ Configured in /etc/default/grub, which `sudo update-grub` parses in order to gen
 - GRUB_TIMEOUT: amnt. of time (s) to wait at GRUB before it boots the boot entry at idx. GRUB_DEFAULT
 
 
+## Kernel, list modules
+`lsmod`
+
+## Kernel, update initial RAM filesystem
+`update-initramfs -u`
+(e.g., after modifying kernel modules)
+
 ## Keycodes, show
 - `xev`
 - `showkey`
