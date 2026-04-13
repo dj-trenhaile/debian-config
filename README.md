@@ -215,6 +215,7 @@ Configured in /etc/default/grub, which `sudo update-grub` parses in order to gen
     - quiet: don't show boot messages
     - splash: show the boot splash screen
     - nomodeset: don't start kernel video drivers. Use the firmware-provided video mode.
+    - https://docs.kernel.org/admin-guide/kernel-parameters.html
 
 <br/>
 
