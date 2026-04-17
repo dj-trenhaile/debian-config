@@ -145,6 +145,7 @@ Places:
 - Videos
 - debian-config
 - projects
+
 Configure > Configure Dolphin... > Context Menu: check Delete
 
 <br/><br/>
@@ -229,9 +230,13 @@ Configured in /etc/default/grub, which `sudo update-grub` parses in order to gen
 ## Kernel, list modules
 `lsmod`
 
+
 ## Kernel, update initial RAM filesystem
+
 `update-initramfs -u`
+
 (e.g., after modifying kernel modules)
+
 
 ## Keycodes, show
 - `xev`
