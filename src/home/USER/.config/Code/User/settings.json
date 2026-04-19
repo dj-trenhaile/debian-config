@@ -50,4 +50,5 @@
     "files.hotExit": "off",
     "window.confirmSaveUntitledWorkspace": false,
     "window.restoreWindows": "none",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
 }
