@@ -250,6 +250,9 @@ Remember: pipes create asynchronous subshells. As with any other subshell, varia
 Consider a common case in which this wrinkle becomes relevant: a `while read` loop at the end of a pipeline that iterates the pipeline's results. One must be sure that no commands following such a loop rely on variable assignments therein. 
 
 
+## `qdbus`
+Used to interact with Qt applications over the Qt message bus.
+
 ## TLS certificates
 - root CA: `openssl req -x509 -out rootCA.crt -keyout rootCA.key -noenc -days <valid days>`
 - SAN-compliant certificate:
