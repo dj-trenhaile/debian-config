@@ -57,31 +57,53 @@ One can assign i3 workspaces to specific displays. The provided config includes 
 
 
 
+
+
 # Security setup
-## /etc/pam.d/gdm-password
-### @include common-auth
-auth optional pam_kwallet5.so
-### @include common-session
-session optional pam_kwallet5.so auto_start kwalletd=/usr/bin/kwalletd5
-## Fingerprint
-1. `sudo apt install fprintd libpam-fprintd`
+As of this writing, there is no good PAM solution that allows a biometric to unlock a secrets 
+provider (e.g., Kwallet) at login. Therefore, for the time being, a biometrics-enabled machine 
+should opt to disable the local secrets provider by default.
+
+
+## W/o biometrics
+1. Ensure Kwallet is enabled in System Settings.
+2. Ensure the primary wallet is called "kdewallet" and is encrypted via Blowfish w/ your user password.
+3. Add to /etc/pam.d/gdm-password:
+    - (after common-auth) "auth requisite pam_kwallet5.so"
+    - (after common-session) "session requisite pam_kwallet5.so auto_start kwalletd=/usr/bin/kwalletd5"
+
+
+## W/ biometrics
+
+### ~/.config/kwalletrc
+```
+[Wallet]
+Enabled=false
+```
+
+### Fingerprint
+1. Install fprintd and its accompanying PAM pam_fprintd.so: `sudo apt install fprintd libpam-fprintd`
 2. Add fingerprints via System Settings or `fprintd-enroll`
 3. (opt) Check that prints work with `fprintd-verify`
-## Facial rec
-Install Howdy: https://github.com/boltgolt/howdy
-- Outside of any virtual env, `sudo pip install dlib --break-system-packages`<sup>1</sup>
-- Become root and navigate to /lib/security/howdy
-    - `dlib-data/install.sh`
-    - `chmod -R a+rx dlib-data models records`
-    - `chmod -R a+rxw snapshots`
-    - In compare.py, modify `import ConfigParser` to `import configparser as ConfigParser`<sup>1</sup><br>
+
+### Facial rec
+Howdy: https://github.com/boltgolt/howdy
+1. Outside of any virtual env, `sudo pip install dlib --break-system-packages`<sup>1</sup>
+2. Become root and navigate to /lib/security/howdy
+    1. `dlib-data/install.sh`
+    2. `chmod -R a+rx dlib-data models records`
+    3. `chmod -R a+rxw snapshots`
+    4. In compare.py, modify `import ConfigParser` to `import configparser as ConfigParser`<sup>1</sup>
 
 <sup>1</sup>See https://github.com/boltgolt/howdy/issues/781 for more details.
 
-## Enable new auth methods
-`pam-auth-update`
+### PAM integration
+Perform manually (recommended), or with `pam-auth-update`.
+
 
 <br/><br/>
+
+
 
 
 
@@ -241,6 +263,17 @@ Configured in /etc/default/grub, which `sudo update-grub` parses in order to gen
 ## Keycodes, show
 - `xev`
 - `showkey`
+
+## PAM
+- System-wide modules live in /etc/pam.d
+- Important modules:
+    - gdm-password
+    - gdm-fingerprint
+    - common-auth
+    - common-account
+    - common-session
+    - common-password
+- See `man pam.d` for further documentation.
 
 
 ## Pipelines
