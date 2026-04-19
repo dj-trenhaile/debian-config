@@ -1,5 +1,5 @@
 [ActivityManager][Global Shortcuts]
-switch-to-activity-58c7d575-5c48-49c7-8ed7-b0e4de685b9e=
+switch-to-activity-3ef84580-1165-4319-9614-524077cbe84b=
 
 [KDE Keyboard Layout Switcher][Global Shortcuts]
 Switch to Next Keyboard Layout=
@@ -8,24 +8,24 @@ Switch to Next Keyboard Layout=
 AboutApp=
 AboutKDE=
 Activate Next Tab=Ctrl+]; Ctrl+PgDown
-Activate Previous Tab=Ctrl+PgUp; Ctrl+[
+Activate Previous Tab=Ctrl+[; Ctrl+PgUp
 ActualSize=Ctrl+0
-AddBookmark=
-Back=Back
+AddBookmark=Ctrl+B
+Back=
 BackwardWord=Ctrl+Left
 Begin=Ctrl+Home
 BeginningOfLine=Home
 Clear=
-Close=Ctrl+W
+Close=Ctrl+W; Ctrl+Esc
 ConfigureNotifications=
 ConfigureToolbars=
-Copy=Ctrl+C
-CreateFolder=
-Cut=Ctrl+X
+Copy=Ctrl+Ins; Ctrl+C
+CreateFolder=F10
+Cut=Shift+Del; Ctrl+X
 DeleteFile=Shift+Del
 DeleteWordBack=Ctrl+Backspace
 DeleteWordForward=Ctrl+Del
-Deselect=
+Deselect=Ctrl+Shift+A
 DocumentBack=
 DocumentForward=
 Donate=
@@ -33,38 +33,38 @@ EditBookmarks=
 End=Ctrl+End
 EndOfLine=End
 Find=Ctrl+F
-FindNext=
-FindPrev=
+FindNext=F3
+FindPrev=Shift+F3
 FitToHeight=
 FitToPage=
 FitToWidth=
-Forward=Forward
+Forward=
 ForwardWord=Ctrl+Right
-FullScreen=
+FullScreen=Ctrl+Shift+F
 Goto=
 GotoLine=Ctrl+G
 GotoPage=
-Help=
-Home=Home Page
+Help=F1
+Home=
 KeyBindings=
 Mail=
 MoveToTrash=Del
 New=Ctrl+N
 Next=PgDown
-NextCompletion=
+NextCompletion=Ctrl+Down
 Open=Ctrl+O
 OpenRecent=
-Paste=Ctrl+V
+Paste=Shift+Ins; Ctrl+V
 Paste Selection=Ctrl+Shift+Ins
-Preferences=
-PrevCompletion=
-Print=
+Preferences=Ctrl+Shift+,
+PrevCompletion=Ctrl+Up
+Print=Ctrl+P
 PrintPreview=
 Prior=PgUp
-Quit=
+Quit=Ctrl+Q
 Redo=Ctrl+Shift+Z
-Reload=Refresh
-RenameFile=
+Reload=F5
+RenameFile=F2
 Replace=Ctrl+R
 ReportBug=
 Revert=
@@ -79,45 +79,62 @@ ShowMenubar=Ctrl+M
 ShowStatusbar=
 ShowToolbar=
 Spelling=
-SubstringCompletion=
+SubstringCompletion=Ctrl+T
 SwitchApplicationLanguage=
-TextCompletion=
+TextCompletion=Ctrl+E
 TipofDay=
 Undo=Ctrl+Z
 Up=
-WhatsThis=
+WhatsThis=Shift+F1
 Zoom=
 ZoomIn=Ctrl+=
 ZoomOut=Ctrl+-
+
+[juk][Global Shortcuts]
+back=
+forward=
+forwardAlbum=
+mute=
+playPause=
+seekBack=
+seekForward=
+stop=
+volumeDown=
+volumeUp=
 
 [kaccess][Global Shortcuts]
 Toggle Screen Reader On and Off=
 
 [kcm_touchpad][Global Shortcuts]
-Disable Touchpad=Touchpad Off
-Enable Touchpad=Touchpad On
-Toggle Touchpad=Touchpad Toggle
+Disable Touchpad=
+Enable Touchpad=
+Toggle Touchpad=
+
+[khotkeys][Global Shortcuts]
+{d03619b6-9b3c-48cc-9d9c-a2aadb485550}=
 
 [klipper][Global Shortcuts]
-clear-history=
+clear-history=Alt+Shift+M
 clipboard_action=
 cycleNextAction=
 cyclePrevAction=
 edit_clipboard=
 repeat_action=
 show-barcode=
-show-on-mouse-pos=Ctrl+M
+show-on-mouse-pos=Alt+M
 
-[knotes][Global Shortcuts]
-hide_all_notes=
-new_note=
-new_note_clipboard=
-show_all_notes=
+[kmix][Global Shortcuts]
+decrease_microphone_volume=
+decrease_volume=
+increase_microphone_volume=
+increase_volume=
+mic_mute=
+mute=
 
 [ksmserver][Global Shortcuts]
 Halt Without Confirmation=
 Lock Session=
-Log Out=Power Off; Alt+Shift+E
+Log Out=Alt+Shift+E
 Log Out Without Confirmation=
 Reboot Without Confirmation=
 
@@ -134,7 +151,7 @@ _launch=
 
 [org.kde.krunner.desktop][Global Shortcuts]
 RunClipboard=
-_launch=Alt+D; Search
+_launch=Alt+D
 
 [org.kde.plasma.emojier.desktop][Global Shortcuts]
 _launch=
@@ -149,19 +166,23 @@ WindowUnderCursorScreenShot=
 _launch=
 
 [org_kde_powerdevil][Global Shortcuts]
-Decrease Keyboard Brightness=Keyboard Brightness Down
+Decrease Keyboard Brightness=
 Decrease Screen Brightness=
-Hibernate=Hibernate
-Increase Keyboard Brightness=Keyboard Brightness Up
+Hibernate=
+Increase Keyboard Brightness=
 Increase Screen Brightness=
 PowerDown=
 PowerOff=
-Sleep=Sleep
-Toggle Keyboard Backlight=Keyboard Light On/Off
+Sleep=
+Toggle Keyboard Backlight=
 Turn Off Screen=
 
+[plasmashell][Global Shortcuts]
+next activity=
+previous activity=
+
 [systemsettings.desktop][Global Shortcuts]
-_launch=Tools
+_launch=
 kcm-kscreen=
 kcm-lookandfeel=
 kcm-users=
