@@ -273,6 +273,7 @@ Configured in /etc/default/grub, which `sudo update-grub` parses in order to gen
     - common-account
     - common-session
     - common-password
+    - i3lock
 - See `man pam.d` for further documentation.
 
 
